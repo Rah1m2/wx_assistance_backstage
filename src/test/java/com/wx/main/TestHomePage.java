@@ -1,0 +1,97 @@
+package com.wx.main;
+
+import com.wx.main.DAO.UserDAO;
+import com.wx.main.Model.User;
+import com.wx.main.Service.UserService;
+import com.wx.main.Util.MyBatis_DB_Util;
+import junit.framework.TestCase;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.wicket.util.tester.WicketTester;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.util.List;
+
+/**
+ * Simple test using the WicketTester
+ */
+public class TestHomePage {
+	private WicketTester tester;
+
+	@Before
+	public void setUp()
+	{
+		tester = new WicketTester();
+	}
+
+	@Test
+	public void testRenderMyPage() {
+
+	}
+
+	@Test
+	public void DAOTest()
+	{
+		String config = "/applicationContext.xml";
+
+		ApplicationContext acContext = new ClassPathXmlApplicationContext(config);
+
+
+		SqlSessionFactory sqlSessionFactory = (SqlSessionFactory) acContext.getBean("sqlSessionFactory");
+		//通过接口调用方法执行查询
+		UserService userService = (UserService) acContext.getBean("userServiceImpl");
+
+		System.out.println(userService.getUserList());
+
+//		//遍历打印
+//		for (User user : list) {
+//			System.out.println("my account:"+user.getUser_account());
+//		}
+//
+//		//带限制条件的查询
+//		System.out.println(userMapper.getUserByAccount("772557832@qq.com"));
+//
+//		//插入操作
+//		int res = userMapper.insertSingleUser(new User(2,"1962219910@qq.com","010501","psychology",509,"Sichuan China","female","second"));
+//
+//		//这里很重要，操作完成后必须提交事务
+//		if(res >= 1){
+//			System.out.println("插入成功！");
+//			sqlSession.commit(); //提交事务之后才会写入数据库
+//		}
+//
+//		//删除操作
+//		res = userMapper.deleteSingleUser(new User(65535,"1962219910@qq.com",null,null,65535,null,null,null));
+//		if(res >= 1){
+//			System.out.println("删除成功！");
+//			sqlSession.commit(); //提交事务之后才会写入数据库
+//		}
+//
+//		//修改操作
+//		res = userMapper.updateSingleUser(new User(65535,"772557832@qq.com","00000000",null,65535,null,null,null));
+//		if(res >= 1){
+//			System.out.println("修改成功！");
+//			sqlSession.commit(); //提交事务之后才会写入数据库
+//		}
+
+		//关闭连接以免出现内存问题
+//		sqlSession.close();
+	}
+
+	@Test
+	public void fuck(){
+		String config = "/applicationContext.xml";
+
+		ApplicationContext acContext = new ClassPathXmlApplicationContext(config);
+
+
+		String[] Slist = acContext.getBeanDefinitionNames();
+
+		for (String s : Slist) {
+			System.out.println(s);
+		}
+	}
+}
