@@ -36,14 +36,14 @@ public class UserController {
 
     @RequestMapping(value = "/login")
     @ResponseBody
-    public String login(String encryptedData,String iv,String code){
+    public String login(String encryptedData,String iv,String code) {
         //测试用
-        System.out.println("encryptedData:"+encryptedData);
-        System.out.println("iv:"+iv);
-        System.out.println("code:"+code);
-
+//        System.out.println("encryptedData:"+encryptedData);
+//        System.out.println("iv:"+iv);
+//        System.out.println("code:"+code);
         return userService.wxLogin(encryptedData,iv,code);
     }
+
 
 
     /*---------------------------------测试用接口-------------------------------------*/

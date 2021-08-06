@@ -1,5 +1,7 @@
 package com.wx.main.Service.Impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.wx.main.DAO.UserDAO;
 import com.wx.main.Model.User;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service(value = "userServiceImpl")
 public class UserServiceImpl implements UserService {
@@ -54,6 +57,7 @@ public class UserServiceImpl implements UserService {
 
     public String wxLogin(String encryptedData, String iv, String code) {
         final int INSERT_FAILED = 0;
+        List<User> user_list;
         //登录凭证不能为空
         if (code == null || code.length() == 0) {
             System.out.println("登录凭证不能为空！");
@@ -103,8 +107,8 @@ public class UserServiceImpl implements UserService {
 //        System.out.println("res_json:"+json_res.get("avatarUrl"));
 
         //操作dao层，如果不是第一次登录就返回"EXIST"；否则进行插入操作
-        if(!userDAO.getUserByAccount(openid).isEmpty())
-            return "EXIST";
+        if(!(user_list=userDAO.getUserByAccount(openid)).isEmpty())
+            return JSON.toJSONString(user_list);
         assert json_res != null;
         if(INSERT_FAILED == userDAO.insertSingleUser(new User(openid, (String) json_res.get("nickName"), json_res.get("gender").toString(), (String) json_res.get("language"), (String) json_res.get("country"), (String) json_res.get("avatarUrl"))))
             return "NO";
