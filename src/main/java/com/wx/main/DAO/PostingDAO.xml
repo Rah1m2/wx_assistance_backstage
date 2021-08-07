@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wx.main.DAO.PostingDAO">
+
+    <select id="getPostingList" resultType="com.wx.main.Model.Posting">
+      select * from postings_info
+    </select>
+
+    <select id="getPostingBySortId" resultType="com.wx.main.Model.Posting" parameterType="int">
+        select * from postings_info where sort_id=#{sort_id}
+    </select>
+
+    <insert id="insertSinglePosting" parameterType="com.wx.main.Model.Posting">
+      insert into postings_info (article_id,article_title,article_content,article_image,sort_id) values(#{article_id},#{article_title},#{article_content},#{article_image},#{sort_id})
+  </insert>
+
+    <!--<delete id="deleteSingleUser">-->
+    <!--delete from user_info where user_account=#{user_account}-->
+    <!--</delete>-->
+
+    <!--<update id="updateSingleUser">-->
+    <!--update user_info set user_password=#{user_password} where user_account=#{user_account}-->
+    <!--</update>-->
+</mapper>

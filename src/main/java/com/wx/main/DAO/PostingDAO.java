@@ -9,7 +9,12 @@ public interface PostingDAO {
     //返回所有帖子
     List<Posting> getPostingList();
 
+    //按sort_id获取帖子
+    List<Posting> getPostingBySortId(int sort_id);
+
     //增加一条帖子信息
     int insertSinglePosting(Posting posting);
+
+
 
 }

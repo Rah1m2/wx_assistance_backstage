@@ -1,7 +1,9 @@
 package com.wx.main;
 
 import com.wx.main.DAO.UserDAO;
+import com.wx.main.Model.Posting;
 import com.wx.main.Model.User;
+import com.wx.main.Service.PostingService;
 import com.wx.main.Service.UserService;
 import com.wx.main.Util.MyBatis_DB_Util;
 import junit.framework.TestCase;
@@ -29,7 +31,15 @@ public class TestHomePage {
 
 	@Test
 	public void testRenderMyPage() {
+		String config = "/applicationContext.xml";
 
+		ApplicationContext acContext = new ClassPathXmlApplicationContext(config);
+
+		SqlSessionFactory sqlSessionFactory = (SqlSessionFactory) acContext.getBean("sqlSessionFactory");
+		//通过接口调用方法执行查询
+		PostingService postingService = (PostingService) acContext.getBean("postingServiceImpl");
+
+//		System.out.println(postingService.getRequiredPostings("test"));
 	}
 
 	@Test
@@ -39,10 +49,9 @@ public class TestHomePage {
 
 		ApplicationContext acContext = new ClassPathXmlApplicationContext(config);
 
-
 		SqlSessionFactory sqlSessionFactory = (SqlSessionFactory) acContext.getBean("sqlSessionFactory");
 		//通过接口调用方法执行查询
-		UserService userService = (UserService) acContext.getBean("userServiceImpl");
+		UserService userService = (UserService) acContext.getBean("PostingServiceImpl");
 
 		System.out.println(userService.getUserList());
 

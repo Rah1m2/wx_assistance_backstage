@@ -21,9 +21,17 @@
     <settings>
         <setting name="logImpl" value="STDOUT_LOGGING"/>
     </settings>
+
+    <plugins>
+        <plugin interceptor="${PageHelper}">
+            <property name="dialect" value="mysql"/>
+        </plugin>
+    </plugins>
     
     <mappers>
         <mapper resource="com/wx/main/DAO/UserDAO.xml"/>
+        <mapper resource="com/wx/main/DAO/PostingDAO.xml"/>
         <!--<mapper class="com.mybatis.main.DAO.UserDAOImpl.Impl"/>-->
     </mappers>
+
 </configuration>

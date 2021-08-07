@@ -1133,39 +1133,88 @@
       <Charset>utf8mb4</Charset>
       <DefaultForCharset>0</DefaultForCharset>
     </collation>
-    <table id="286" parent="3" name="user_info"/>
-    <column id="287" parent="286" name="user_openid">
+    <table id="286" parent="3" name="postings_info"/>
+    <table id="287" parent="3" name="sort_info"/>
+    <table id="288" parent="3" name="user_info"/>
+    <column id="289" parent="286" name="article_id">
+      <Position>1</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="290" parent="286" name="article_title">
+      <Position>2</Position>
+      <DataType>varchar(200)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="291" parent="286" name="article_content">
+      <Position>3</Position>
+      <DataType>text|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="292" parent="286" name="article_image">
+      <Position>4</Position>
+      <DataType>varchar(200)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="293" parent="286" name="sort_id">
+      <Position>5</Position>
+      <DataType>varchar(200)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="294" parent="286" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>article_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="295" parent="287" name="sort_id">
+      <Position>1</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="296" parent="287" name="sort_name">
+      <Position>2</Position>
+      <DataType>varchar(200)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="297" parent="287" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>sort_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="298" parent="288" name="user_openid">
       <Position>1</Position>
       <DataType>varchar(200)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="288" parent="286" name="user_name">
+    <column id="299" parent="288" name="user_name">
       <Position>2</Position>
       <DataType>varchar(200)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="289" parent="286" name="user_gender">
+    <column id="300" parent="288" name="user_gender">
       <Position>3</Position>
       <DataType>varchar(200)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="290" parent="286" name="user_language">
+    <column id="301" parent="288" name="user_language">
       <Position>4</Position>
       <DataType>varchar(200)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="291" parent="286" name="user_country">
+    <column id="302" parent="288" name="user_country">
       <Position>5</Position>
       <DataType>varchar(200)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="292" parent="286" name="user_avatarUrl">
+    <column id="303" parent="288" name="user_avatarUrl">
       <Position>6</Position>
       <DataType>varchar(200)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="293" parent="286" name="PRIMARY">
+    <key id="304" parent="288" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>user_openid</ColNames>
       <Primary>1</Primary>
