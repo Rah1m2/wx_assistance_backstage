@@ -9,4 +9,6 @@ import java.util.List;
 public interface PostingService {
 
     String getRequiredPostings(QueryParams queryParams);
+
+    int storeSinglePosting(Posting posting);
 }

@@ -1,11 +1,13 @@
 package com.wx.main;
 
+import com.alibaba.fastjson.JSONObject;
 import com.wx.main.DAO.UserDAO;
 import com.wx.main.Model.Posting;
 import com.wx.main.Model.User;
 import com.wx.main.Service.PostingService;
 import com.wx.main.Service.UserService;
 import com.wx.main.Util.MyBatis_DB_Util;
+import com.wx.main.Util.Transcoding_Util;
 import junit.framework.TestCase;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -103,4 +105,22 @@ public class TestHomePage {
 			System.out.println(s);
 		}
 	}
+	@Test
+	public void Util_Test(){
+		String config = "/applicationContext.xml";
+
+		ApplicationContext acContext = new ClassPathXmlApplicationContext(config);
+
+//		acContext.getBean("Transcoding_Util");
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put("pageNum",1);
+
+		//查询的页数
+		jsonObject.put("pageSize",2);
+		jsonObject.put("ZH","中国第一");
+		Transcoding_Util.Transcode(jsonObject);
+	}
 }
+
+
