@@ -1,4 +1,4 @@
-package com.wx.main.Model;
+package com.wx.main.POJO;
 
 public class User {
     private String user_openid;

@@ -1,6 +1,6 @@
 package com.wx.main.Service;
 
-import com.wx.main.Model.User;
+import com.wx.main.POJO.User;
 import java.util.List;
 
 public interface UserService {

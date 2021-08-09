@@ -1,7 +1,7 @@
-package com.wx.main.Model;
+package com.wx.main.POJO;
 
 public class QueryParams {
-    private String query;
+    private int tab_id;
     private int sort_id;
     private int pageNum;
     private int pageSize;
@@ -9,19 +9,20 @@ public class QueryParams {
     public QueryParams() {
     }
 
-    public QueryParams(String query, int sort_id, int pageNum, int pageSize) {
-        this.query = query;
+    public QueryParams(int tab_id, int sort_id, int pageNum, int pageSize) {
+        this.tab_id = tab_id;
         this.sort_id = sort_id;
         this.pageNum = pageNum;
         this.pageSize = pageSize;
     }
 
-    public String getQuery() {
-        return query;
+
+    public int getTab_id() {
+        return tab_id;
     }
 
-    public void setQuery(String query) {
-        this.query = query;
+    public void setTab_id(int tab_id) {
+        this.tab_id = tab_id;
     }
 
     public int getSort_id() {
@@ -46,5 +47,15 @@ public class QueryParams {
 
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
+    }
+
+    @Override
+    public String toString() {
+        return "QueryParams{" +
+                "tab_id=" + tab_id +
+                ", sort_id=" + sort_id +
+                ", pageNum=" + pageNum +
+                ", pageSize=" + pageSize +
+                '}';
     }
 }

@@ -1,24 +1,11 @@
 package com.wx.main.Controller;
 
 
-import com.alibaba.fastjson.JSONObject;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-import com.wx.main.DAO.UserDAO;
-import com.wx.main.Model.User;
+import com.wx.main.POJO.User;
 import com.wx.main.Service.UserService;
-import com.wx.main.Util.Decrypt_Util;
-import com.wx.main.Util.HttpRequest_Util;
-import org.mortbay.util.ajax.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/msg")

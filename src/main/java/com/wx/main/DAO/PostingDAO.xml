@@ -4,15 +4,23 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wx.main.DAO.PostingDAO">
 
-    <select id="getPostingList" resultType="com.wx.main.Model.Posting">
+    <select id="getPostingList" resultType="com.wx.main.POJO.Posting">
       select * from postings_info
     </select>
 
-    <select id="getPostingBySortId" resultType="com.wx.main.Model.Posting" parameterType="int">
+    <select id="getPostingListOrderByTime" resultType="com.wx.main.POJO.Posting">
+        select * from postings_info order by last_reply_time
+    </select>
+
+    <select id="getSortInfo" resultType="com.wx.main.POJO.Sort">
+      select * from sort_info
+    </select>
+
+    <select id="getPostingBySortId" resultType="com.wx.main.POJO.Posting" parameterType="int">
         select * from postings_info where sort_id=#{sort_id}
     </select>
 
-    <insert id="insertSinglePosting" parameterType="com.wx.main.Model.Posting">
+    <insert id="insertSinglePosting" parameterType="com.wx.main.POJO.Posting">
       insert into postings_info (article_id,article_title,article_content,article_image,sort_id) values(#{article_id},#{article_title},#{article_content},#{article_image},#{sort_id})
   </insert>
 

@@ -2,8 +2,7 @@ package com.wx.main.Util;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.wx.main.Model.Posting;
-import com.wx.main.Model.User;
+import com.wx.main.POJO.Posting;
 
 
 import java.io.UnsupportedEncodingException;
@@ -18,8 +17,8 @@ public class Transcoding_Util {
         for (Object aList : list) {
             try {
                 Posting posting = (Posting) aList;
-                ((Posting) aList).setArticle_content(URLEncoder.encode(posting.getArticle_content(), "UTF-8"));
-                ((Posting) aList).setArticle_title(URLEncoder.encode(posting.getArticle_title(), "UTF-8"));
+                posting.setArticle_content(URLEncoder.encode(posting.getArticle_content(), "UTF-8"));
+                posting.setArticle_title(URLEncoder.encode(posting.getArticle_title(), "UTF-8"));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }

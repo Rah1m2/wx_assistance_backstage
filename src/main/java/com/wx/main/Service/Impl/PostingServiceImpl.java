@@ -5,16 +5,16 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.wx.main.DAO.PostingDAO;
-import com.wx.main.Model.Posting;
-import com.wx.main.Model.QueryParams;
+import com.wx.main.POJO.Posting;
+import com.wx.main.POJO.QueryParams;
 import com.wx.main.Service.PostingService;
 import com.wx.main.Util.Transcoding_Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 @Service(value = "postingServiceImpl")
 public class PostingServiceImpl implements PostingService {
@@ -31,8 +31,8 @@ public class PostingServiceImpl implements PostingService {
 
     /**
      *
-     * @param queryParams
-     * @return
+     * @param queryParams 请求参数
+     * @return 返回包含数据的json串
      */
     public String getRequiredPostings(QueryParams queryParams) {
         //嵌套json
@@ -47,23 +47,43 @@ public class PostingServiceImpl implements PostingService {
         //分页查询的对象
         Page page = PageHelper.startPage(queryParams.getPageNum(),queryParams.getPageSize());
 
-        //0代表选择全部
-        if (queryParams.getSort_id() == 0)
+        if (queryParams.getSort_id() == 0 && queryParams.getTab_id() == 0) //0-0代表选择全部
             jsonObject.put("articleList",postingDAO.getPostingList());
+        else if(queryParams.getSort_id() == 0 && queryParams.getTab_id() == 1) //0-1代表按时间排序
+            jsonObject.put("articleList",postingDAO.getPostingListOrderByTime());
         else
             jsonObject.put("articleList",postingDAO.getPostingBySortId(queryParams.getSort_id()));
 
         //帖子总数
         jsonObject.put("articleTotal",page.getTotal());
 
+        //给帖子列表编码
         jsonObject.put("articleList",Transcoding_Util.TranscodePosting((List) jsonObject.get("articleList")));
-//        jsonObject = Transcoding_Util.TranscodePosting((List) jsonObject.get("articleList"));
 
+        //image分割（待封装）
+        List <Posting> postingList = ((List<Posting>) jsonObject.get("articleList"));
+        Scanner scanner;
+        List <String> imageList = new ArrayList<String>();
+        for (Posting posting : postingList) {
+            if (posting.getArticle_image() == null)
+                continue;
+            scanner = new Scanner(posting.getArticle_image()).useDelimiter(" ");
+            while (scanner.hasNext())
+                imageList.add(scanner.next());
+            posting.setArticle_image(JSON.toJSONString(imageList));
+            imageList.clear();
+        }
+        //end of image sealed
+        
         //返回String串,注解会自动转换为json
         return JSON.toJSONString(jsonObject);
     }
 
     public int storeSinglePosting(Posting posting) {
         return postingDAO.insertSinglePosting(posting);
+    }
+
+    public String getSortInfo() {
+        return JSON.toJSONString(postingDAO.getSortInfo());
     }
 }

@@ -1,23 +1,15 @@
 package com.wx.main;
 
 import com.alibaba.fastjson.JSONObject;
-import com.wx.main.DAO.UserDAO;
-import com.wx.main.Model.Posting;
-import com.wx.main.Model.User;
 import com.wx.main.Service.PostingService;
 import com.wx.main.Service.UserService;
-import com.wx.main.Util.MyBatis_DB_Util;
 import com.wx.main.Util.Transcoding_Util;
-import junit.framework.TestCase;
-import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import java.util.List;
 
 /**
  * Simple test using the WicketTester

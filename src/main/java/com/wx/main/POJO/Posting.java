@@ -1,4 +1,6 @@
-package com.wx.main.Model;
+package com.wx.main.POJO;
+
+import java.util.Date;
 
 public class Posting {
     private int article_id;
@@ -6,17 +8,21 @@ public class Posting {
     private String article_content;
     private String article_image;
     private String sort_id;
+    private int tab_id;
+    private Date last_reply_time;
 
 
     public Posting() {
     }
 
-    public Posting(int article_id, String article_title, String article_content, String article_image, String sort_id) {
+    public Posting(int article_id, String article_title, String article_content, String article_image, String sort_id, int tab_id, Date last_reply_time) {
         this.article_id = article_id;
         this.article_title = article_title;
         this.article_content = article_content;
         this.article_image = article_image;
         this.sort_id = sort_id;
+        this.tab_id = tab_id;
+        this.last_reply_time = last_reply_time;
     }
 
     public int getArticle_id() {
@@ -59,6 +65,22 @@ public class Posting {
         this.sort_id = sort_id;
     }
 
+    public int getTab_id() {
+        return tab_id;
+    }
+
+    public void setTab_id(int tab_id) {
+        this.tab_id = tab_id;
+    }
+
+    public Date getLast_reply_time() {
+        return last_reply_time;
+    }
+
+    public void setLast_reply_time(Date last_reply_time) {
+        this.last_reply_time = last_reply_time;
+    }
+
     @Override
     public String toString() {
         return "Posting{" +
@@ -67,6 +89,8 @@ public class Posting {
                 ", article_content='" + article_content + '\'' +
                 ", article_image='" + article_image + '\'' +
                 ", sort_id='" + sort_id + '\'' +
+                ", tab_id=" + tab_id +
+                ", last_reply_time=" + last_reply_time +
                 '}';
     }
 }

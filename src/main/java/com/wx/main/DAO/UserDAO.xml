@@ -4,12 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wx.main.DAO.UserDAO">
 
-    <select id="getUserList" resultType="com.wx.main.Model.User">
+    <select id="getUserList" resultType="com.wx.main.POJO.User">
       select * from user_info
     </select>
 
     <!--这是一个resultMap单元，名字为自定义，类型为User-->
-    <resultMap id="userMap" type="com.wx.main.Model.User">
+    <resultMap id="userMap" type="com.wx.main.POJO.User">
       <!--<result column="id" property="user_id"/>-->
     </resultMap>
     <!--相当于在这个实例中引用刚刚定义的resultMap-->
@@ -17,7 +17,7 @@
       select * from user_info where user_openid = #{user_openid}
     </select>
 
-    <insert id="insertSingleUser" parameterType="com.wx.main.Model.User">
+    <insert id="insertSingleUser" parameterType="com.wx.main.POJO.User">
       insert into user_info (user_openid,user_name,user_gender,user_language,user_country,user_avatarUrl) values(#{user_openid},#{user_name},#{user_gender},#{user_language},#{user_country},#{user_avatarUrl})
   </insert>
 

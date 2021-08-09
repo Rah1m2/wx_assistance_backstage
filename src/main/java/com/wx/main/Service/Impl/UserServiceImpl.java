@@ -1,10 +1,9 @@
 package com.wx.main.Service.Impl;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.wx.main.DAO.UserDAO;
-import com.wx.main.Model.User;
+import com.wx.main.POJO.User;
 import com.wx.main.Service.UserService;
 import com.wx.main.Util.Decrypt_Util;
 import com.wx.main.Util.HttpRequest_Util;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 @Service(value = "userServiceImpl")
 public class UserServiceImpl implements UserService {

@@ -1,9 +1,8 @@
 package com.wx.main.Controller;
 
-import com.wx.main.Model.Posting;
-import com.wx.main.Model.QueryParams;
+import com.wx.main.POJO.Posting;
+import com.wx.main.POJO.QueryParams;
 import com.wx.main.Service.PostingService;
-import com.wx.main.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +45,12 @@ public class PostingController {
         if (postingService.storeSinglePosting(posting) == 0)
             return "NO";
         return "YES";
+    }
+
+    @RequestMapping(value = "/sendSortInfo")
+    @ResponseBody
+    public String sendSortInfo() {
+        return postingService.getSortInfo();
     }
 
     private void showUrl(){
