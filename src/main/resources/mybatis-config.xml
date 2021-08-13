@@ -31,6 +31,7 @@
     <mappers>
         <mapper resource="com/wx/main/DAO/UserDAO.xml"/>
         <mapper resource="com/wx/main/DAO/PostingDAO.xml"/>
+        <mapper resource="com/wx/main/DAO/SearchDAO.xml"/>
         <!--<mapper class="com.mybatis.main.DAO.UserDAOImpl.Impl"/>-->
     </mappers>
 

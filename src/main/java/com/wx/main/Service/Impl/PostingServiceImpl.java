@@ -8,6 +8,7 @@ import com.wx.main.DAO.PostingDAO;
 import com.wx.main.POJO.Posting;
 import com.wx.main.POJO.QueryParams;
 import com.wx.main.Service.PostingService;
+import com.wx.main.Util.Split_Util;
 import com.wx.main.Util.Transcoding_Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,7 +62,7 @@ public class PostingServiceImpl implements PostingService {
         List <Posting> postingList = ((List<Posting>) jsonObject.get("articleList"));
 
         //分割图片的url转换为json串
-        splitUrl(postingList);
+        Split_Util.splitUrl(postingList);
 
         //返回String串,注解会自动转换为json
         return JSON.toJSONString(jsonObject);
@@ -73,7 +74,9 @@ public class PostingServiceImpl implements PostingService {
      * @return 返回json串
      */
     public String getPostingDetail(int article_id){
-        return JSON.toJSONString(postingDAO.getPostingByArticleId(article_id));
+        List <Posting> posting = postingDAO.getPostingByArticleId(article_id);
+        Split_Util.splitUrl(posting);
+        return JSON.toJSONString(posting);
     }
 
     /**
@@ -95,18 +98,4 @@ public class PostingServiceImpl implements PostingService {
         return JSON.toJSONString(postingDAO.getSortInfo());
     }
 
-    //分割图片工具
-    private void splitUrl(List<Posting> postingList){
-        Scanner scanner;
-        List <String> imageList = new ArrayList<String>();
-        for (Posting posting : postingList) {
-            if (posting.getArticle_image() == null)
-                continue;
-            scanner = new Scanner(posting.getArticle_image()).useDelimiter(" ");
-            while (scanner.hasNext())
-                imageList.add(scanner.next());
-            posting.setArticle_image(JSON.toJSONString(imageList));
-            imageList.clear();
-        }
-    }
 }

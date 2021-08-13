@@ -1,6 +1,7 @@
 package com.wx.main.Controller;
 
 import com.alibaba.fastjson.JSON;
+import com.wx.main.Service.SearchService;
 import com.wx.main.Service.UserService;
 import com.wx.main.Util.Generate_TempKey_Util;
 import org.json.JSONObject;
@@ -17,14 +18,13 @@ import java.util.TreeMap;
 @RequestMapping("/sys")
 public class SysController {
 
-    private UserService userService;
+    private SearchService searchService;
 
-    public SysController() {
-    }
+
 
     @Autowired
-    public SysController(UserService userService) {
-        this.userService = userService;
+    public SysController(SearchService searchService) {
+        this.searchService = searchService;
     }
 
     @RequestMapping(value = "/reqKey")
@@ -37,7 +37,20 @@ public class SysController {
         return JSON.toJSONString(credential);
     }
 
+    @RequestMapping(value = "/searchRes")
+    @ResponseBody
+    public String sendSearchRes(String query) {
+        System.out.println("param:"+query);
+        System.out.println("res:"+searchService.getSearchResult(query));
+        return searchService.getSearchResult(query);
+    }
 
+    @RequestMapping(value = "/sendSubMsg")
+    @ResponseBody
+    public String sendSubscribeMsg(){
+
+        return null;
+    }
 
     /*---------------------------------测试用接口-------------------------------------*/
 
