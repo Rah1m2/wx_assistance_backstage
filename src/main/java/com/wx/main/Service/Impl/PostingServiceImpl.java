@@ -30,7 +30,7 @@ public class PostingServiceImpl implements PostingService {
     }
 
     /**
-     *
+     * 获取首页的帖子封面信息
      * @param queryParams 请求参数
      * @return 返回包含数据的json串
      */
@@ -57,11 +57,46 @@ public class PostingServiceImpl implements PostingService {
         //帖子总数
         jsonObject.put("articleTotal",page.getTotal());
 
-        //给帖子列表编码
-        jsonObject.put("articleList",Transcoding_Util.TranscodePosting((List) jsonObject.get("articleList")));
-
-        //image分割（待封装）
+        //单独获取帖子list
         List <Posting> postingList = ((List<Posting>) jsonObject.get("articleList"));
+
+        //分割图片的url转换为json串
+        splitUrl(postingList);
+
+        //返回String串,注解会自动转换为json
+        return JSON.toJSONString(jsonObject);
+    }
+
+    /**
+     * 获取帖子的内容信息（图片，文字）
+     * @param article_id 帖子的id
+     * @return 返回json串
+     */
+    public String getPostingDetail(int article_id){
+        return JSON.toJSONString(postingDAO.getPostingByArticleId(article_id));
+    }
+
+    /**
+     * 存储新增的帖子
+     * @param posting 实体类
+     * @return 插入成功返回"YES",否则返回"NO"
+     */
+    public String insertSinglePosting(Posting posting) {
+        if (postingDAO.insertSinglePosting(posting) == 0)
+            return "NO";
+        return "YES";
+    }
+
+    /**
+     * 获取帖子的分类信息
+     * @return 返回json串
+     */
+    public String getSortInfo() {
+        return JSON.toJSONString(postingDAO.getSortInfo());
+    }
+
+    //分割图片工具
+    private void splitUrl(List<Posting> postingList){
         Scanner scanner;
         List <String> imageList = new ArrayList<String>();
         for (Posting posting : postingList) {
@@ -73,17 +108,5 @@ public class PostingServiceImpl implements PostingService {
             posting.setArticle_image(JSON.toJSONString(imageList));
             imageList.clear();
         }
-        //end of image sealed
-        
-        //返回String串,注解会自动转换为json
-        return JSON.toJSONString(jsonObject);
-    }
-
-    public int storeSinglePosting(Posting posting) {
-        return postingDAO.insertSinglePosting(posting);
-    }
-
-    public String getSortInfo() {
-        return JSON.toJSONString(postingDAO.getSortInfo());
     }
 }

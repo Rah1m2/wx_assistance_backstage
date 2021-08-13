@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/pst")
 public class PostingController {
 
-    private HttpServletRequest request;
+//    private HttpServletRequest request;
 
     private PostingService postingService;
 
@@ -22,9 +22,9 @@ public class PostingController {
     }
 
     @Autowired
-    public PostingController(PostingService postingService, HttpServletRequest request) {
+    public PostingController(PostingService postingService) {
         this.postingService = postingService;
-        this.request = request;
+//        this.request = request;
     }
 
     /**
@@ -35,28 +35,46 @@ public class PostingController {
     @RequestMapping(value = "/reqPostings")
     @ResponseBody
     public String sendPostings(QueryParams queryParams) {
-        showUrl();
+//        showUrl();
         return postingService.getRequiredPostings(queryParams);
     }
 
-    @RequestMapping(value = "/sendPostings")
+    /**
+     * 获取帖子的内容（问题描述，图片等）
+     * @param article_id 文章id
+     * @return 返回评论文章的String串
+     */
+    @RequestMapping(value = "/reqPostingDetail")
     @ResponseBody
-    public String receivePostings(Posting posting) {
-        if (postingService.storeSinglePosting(posting) == 0)
-            return "NO";
-        return "YES";
+    public String sendPostingDetail(int article_id) {
+        return postingService.getPostingDetail(article_id);
     }
 
-    @RequestMapping(value = "/sendSortInfo")
+    /**
+     * 返回帖子的标题和第一张图片
+     * @param posting 帖子的实体类
+     * @return 同下
+     */
+    @RequestMapping(value = "/sendPostingInfo")
+    @ResponseBody
+    public String receivePosting(Posting posting) {
+        return postingService.insertSinglePosting(posting);
+    }
+
+    /**
+     * 返回帖子的分类信息
+     * @return 返回String串
+     */
+    @RequestMapping(value = "/reqSortInfo")
     @ResponseBody
     public String sendSortInfo() {
         return postingService.getSortInfo();
     }
 
-    private void showUrl(){
-        System.out.println("url: "+request.getScheme() +"://" + request.getServerName()
-                + ":" +request.getServerPort()
-                + request.getServletPath() + "?" + request.getQueryString());
-    }
+//    private void showUrl(){
+//        System.out.println("url: "+request.getScheme() +"://" + request.getServerName()
+//                + ":" +request.getServerPort()
+//                + request.getServletPath() + "?" + request.getQueryString());
+//    }
 
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wx.main.DAO.SearchDAO">
+
+    <!--select * from postings_info where article_content like CONCAT('%',#{query},'%')-->
+
+    <select id="dynamicSearch" resultType="com.wx.main.POJO.Posting" parameterType="String">
+        SELECT
+        <choose>
+         <when test="#{query} != null">
+             DISTINCT postings_info.article_id,article_title,article_content,article_image,sort_id,tab_id,last_reply_time FROM postings_info LEFT JOIN comment_info
+             ON
+             postings_info.article_id = comment_info.article_id
+             WHERE
+             postings_info.article_content LIKE CONCAT('%',#{query},'%')
+             OR
+             postings_info.article_title LIKE CONCAT('%',#{query},'%')
+             OR
+             comment_info.comment_content LIKE CONCAT('%',#{query},'%')
+         </when>
+         <otherwise>
+             * from postings_info
+         </otherwise>
+       </choose>
+    </select>
+
+</mapper>

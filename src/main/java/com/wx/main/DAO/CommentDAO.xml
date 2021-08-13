@@ -8,10 +8,14 @@
     </select>
 
     <select id="getCommentByUserId" resultType="com.wx.main.POJO.Comment">
-      select * from comment_info where user_id=#{user_id}
+      select * from comment_info where user_openid=#{user_openid}
     </select>
     
     <select id="getCommentByArticleId" resultType="com.wx.main.POJO.Comment">
       select * from comment_info where article_id=#{article_id}
     </select>
+
+    <insert id="insertSingleComment" parameterType="com.wx.main.POJO.Comment">
+      insert into comment_info (comment_id,article_id,user_openid,user_name,user_avatarUrl,comment_content,comment_image) values(#{comment_id},#{article_id},#{user_openid},#{user_name},#{user_avatarUrl},#{comment_content},#{comment_image})
+    </insert>
 </mapper>

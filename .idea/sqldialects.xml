@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/src/main/java/com/wx/main/DAO/CommentDAO.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/wx/main/DAO/PostingDAO.xml" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/wx/main/DAO/SearchDAO.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/wx/main/DAO/UserDAO.xml" dialect="MySQL" />
   </component>
   <component name="SqlResolveMappings">

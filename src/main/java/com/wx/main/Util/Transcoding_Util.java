@@ -2,6 +2,7 @@ package com.wx.main.Util;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.wx.main.POJO.Comment;
 import com.wx.main.POJO.Posting;
 
 
@@ -14,11 +15,24 @@ import java.util.Map;
 //@SuppressWarnings("all")
 public class Transcoding_Util {
     public static List TranscodePosting(List list){
-        for (Object aList : list) {
+        for (Object o : list) {
             try {
-                Posting posting = (Posting) aList;
+                Posting posting = (Posting) o;
                 posting.setArticle_content(URLEncoder.encode(posting.getArticle_content(), "UTF-8"));
                 posting.setArticle_title(URLEncoder.encode(posting.getArticle_title(), "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+        return list;
+    }
+
+    public static List TranscodeComment(List list){
+        for (Object o : list) {
+            try {
+                Comment comment = (Comment) o;
+                comment.setComment_content((URLEncoder.encode(comment.getComment_content(), "UTF-8")));
+                comment.setUser_name(URLEncoder.encode(comment.getUser_name(), "UTF-8"));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }

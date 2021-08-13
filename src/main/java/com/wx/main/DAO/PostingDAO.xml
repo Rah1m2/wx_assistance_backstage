@@ -20,6 +20,10 @@
         select * from postings_info where sort_id=#{sort_id}
     </select>
 
+    <select id="getPostingByArticleId" resultType="com.wx.main.POJO.Posting" parameterType="int">
+        select * from postings_info where article_id=#{article_id}
+    </select>
+
     <insert id="insertSinglePosting" parameterType="com.wx.main.POJO.Posting">
       insert into postings_info (article_id,article_title,article_content,article_image,sort_id) values(#{article_id},#{article_title},#{article_content},#{article_image},#{sort_id})
   </insert>

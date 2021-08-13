@@ -2,6 +2,7 @@ package com.wx.main.DAO;
 
 import com.wx.main.POJO.Posting;
 import com.wx.main.POJO.Sort;
+import javafx.geometry.Pos;
 
 import java.util.List;
 
@@ -18,6 +19,9 @@ public interface PostingDAO {
 
     //按sort_id获取帖子
     List<Posting> getPostingBySortId(int sort_id);
+
+    //按照article_id获取帖子
+    List<Posting> getPostingByArticleId(int article_id);
 
     //增加一条帖子信息
     int insertSinglePosting(Posting posting);

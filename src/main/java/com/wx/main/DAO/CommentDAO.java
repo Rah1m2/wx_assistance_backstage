@@ -12,5 +12,8 @@ public interface CommentDAO {
     List<Comment> getCommentByUserId();
 
     //按article_id返回评论
-    List<Comment> getCommentByArticleId();
+    List<Comment> getCommentByArticleId(String article_id);
+
+    //插入单条评论
+    int insertSingleComment(Comment comment);
 }
