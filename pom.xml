@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.wx.main</groupId>
@@ -34,7 +34,7 @@
 			<artifactId>wicket</artifactId>
 			<version>${wicket.version}</version>
 		</dependency>
-		<!-- OPTIONAL 
+		<!-- OPTIONAL
 			<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-extensions</artifactId>
@@ -56,12 +56,12 @@
 		</dependency>
 
 		<!--  JUNIT DEPENDENCY FOR TESTING -->
-		 <dependency>
-				 <groupId>junit</groupId>
-				 <artifactId>junit</artifactId>
-				 <version>4.13</version>
-				 <scope>test</scope>
-		 </dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13</version>
+			<scope>test</scope>
+		</dependency>
 
 		<!--  JETTY DEPENDENCIES FOR TESTING  -->
 
@@ -192,6 +192,12 @@
 			<artifactId>pagehelper</artifactId>
 			<version>4.1.2</version>
 		</dependency>
+
+		<!--<dependency>-->
+		<!--<groupId>com.github.binarywang</groupId>-->
+		<!--<artifactId>weixin-java-miniapp</artifactId>-->
+		<!--<version>3.6.0</version>-->
+		<!--</dependency>-->
 
 
 	</dependencies>

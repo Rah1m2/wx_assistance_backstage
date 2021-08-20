@@ -1,15 +1,19 @@
 package com.wx.main.Service.Impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.wx.main.DAO.CommentDAO;
 import com.wx.main.POJO.Comment;
+import com.wx.main.POJO.Thumb;
 import com.wx.main.Service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service(value = "commentServiceImpl")
@@ -23,10 +27,14 @@ public class CommentServiceImpl implements CommentService {
     }
 
     public String getCommentByPosting(String article_id) {
+//        Page page = PageHelper.startPage();
         //用于封装两个属性的json对象
         JSONObject jsonObject = new JSONObject();
         //属性1
         List<Comment> commentList = commentDAO.getCommentByArticleId(article_id);
+//        for (Comment comment : commentList) {
+//            comment.setThumbs_count();
+//        }
         //评论列表
         jsonObject.put("commentList",commentList);
         //属性2：评论的总条数
@@ -39,9 +47,52 @@ public class CommentServiceImpl implements CommentService {
         return null;
     }
 
-    public String insertSingleComment(Comment comment) {
-        if (commentDAO.insertSingleComment(comment) == 0)
-            return "NO";
-        return "YES";
+    public int insertSingleComment(Comment comment) {
+        commentDAO.insertSingleComment(comment);
+        return comment.getComment_id();
+    }
+
+    public String updateCurUserThumbs(String user_openid, String thumbs) {
+
+        //把点赞有关集合转换为json
+        JSONObject jsonObject = com.alibaba.fastjson.JSONObject.parseObject(thumbs);
+
+        //提取点赞集合
+        JSONArray tmpAdd = (JSONArray) jsonObject.get("addThumbs");
+
+        //提取取消点赞集合
+        JSONArray tmpDel = (JSONArray) jsonObject.get("delThumbs");
+
+        //转换为json字符串
+        String jsonStrAdd = JSONObject.toJSONString(tmpAdd, SerializerFeature.WriteClassName);
+        String jsonStrDel = JSONObject.toJSONString(tmpDel, SerializerFeature.WriteClassName);
+
+        //再把点赞/取消点赞的评论的字符串转换为集合
+        List<Integer> addList = JSONObject.parseArray(jsonStrAdd, Integer.class);//把字符串转换成集合
+        List<Integer> delList = JSONObject.parseArray(jsonStrDel, Integer.class);
+
+        //声明临时对象
+        Thumb thumb = new Thumb(0,user_openid);
+
+        //最终拼凑起来需要插入数据库的集合
+        List<Thumb> combineAddList = new ArrayList<Thumb>();
+        for (Integer anAddList : addList) {
+            thumb.setComment_id(anAddList);
+            combineAddList.add(thumb);
+            thumb = new Thumb(0,user_openid);
+        }
+        commentDAO.addCommentThumbs(combineAddList);
+//        commentDAO.
+
+        //最终拼凑起来需要删除数据库的集合
+        List<Thumb> combineDelList = new ArrayList<Thumb>();
+        for (Integer anDelList : delList) {
+            thumb.setComment_id(anDelList);
+            combineDelList.add(thumb);
+        }
+        commentDAO.delCommentThumbs(combineDelList);
+
+        System.out.println("list："+combineAddList);
+        return null;
     }
 }

@@ -1,14 +1,19 @@
 package com.wx.main.Controller;
 
-import com.wx.main.POJO.Posting;
-import com.wx.main.POJO.QueryParams;
+import com.alibaba.fastjson.JSON;
+import com.wx.main.POJO.*;
 import com.wx.main.Service.PostingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/pst")
@@ -28,7 +33,7 @@ public class PostingController {
     }
 
     /**
-     * 前端向后端请求数据
+     * 前端向后端请求数帖子封面数据
      * @param queryParams 前端传回的请求参数
      * @return 返回装有数据的json串
      */
@@ -37,6 +42,12 @@ public class PostingController {
     public String sendPostings(QueryParams queryParams) {
 //        showUrl();
         return postingService.getRequiredPostings(queryParams);
+    }
+
+    @RequestMapping(value = "/reqMyPostings")
+    @ResponseBody
+    public String sendMyPosting(String user_openid) {
+        return postingService.getMyPostings(user_openid);
     }
 
     /**
@@ -51,7 +62,7 @@ public class PostingController {
     }
 
     /**
-     * 返回帖子的标题和第一张图片
+     * 插入一条帖子
      * @param posting 帖子的实体类
      * @return 同下
      */
@@ -59,6 +70,17 @@ public class PostingController {
     @ResponseBody
     public String receivePosting(Posting posting) {
         return postingService.insertSinglePosting(posting);
+    }
+
+    /**
+     * 删掉一条帖子
+     * @param article_id posting 帖子的实体类
+     * @return 删除成功返回YES,删除失败返回NO
+     */
+    @RequestMapping(value = "/deletePosting")
+    @ResponseBody
+    public String deletePosting(String article_id) {
+        return postingService.deleteSinglePosting(article_id);
     }
 
     /**
@@ -70,6 +92,20 @@ public class PostingController {
     public String sendSortInfo() {
         return postingService.getSortInfo();
     }
+
+    /**
+     * 返回当前用户发表的帖子数目
+     * @return 返回数值
+     */
+    @RequestMapping(value = "/reqMyPostingCount")
+    @ResponseBody
+    public int sendMyPostingCount(String user_openid) {
+        return postingService.getCurUserPstCount(user_openid);
+    }
+
+
+
+
 
 //    private void showUrl(){
 //        System.out.println("url: "+request.getScheme() +"://" + request.getServerName()

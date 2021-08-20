@@ -1136,56 +1136,63 @@
     <table id="286" parent="3" name="comment_info"/>
     <table id="287" parent="3" name="postings_info"/>
     <table id="288" parent="3" name="sort_info"/>
-    <table id="289" parent="3" name="user_info"/>
-    <column id="290" parent="286" name="comment_id">
+    <table id="289" parent="3" name="thumb_info"/>
+    <table id="290" parent="3" name="user_info"/>
+    <column id="291" parent="286" name="comment_id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="291" parent="286" name="article_id">
+    <column id="292" parent="286" name="article_id">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="292" parent="286" name="user_openid">
+    <column id="293" parent="286" name="user_openid">
       <Position>3</Position>
-      <DataType>int|0s</DataType>
+      <DataType>varchar(200)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="293" parent="286" name="user_name">
+    <column id="294" parent="286" name="user_name">
       <Position>4</Position>
       <DataType>varchar(200)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="294" parent="286" name="user_avatarUrl">
+    <column id="295" parent="286" name="user_avatarUrl">
       <Position>5</Position>
       <DataType>varchar(200)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="295" parent="286" name="comment_content">
+    <column id="296" parent="286" name="comment_content">
       <Position>6</Position>
       <DataType>text|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="296" parent="286" name="comment_image">
+    <column id="297" parent="286" name="comment_image">
       <Position>7</Position>
       <DataType>varchar(200)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="297" parent="286" name="article_id_foreign_key">
+    <column id="298" parent="286" name="thumbs_count">
+      <Position>8</Position>
+      <DataType>int(10) unsigned zerofill|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="299" parent="286" name="article_id_foreign_key">
       <ColNames>article_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="298" parent="286" name="PRIMARY">
+    <key id="300" parent="286" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>comment_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="299" parent="286" name="article_id_foreign_key">
+    <foreign-key id="301" parent="286" name="article_id_foreign_key">
       <ColNames>article_id</ColNames>
       <RefSchemaName>db_wx</RefSchemaName>
       <RefTableName>postings_info</RefTableName>
@@ -1193,96 +1200,123 @@
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="300" parent="287" name="article_id">
+    <column id="302" parent="287" name="article_id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="301" parent="287" name="article_title">
+    <column id="303" parent="287" name="article_title">
       <Position>2</Position>
       <DataType>varchar(200)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="302" parent="287" name="article_content">
+    <column id="304" parent="287" name="article_content">
       <Position>3</Position>
       <DataType>text|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="303" parent="287" name="article_image">
+    <column id="305" parent="287" name="article_image">
       <Position>4</Position>
       <DataType>text|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="304" parent="287" name="sort_id">
+    <column id="306" parent="287" name="sort_id">
       <Position>5</Position>
       <DataType>varchar(200)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="305" parent="287" name="tab_id">
+    <column id="307" parent="287" name="tab_id">
       <Position>6</Position>
       <DataType>int|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="306" parent="287" name="last_reply_time">
+    <column id="308" parent="287" name="last_reply_time">
       <Position>7</Position>
       <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="307" parent="287" name="PRIMARY">
+    <column id="309" parent="287" name="user_openid">
+      <Position>8</Position>
+      <DataType>varchar(200)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="310" parent="287" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>article_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="308" parent="288" name="sort_id">
+    <column id="311" parent="288" name="sort_id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="309" parent="288" name="sort_name">
+    <column id="312" parent="288" name="sort_name">
       <Position>2</Position>
       <DataType>varchar(200)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="310" parent="288" name="PRIMARY">
+    <key id="313" parent="288" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>sort_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="311" parent="289" name="user_openid">
+    <column id="314" parent="289" name="thumb_id">
+      <Position>1</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="315" parent="289" name="comment_id">
+      <Position>2</Position>
+      <DataType>int|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="316" parent="289" name="user_openid">
+      <Position>3</Position>
+      <DataType>varchar(200)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="317" parent="289" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>thumb_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="318" parent="290" name="user_openid">
       <Position>1</Position>
       <DataType>varchar(200)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="312" parent="289" name="user_name">
+    <column id="319" parent="290" name="user_name">
       <Position>2</Position>
       <DataType>varchar(200)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="313" parent="289" name="user_gender">
+    <column id="320" parent="290" name="user_gender">
       <Position>3</Position>
       <DataType>varchar(200)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="314" parent="289" name="user_language">
+    <column id="321" parent="290" name="user_language">
       <Position>4</Position>
       <DataType>varchar(200)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="315" parent="289" name="user_country">
+    <column id="322" parent="290" name="user_country">
       <Position>5</Position>
       <DataType>varchar(200)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="316" parent="289" name="user_avatarUrl">
+    <column id="323" parent="290" name="user_avatarUrl">
       <Position>6</Position>
       <DataType>varchar(200)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="317" parent="289" name="PRIMARY">
+    <key id="324" parent="290" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>user_openid</ColNames>
       <Primary>1</Primary>

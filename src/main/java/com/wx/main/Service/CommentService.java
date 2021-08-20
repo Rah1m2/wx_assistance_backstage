@@ -8,5 +8,8 @@ public interface CommentService {
 
     String getCommentByUser();
 
-    String insertSingleComment(Comment comment);
+    int insertSingleComment(Comment comment);
+
+    //存储当前用户的点赞记录
+    String updateCurUserThumbs(String user_openid, String thumbs);
 }

@@ -10,12 +10,13 @@ public class Posting {
     private String sort_id;
     private int tab_id;
     private Date last_reply_time;
+    private String user_openid;
 
 
     public Posting() {
     }
 
-    public Posting(int article_id, String article_title, String article_content, String article_image, String sort_id, int tab_id, Date last_reply_time) {
+    public Posting(int article_id, String article_title, String article_content, String article_image, String sort_id, int tab_id, Date last_reply_time, String user_openid) {
         this.article_id = article_id;
         this.article_title = article_title;
         this.article_content = article_content;
@@ -23,6 +24,7 @@ public class Posting {
         this.sort_id = sort_id;
         this.tab_id = tab_id;
         this.last_reply_time = last_reply_time;
+        this.user_openid = user_openid;
     }
 
     public int getArticle_id() {
@@ -81,6 +83,14 @@ public class Posting {
         this.last_reply_time = last_reply_time;
     }
 
+    public String getUser_openid() {
+        return user_openid;
+    }
+
+    public void setUser_openid(String user_openid) {
+        this.user_openid = user_openid;
+    }
+
     @Override
     public String toString() {
         return "Posting{" +
@@ -91,6 +101,7 @@ public class Posting {
                 ", sort_id='" + sort_id + '\'' +
                 ", tab_id=" + tab_id +
                 ", last_reply_time=" + last_reply_time +
+                ", user_openid='" + user_openid + '\'' +
                 '}';
     }
 }

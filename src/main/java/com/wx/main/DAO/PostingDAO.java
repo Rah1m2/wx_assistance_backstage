@@ -23,7 +23,21 @@ public interface PostingDAO {
     //按照article_id获取帖子
     List<Posting> getPostingByArticleId(int article_id);
 
+    //按照user_openId获取帖子
+    List<Posting> getPostingByUserOpenId(String user_openid);
+
+    //按三种不同的id分别获取帖子
+    List<Posting> getPostingById(int id);
+
     //增加一条帖子信息
     int insertSinglePosting(Posting posting);
 
+    //删除一条帖子信息
+    int deleteSinglePosting(String article_id);
+
+    //获取当前用户发表的帖子数目
+    int getCurrentUserPstCount(String user_openid);
+
+    //更新当前用户的点赞数目
+//    int updateCurrentUserThumbCount();
 }

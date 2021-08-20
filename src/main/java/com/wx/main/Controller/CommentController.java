@@ -25,7 +25,7 @@ public class CommentController {
 
     @RequestMapping(value = "/sendComment")
     @ResponseBody
-    public String receiveComment(Comment comment) {
+    public int receiveComment(Comment comment) {
         return commentService.insertSingleComment(comment);
     }
 
@@ -35,6 +35,20 @@ public class CommentController {
         System.out.println("test: ");
 //        showUrl();
         return commentService.getCommentByPosting(article_id);
+    }
+
+    /**
+     *
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/sendThumbs")
+    @ResponseBody
+    public String receiveThumbs(String user_openid, String thumbs) {
+        System.out.println("receive user_openid:"+user_openid);
+        System.out.println("receive json:"+thumbs);
+        commentService.updateCurUserThumbs(user_openid,thumbs);
+        return "test";
     }
 
 //    private void showUrl(){

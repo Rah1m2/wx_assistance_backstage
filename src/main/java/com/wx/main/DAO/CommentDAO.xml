@@ -15,7 +15,36 @@
       select * from comment_info where article_id=#{article_id}
     </select>
 
-    <insert id="insertSingleComment" parameterType="com.wx.main.POJO.Comment">
+    <insert id="insertSingleComment" parameterType="com.wx.main.POJO.Comment" useGeneratedKeys="true" keyColumn="comment_id">
+      <selectKey resultType="int" keyProperty="comment_id" order="AFTER" >
+          select LAST_INSERT_ID()
+      </selectKey>
       insert into comment_info (comment_id,article_id,user_openid,user_name,user_avatarUrl,comment_content,comment_image) values(#{comment_id},#{article_id},#{user_openid},#{user_name},#{user_avatarUrl},#{comment_content},#{comment_image})
     </insert>
+
+
+      <insert id="addCommentThumbs" parameterType="com.wx.main.POJO.Thumb">
+          insert into thumb_info (thumb_id, comment_id, user_openid) values 
+              <foreach collection="addList" item="an" separator=",">
+                  (#{an.thumb_id},#{an.comment_id},#{an.user_openid})
+              </foreach>
+      </insert>
+
+      <delete id="delCommentThumbs" parameterType="com.wx.main.POJO.Thumb">
+          delete from thumb_info
+          <where>
+              <foreach collection="delList" item="an" separator=",">
+                  comment_id=#{an.comment_id}
+              </foreach>
+          </where>
+      </delete>
+
+      <update id="updateThumbsCount" parameterType="int">
+          update comment_info set thumbs_count = (
+                  select COUNT(*) from thumb_info
+                  where thumb_info.comment_id=#{comment_id}
+          ) where comment_id=#{comment_id}
+      </update>
+
+
 </mapper>

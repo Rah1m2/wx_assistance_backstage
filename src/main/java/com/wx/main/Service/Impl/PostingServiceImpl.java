@@ -1,21 +1,24 @@
 package com.wx.main.Service.Impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.mysql.cj.xdevapi.JsonArray;
 import com.wx.main.DAO.PostingDAO;
 import com.wx.main.POJO.Posting;
 import com.wx.main.POJO.QueryParams;
+import com.wx.main.POJO.Thumb;
 import com.wx.main.Service.PostingService;
 import com.wx.main.Util.Split_Util;
 import com.wx.main.Util.Transcoding_Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service(value = "postingServiceImpl")
 public class PostingServiceImpl implements PostingService {
@@ -69,6 +72,15 @@ public class PostingServiceImpl implements PostingService {
     }
 
     /**
+     *
+     * @param user_openid
+     * @return
+     */
+    public String getMyPostings (String user_openid) {
+        return JSON.toJSONString(postingDAO.getPostingByUserOpenId(user_openid));
+    }
+
+    /**
      * 获取帖子的内容信息（图片，文字）
      * @param article_id 帖子的id
      * @return 返回json串
@@ -85,7 +97,21 @@ public class PostingServiceImpl implements PostingService {
      * @return 插入成功返回"YES",否则返回"NO"
      */
     public String insertSinglePosting(Posting posting) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        System.out.println(df.format(new Date()));// new Date()为获取当前系统时间
+        posting.setLast_reply_time(new Date());
         if (postingDAO.insertSinglePosting(posting) == 0)
+            return "NO";
+        return "YES";
+    }
+
+    /**
+     * 删掉帖子
+     * @param article_id
+     * @return
+     */
+    public String deleteSinglePosting(String article_id) {
+        if (postingDAO.deleteSinglePosting(article_id) == 0)
             return "NO";
         return "YES";
     }
@@ -97,5 +123,12 @@ public class PostingServiceImpl implements PostingService {
     public String getSortInfo() {
         return JSON.toJSONString(postingDAO.getSortInfo());
     }
+
+    public int getCurUserPstCount(String user_openid) {
+        System.out.println("count:"+postingDAO.getCurrentUserPstCount(user_openid));
+        return postingDAO.getCurrentUserPstCount(user_openid);
+    }
+
+
 
 }

@@ -24,10 +24,30 @@
         select * from postings_info where article_id=#{article_id}
     </select>
 
-    <insert id="insertSinglePosting" parameterType="com.wx.main.POJO.Posting">
-      insert into postings_info (article_id,article_title,article_content,article_image,sort_id) values(#{article_id},#{article_title},#{article_content},#{article_image},#{sort_id})
-  </insert>
+    <select id="getPostingByUserOpenId" resultType="com.wx.main.POJO.Posting" parameterType="String">
+        select * from postings_info where user_openid=#{user_openid}
+    </select>
 
+    <select id="getPostingById" resultType="com.wx.main.POJO.Posting" parameterType="int">
+        select * from postings_info
+            <where>
+                <if test="sort_id != null">sort_id=#{sort_id}</if>
+                <if test="article_id != null">article_id=#{article_id}</if>
+                <if test="user_id != null">user_id=#{user_id}</if>
+            </where>
+    </select>
+
+    <insert id="insertSinglePosting" parameterType="com.wx.main.POJO.Posting">
+      insert into postings_info (article_id,article_title,article_content,article_image,sort_id,last_reply_time) values(#{article_id},#{article_title},#{article_content},#{article_image},#{sort_id},#{last_reply_time})
+    </insert>
+
+    <update id="deleteSinglePosting" parameterType="String">
+        delete from postings_info where article_id=#{article_id}
+    </update>
+
+    <select id="getCurrentUserPstCount" parameterType="String" resultType="int" >
+        select COUNT(*) from postings_info where user_openid=#{user_openid}
+    </select>
     <!--<delete id="deleteSingleUser">-->
     <!--delete from user_info where user_account=#{user_account}-->
     <!--</delete>-->
