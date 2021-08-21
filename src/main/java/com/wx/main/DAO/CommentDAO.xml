@@ -40,10 +40,13 @@
       </delete>
 
       <update id="updateThumbsCount" parameterType="int">
-          update comment_info set thumbs_count = (
-                  select COUNT(*) from thumb_info
-                  where thumb_info.comment_id=#{comment_id}
-          ) where comment_id=#{comment_id}
+          update comment_info set comment_info.thumbs =
+          <foreach collection="cmtList" item="an">
+              (
+                      select COUNT(*) from thumb_info
+                      where thumb_info.comment_id=#{an}
+              ) where comment_id=#{an}
+          </foreach>
       </update>
 
 

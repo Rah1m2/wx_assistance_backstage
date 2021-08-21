@@ -1177,7 +1177,7 @@
       <DataType>varchar(200)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="298" parent="286" name="thumbs_count">
+    <column id="298" parent="286" name="thumbs">
       <Position>8</Position>
       <DataType>int(10) unsigned zerofill|0s</DataType>
       <NotNull>1</NotNull>

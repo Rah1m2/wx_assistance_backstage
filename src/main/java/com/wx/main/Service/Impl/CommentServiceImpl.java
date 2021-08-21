@@ -32,9 +32,7 @@ public class CommentServiceImpl implements CommentService {
         JSONObject jsonObject = new JSONObject();
         //属性1
         List<Comment> commentList = commentDAO.getCommentByArticleId(article_id);
-//        for (Comment comment : commentList) {
-//            comment.setThumbs_count();
-//        }
+
         //评论列表
         jsonObject.put("commentList",commentList);
         //属性2：评论的总条数
@@ -54,6 +52,7 @@ public class CommentServiceImpl implements CommentService {
 
     public String updateCurUserThumbs(String user_openid, String thumbs) {
 
+        System.out.println("thumbs:"+thumbs);
         //把点赞有关集合转换为json
         JSONObject jsonObject = com.alibaba.fastjson.JSONObject.parseObject(thumbs);
 
@@ -75,24 +74,31 @@ public class CommentServiceImpl implements CommentService {
         Thumb thumb = new Thumb(0,user_openid);
 
         //最终拼凑起来需要插入数据库的集合
-        List<Thumb> combineAddList = new ArrayList<Thumb>();
-        for (Integer anAddList : addList) {
-            thumb.setComment_id(anAddList);
-            combineAddList.add(thumb);
-            thumb = new Thumb(0,user_openid);
+        if (!addList.isEmpty()) {
+            List<Thumb> combineAddList = new ArrayList<Thumb>();
+            for (Integer anAddList : addList) {
+                thumb.setComment_id(anAddList);
+                combineAddList.add(thumb);
+                thumb = new Thumb(0, user_openid);
+            }
+            commentDAO.addCommentThumbs(combineAddList);
         }
-        commentDAO.addCommentThumbs(combineAddList);
 //        commentDAO.
 
         //最终拼凑起来需要删除数据库的集合
-        List<Thumb> combineDelList = new ArrayList<Thumb>();
-        for (Integer anDelList : delList) {
-            thumb.setComment_id(anDelList);
-            combineDelList.add(thumb);
+        if (!delList.isEmpty()) {
+            List<Thumb> combineDelList = new ArrayList<Thumb>();
+            for (Integer anDelList : delList) {
+                thumb.setComment_id(anDelList);
+                combineDelList.add(thumb);
+                thumb = new Thumb(0, user_openid);
+            }
+            commentDAO.delCommentThumbs(combineDelList);
         }
-        commentDAO.delCommentThumbs(combineDelList);
 
-        System.out.println("list："+combineAddList);
-        return null;
+        //更新点赞人数,要写个foreach
+        commentDAO.updateThumbsCount(tmpAdd);
+
+        return "YES";
     }
 }

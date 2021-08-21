@@ -1,6 +1,7 @@
 package com.wx.main.POJO;
 
 public class QueryParams {
+    private int article_id;
     private int tab_id;
     private int sort_id;
     private int pageNum;
@@ -9,13 +10,21 @@ public class QueryParams {
     public QueryParams() {
     }
 
-    public QueryParams(int tab_id, int sort_id, int pageNum, int pageSize) {
+    public QueryParams(int article_id, int tab_id, int sort_id, int pageNum, int pageSize) {
+        this.article_id = article_id;
         this.tab_id = tab_id;
         this.sort_id = sort_id;
         this.pageNum = pageNum;
         this.pageSize = pageSize;
     }
 
+    public int getArticle_id() {
+        return article_id;
+    }
+
+    public void setArticle_id(int article_id) {
+        this.article_id = article_id;
+    }
 
     public int getTab_id() {
         return tab_id;

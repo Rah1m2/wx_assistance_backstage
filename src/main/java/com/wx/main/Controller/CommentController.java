@@ -1,6 +1,7 @@
 package com.wx.main.Controller;
 
 import com.wx.main.POJO.Comment;
+import com.wx.main.POJO.QueryParams;
 import com.wx.main.Service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,10 +32,9 @@ public class CommentController {
 
     @RequestMapping(value = "/reqComment")
     @ResponseBody
-    public String sendComment(String article_id) {
-        System.out.println("test: ");
+    public String sendComment(QueryParams queryParams) {
 //        showUrl();
-        return commentService.getCommentByPosting(article_id);
+        return commentService.getCommentByPosting(String.valueOf(queryParams.getArticle_id()));
     }
 
     /**
@@ -50,6 +50,7 @@ public class CommentController {
         commentService.updateCurUserThumbs(user_openid,thumbs);
         return "test";
     }
+
 
 //    private void showUrl(){
 //        System.out.println("url: "+request.getScheme() +"://" + request.getServerName()

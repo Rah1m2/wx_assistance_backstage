@@ -1,5 +1,6 @@
 package com.wx.main.DAO;
 
+import com.alibaba.fastjson.JSONArray;
 import com.wx.main.POJO.Comment;
 import com.wx.main.POJO.Thumb;
 import org.apache.ibatis.annotations.Param;
@@ -26,5 +27,5 @@ public interface CommentDAO {
     int delCommentThumbs(@Param("delList")List<Thumb> delThumbs);
 
     //更新点赞人数
-    int updateThumbsCount(int thumbs_count);
+    int updateThumbsCount(@Param("cmtList")JSONArray thumbComments);
 }

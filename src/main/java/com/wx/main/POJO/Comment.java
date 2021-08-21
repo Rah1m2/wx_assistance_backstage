@@ -8,12 +8,12 @@ public class Comment {
     private String user_avatarUrl;
     private String comment_content;
     private String comment_image;
-    private int thumbs_count;
+    private int thumbs;
 
     public Comment() {
     }
 
-    public Comment(int comment_id, int article_id, String user_openid, String user_name, String user_avatarUrl, String comment_content, String comment_image, int thumbs_count) {
+    public Comment(int comment_id, int article_id, String user_openid, String user_name, String user_avatarUrl, String comment_content, String comment_image, int thumbs) {
         this.comment_id = comment_id;
         this.article_id = article_id;
         this.user_openid = user_openid;
@@ -21,7 +21,7 @@ public class Comment {
         this.user_avatarUrl = user_avatarUrl;
         this.comment_content = comment_content;
         this.comment_image = comment_image;
-        thumbs_count = thumbs_count;
+        this.thumbs = thumbs;
     }
 
     public int getComment_id() {
@@ -80,12 +80,12 @@ public class Comment {
         this.comment_image = comment_image;
     }
 
-    public int getThumbs_count() {
-        return thumbs_count;
+    public int getThumbs() {
+        return thumbs;
     }
 
-    public void setThumbs_count(int thumbs_count) {
-        thumbs_count = thumbs_count;
+    public void setThumbs(int thumbs) {
+        this.thumbs = thumbs;
     }
 
     @Override
@@ -98,7 +98,7 @@ public class Comment {
                 ", user_avatarUrl='" + user_avatarUrl + '\'' +
                 ", comment_content='" + comment_content + '\'' +
                 ", comment_image='" + comment_image + '\'' +
-                ", thumbs_count=" + thumbs_count +
+                ", thumbs=" + thumbs +
                 '}';
     }
 }
