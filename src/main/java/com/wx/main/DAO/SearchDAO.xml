@@ -25,5 +25,9 @@
          </otherwise>
        </choose>
     </select>
+    
+    <select id="getUserOpenidByArticleId" resultType="String" parameterType="int">
+        select user_openid from postings_info where article_id=#{article_id}
+    </select>
 
 </mapper>

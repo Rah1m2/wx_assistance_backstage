@@ -1,14 +1,12 @@
 package com.wx.main.Controller;
 
 import com.wx.main.POJO.Comment;
-import com.wx.main.POJO.QueryParams;
+import com.wx.main.VO.QueryParams;
 import com.wx.main.Service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/cmt")
@@ -45,13 +43,21 @@ public class CommentController {
     @RequestMapping(value = "/sendThumbs")
     @ResponseBody
     public String receiveThumbs(String user_openid, String thumbs) {
-        System.out.println("receive user_openid:"+user_openid);
-        System.out.println("receive json:"+thumbs);
         commentService.updateCurUserThumbs(user_openid,thumbs);
         return "test";
     }
 
+    @RequestMapping(value = "/reqCurArtThumbs")
+    @ResponseBody
+    public String sendCurArtThumbs(String article_id) {
+        return commentService.getCurArtThumbs(article_id);
+    }
 
+    @RequestMapping(value = "/delComment")
+    @ResponseBody
+    public int delComment(int comment_id) {
+        return commentService.delSingleComment(comment_id);
+    }
 //    private void showUrl(){
 //        System.out.println("url: "+request.getScheme() +"://" + request.getServerName()
 //                + ":" +request.getServerPort()

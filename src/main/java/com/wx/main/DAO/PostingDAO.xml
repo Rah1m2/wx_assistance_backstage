@@ -37,8 +37,11 @@
             </where>
     </select>
 
-    <insert id="insertSinglePosting" parameterType="com.wx.main.POJO.Posting">
-      insert into postings_info (article_id,article_title,article_content,article_image,sort_id,last_reply_time) values(#{article_id},#{article_title},#{article_content},#{article_image},#{sort_id},#{last_reply_time})
+    <insert id="insertSinglePosting" parameterType="com.wx.main.POJO.Posting" useGeneratedKeys="true" keyColumn="article_id">
+      <selectKey resultType="int" keyProperty="article_id" order="AFTER" >
+        select LAST_INSERT_ID()
+      </selectKey>
+      insert into postings_info (article_id,article_title,article_content,article_image,sort_id,last_reply_time,user_openid) values(#{article_id},#{article_title},#{article_content},#{article_image},#{sort_id},#{last_reply_time},#{user_openid})
     </insert>
 
     <update id="deleteSinglePosting" parameterType="String">

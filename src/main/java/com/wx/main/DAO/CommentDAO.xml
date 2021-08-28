@@ -15,6 +15,16 @@
       select * from comment_info where article_id=#{article_id}
     </select>
 
+    <select id="getThumbByArticleId" resultType="com.wx.main.POJO.Thumb">
+        SELECT DISTINCT thumb_info.thumb_id,thumb_info.comment_id,thumb_info.user_openid
+        FROM
+            thumb_info INNER JOIN comment_info
+                ON
+                    thumb_info.comment_id = comment_info.comment_id
+        WHERE
+            comment_info.article_id=#{article_id}
+    </select>
+
     <insert id="insertSingleComment" parameterType="com.wx.main.POJO.Comment" useGeneratedKeys="true" keyColumn="comment_id">
       <selectKey resultType="int" keyProperty="comment_id" order="AFTER" >
           select LAST_INSERT_ID()
@@ -22,6 +32,9 @@
       insert into comment_info (comment_id,article_id,user_openid,user_name,user_avatarUrl,comment_content,comment_image) values(#{comment_id},#{article_id},#{user_openid},#{user_name},#{user_avatarUrl},#{comment_content},#{comment_image})
     </insert>
 
+    <delete id="delSingleComment" parameterType="int">
+        delete from comment_info where comment_id=#{comment_id}
+    </delete>
 
       <insert id="addCommentThumbs" parameterType="com.wx.main.POJO.Thumb">
           insert into thumb_info (thumb_id, comment_id, user_openid) values 

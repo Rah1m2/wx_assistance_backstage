@@ -1,19 +1,14 @@
 package com.wx.main.Service.Impl;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.mysql.cj.xdevapi.JsonArray;
 import com.wx.main.DAO.PostingDAO;
 import com.wx.main.POJO.Posting;
-import com.wx.main.POJO.QueryParams;
-import com.wx.main.POJO.Thumb;
+import com.wx.main.VO.QueryParams;
 import com.wx.main.Service.PostingService;
 import com.wx.main.Util.Split_Util;
-import com.wx.main.Util.Transcoding_Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -100,9 +95,11 @@ public class PostingServiceImpl implements PostingService {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         System.out.println(df.format(new Date()));// new Date()为获取当前系统时间
         posting.setLast_reply_time(new Date());
-        if (postingDAO.insertSinglePosting(posting) == 0)
+//        System.out.println("article_id:"+postingDAO.insertSinglePosting(posting));
+        postingDAO.insertSinglePosting(posting);
+        if (posting.getArticle_id() == 0)
             return "NO";
-        return "YES";
+        return String.valueOf(posting.getArticle_id());
     }
 
     /**

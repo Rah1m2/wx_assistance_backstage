@@ -1,4 +1,5 @@
-package com.wx.main.POJO;
+package com.wx.main.VO;
+
 import java.util.Map;
 
 public class WxMssVo {

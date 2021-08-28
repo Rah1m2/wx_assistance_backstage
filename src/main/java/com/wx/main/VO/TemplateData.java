@@ -1,4 +1,4 @@
-package com.wx.main.POJO;
+package com.wx.main.VO;
 
 public class TemplateData {
     private String value;//

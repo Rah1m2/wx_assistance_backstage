@@ -1,23 +1,23 @@
 package com.wx.main.Controller;
 
 import com.alibaba.fastjson.JSON;
-import com.wx.main.POJO.TemplateData;
-import com.wx.main.POJO.WxMssVo;
+import com.alibaba.fastjson.JSONObject;
+import com.wx.main.VO.QueryParams;
+import com.wx.main.VO.SubMsgInfo;
+import com.wx.main.VO.TemplateData;
+import com.wx.main.VO.WxMssVo;
 import com.wx.main.Service.SearchService;
-import com.wx.main.Service.UserService;
 import com.wx.main.Util.Generate_TempKey_Util;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.tencent.cloud.CosStsClient;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 
 @Controller
@@ -39,38 +39,40 @@ public class SysController {
         //测试用
         System.out.println("bucket："+bucket);
         System.out.println("region："+region);
-        JSONObject credential = Generate_TempKey_Util.getKey(bucket, region);
+        org.json.JSONObject credential = Generate_TempKey_Util.getKey(bucket, region);
         return JSON.toJSONString(credential);
     }
 
     @RequestMapping(value = "/searchRes")
     @ResponseBody
-    public String sendSearchRes(String query) {
-        System.out.println("param:"+query);
-        System.out.println("res:"+searchService.getSearchResult(query));
-        return searchService.getSearchResult(query);
+    public String sendSearchRes(String query, @RequestParam(value = "queryParams")String tmpQueryParams) {
+        QueryParams queryParams = JSON.parseObject(tmpQueryParams, QueryParams.class);
+        //待增加
+        return searchService.getSearchResult(query,queryParams);
     }
 
     @RequestMapping(value = "/sendSubMsg")
     @ResponseBody
-    public String sendSubscribeMsg(String openid){
-        return push(openid);
+    public String sendSubscribeMsg(SubMsgInfo subMsgInfo) {
+        String user_openid = searchService.getUidByAid(subMsgInfo.getArticle_id());
+        return push(user_openid, subMsgInfo);
     }
 
-    private String push(String openid) {
+    private String push(String user_openid, SubMsgInfo subMsgInfo) {
+        JSONObject subMsgData = JSONObject.parseObject(subMsgInfo.getData());
         RestTemplate restTemplate = new RestTemplate();
         //这里简单起见我们每次都获取最新的access_token（时间开发中，应该在access_token快过期时再重新获取）
         String url = "https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=" + getAccessToken();
         //拼接推送的模版
         WxMssVo wxMssVo = new WxMssVo();
-        wxMssVo.setTouser(openid);//用户的openid（要发送给那个用户，通常这里应该动态传进来的）
-        wxMssVo.setTemplate_id("iDhR7aVopxgSwBvGOpLu5itG2HNIX3wiWIOr5aWSnd4");//订阅消息模板id
+        wxMssVo.setTouser(user_openid);//用户的openid（要发送给那个用户，通常这里应该动态传进来的）
+        wxMssVo.setTemplate_id(subMsgInfo.getTemplate_id());//订阅消息模板id
         wxMssVo.setPage("pages/index/index");
 
         Map<String, TemplateData> m = new HashMap<String, TemplateData>(3);
-        m.put("name4", new TemplateData("评论作者"));
-        m.put("thing1", new TemplateData("文章标题"));
-        m.put("thing2", new TemplateData("评论内容"));
+        m.put("name4", new TemplateData((String) subMsgData.get("name04")));
+        m.put("thing1", new TemplateData((String) subMsgData.get("thing01")));
+        m.put("thing2", new TemplateData((String) subMsgData.get("thing02")));
         wxMssVo.setData(m);
         ResponseEntity<String> responseEntity =
                 restTemplate.postForEntity(url, wxMssVo, String.class);

@@ -1,15 +1,15 @@
 package com.wx.main.Util;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.tencent.cloud.CosStsClient;
+import org.json.JSONObject;
 
 import java.util.TreeMap;
 
 public class Generate_TempKey_Util {
     public static org.json.JSONObject getKey(String bucket, String region){
         TreeMap<String, Object> config = new TreeMap<String, Object>();
-        org.json.JSONObject credential;
+        JSONObject credential;
         try {
             // 替换为您的 SecretId
             config.put("SecretId", "AKIDkJcfSyDBtKUN4VfYBYeT1JJ2UfZBWbQy");

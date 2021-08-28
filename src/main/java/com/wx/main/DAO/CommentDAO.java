@@ -17,11 +17,16 @@ public interface CommentDAO {
     //按article_id返回评论
     List<Comment> getCommentByArticleId(String article_id);
 
+    List<Thumb> getThumbByArticleId(String article_id);
+
     //插入单条评论
     int insertSingleComment(Comment comment);
 
     //插入评论点赞记录
     int addCommentThumbs(@Param("addList")List<Thumb> addThumbs);
+
+    //删除单条评论
+    int delSingleComment(int comment_id);
 
     //删除点赞记录
     int delCommentThumbs(@Param("delList")List<Thumb> delThumbs);

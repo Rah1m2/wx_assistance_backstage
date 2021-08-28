@@ -1,19 +1,12 @@
 package com.wx.main.Controller;
 
-import com.alibaba.fastjson.JSON;
+import com.wx.main.VO.QueryParams;
 import com.wx.main.POJO.*;
 import com.wx.main.Service.PostingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.RestTemplate;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/pst")
@@ -41,6 +34,7 @@ public class PostingController {
     @ResponseBody
     public String sendPostings(QueryParams queryParams) {
 //        showUrl();
+        System.out.println("qParam2:"+queryParams);
         return postingService.getRequiredPostings(queryParams);
     }
 

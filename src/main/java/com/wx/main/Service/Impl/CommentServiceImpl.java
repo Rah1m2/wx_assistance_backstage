@@ -45,9 +45,17 @@ public class CommentServiceImpl implements CommentService {
         return null;
     }
 
+    public String getCurArtThumbs(String article_id) {
+        return JSON.toJSONString(commentDAO.getThumbByArticleId(article_id));
+    }
+
     public int insertSingleComment(Comment comment) {
         commentDAO.insertSingleComment(comment);
         return comment.getComment_id();
+    }
+
+    public int delSingleComment(int comment_id) {
+        return commentDAO.delSingleComment(comment_id);
     }
 
     public String updateCurUserThumbs(String user_openid, String thumbs) {
@@ -97,7 +105,8 @@ public class CommentServiceImpl implements CommentService {
         }
 
         //更新点赞人数,要写个foreach
-        commentDAO.updateThumbsCount(tmpAdd);
+        if (!tmpAdd.isEmpty())
+            commentDAO.updateThumbsCount(tmpAdd);
 
         return "YES";
     }
