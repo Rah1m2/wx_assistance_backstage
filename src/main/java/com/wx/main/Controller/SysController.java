@@ -70,7 +70,7 @@ public class SysController {
         wxMssVo.setPage("pages/index/index");
 
         Map<String, TemplateData> m = new HashMap<String, TemplateData>(3);
-        m.put("name4", new TemplateData((String) subMsgData.get("name04")));
+        m.put("thing6", new TemplateData((String) subMsgData.get("thing06")));
         m.put("thing1", new TemplateData((String) subMsgData.get("thing01")));
         m.put("thing2", new TemplateData((String) subMsgData.get("thing02")));
         wxMssVo.setData(m);
