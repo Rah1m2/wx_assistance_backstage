@@ -11,7 +11,7 @@ public class MyBatis_DB_Util {
     private static SqlSessionFactory sqlSessionFactory;
 
     static{
-        String resource = "/mybatis-config.xml";
+        String resource = "/mybatis/mybatis-config.xml";
         InputStream inputStream = Resource.class.getResourceAsStream(resource);
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
     }

@@ -28,11 +28,11 @@
         </plugin>
     </plugins>
     
-    <mappers>
-        <mapper resource="com/wx/main/DAO/UserDAO.xml"/>
-        <mapper resource="com/wx/main/DAO/PostingDAO.xml"/>
-        <mapper resource="com/wx/main/DAO/SearchDAO.xml"/>
-        <!--<mapper class="com.mybatis.main.DAO.UserDAOImpl.Impl"/>-->
-    </mappers>
+    <!--<mappers>-->
+        <!--&lt;!&ndash;<mapper resource="com/wx/main/DAO/UserDAO.xml"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<mapper resource="com/wx/main/DAO/PostingDAO.xml"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<mapper resource="com/wx/main/DAO/SearchDAO.xml"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<mapper class="com.mybatis.main.DAO.UserDAOImpl.Impl"/>&ndash;&gt;-->
+    <!--</mappers>-->
 
 </configuration>

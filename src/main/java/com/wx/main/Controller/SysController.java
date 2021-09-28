@@ -14,13 +14,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
 
 
-@Controller
+@RestController
 @RequestMapping("/sys")
 public class SysController {
 
@@ -34,7 +35,6 @@ public class SysController {
     }
 
     @RequestMapping(value = "/reqKey")
-    @ResponseBody
     public String sendKey(String bucket, String region){
         //测试用
         System.out.println("bucket："+bucket);
@@ -44,7 +44,6 @@ public class SysController {
     }
 
     @RequestMapping(value = "/searchRes")
-    @ResponseBody
     public String sendSearchRes(String query, @RequestParam(value = "queryParams")String tmpQueryParams) {
         QueryParams queryParams = JSON.parseObject(tmpQueryParams, QueryParams.class);
         //待增加
@@ -52,7 +51,6 @@ public class SysController {
     }
 
     @RequestMapping(value = "/sendSubMsg")
-    @ResponseBody
     public String sendSubscribeMsg(SubMsgInfo subMsgInfo) {
         String user_openid = searchService.getUidByAid(subMsgInfo.getArticle_id());
         return push(user_openid, subMsgInfo);

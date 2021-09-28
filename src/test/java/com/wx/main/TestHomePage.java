@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.wx.main.DAO.SearchDAO;
 import com.wx.main.POJO.Posting;
 import com.wx.main.Service.PostingService;
-import com.wx.main.Service.UserService;
 import com.wx.main.Util.Transcoding_Util;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -38,7 +37,7 @@ public class TestHomePage {
 
 	@Test
 	public void testRenderMyPage() {
-		String config = "/applicationContext.xml";
+		String config = "/spring/applicationContext.xml";
 
 		ApplicationContext acContext = new ClassPathXmlApplicationContext(config);
 
@@ -52,7 +51,7 @@ public class TestHomePage {
 	@Test
 	public void DAOTest()
 	{
-		String config = "/applicationContext.xml";
+		String config = "/spring/applicationContext.xml";
 
 		ApplicationContext acContext = new ClassPathXmlApplicationContext(config);
 
@@ -108,7 +107,7 @@ public class TestHomePage {
 
 	@Test
 	public void fuck(){
-		String config = "/applicationContext.xml";
+		String config = "/spring/applicationContext.xml";
 
 		ApplicationContext acContext = new ClassPathXmlApplicationContext(config);
 
@@ -121,7 +120,7 @@ public class TestHomePage {
 	}
 	@Test
 	public void Util_Test(){
-		String config = "/applicationContext.xml";
+		String config = "/spring/applicationContext.xml";
 
 		ApplicationContext acContext = new ClassPathXmlApplicationContext(config);
 

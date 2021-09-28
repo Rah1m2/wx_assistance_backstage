@@ -8,8 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping("/pst")
 public class PostingController {
 
@@ -32,7 +33,6 @@ public class PostingController {
      * @return 返回装有数据的json串
      */
     @RequestMapping(value = "/reqPostings")
-    @ResponseBody
     public String sendPostings(QueryParams queryParams) {
 //        showUrl();
         System.out.println("qParam2:"+queryParams);
@@ -40,7 +40,6 @@ public class PostingController {
     }
 
     @RequestMapping(value = "/reqMyPostings")
-    @ResponseBody
     public String sendMyPosting(String user_openid) {
         return postingService.getMyPostings(user_openid);
     }
@@ -51,7 +50,6 @@ public class PostingController {
      * @return 返回评论文章的String串
      */
     @RequestMapping(value = "/reqPostingDetail")
-    @ResponseBody
     public String sendPostingDetail(int article_id) {
         return postingService.getPostingDetail(article_id);
     }
@@ -62,7 +60,6 @@ public class PostingController {
      * @return 同下
      */
     @RequestMapping(value = "/sendPostingInfo")
-    @ResponseBody
     public String receivePosting(Posting posting) {
         return postingService.insertSinglePosting(posting);
     }
@@ -73,7 +70,6 @@ public class PostingController {
      * @return 删除成功返回YES,删除失败返回NO
      */
     @RequestMapping(value = "/deletePosting")
-    @ResponseBody
     public String deletePosting(String article_id) {
         return postingService.deleteSinglePosting(article_id);
     }
@@ -83,7 +79,6 @@ public class PostingController {
      * @return 返回String串
      */
     @RequestMapping(value = "/reqSortInfo")
-    @ResponseBody
     public String sendSortInfo() {
         return postingService.getSortInfo();
     }
@@ -93,7 +88,6 @@ public class PostingController {
      * @return 返回数值
      */
     @RequestMapping(value = "/reqMyPostingCount")
-    @ResponseBody
     public int sendMyPostingCount(String user_openid) {
         return postingService.getCurUserPstCount(user_openid);
     }

@@ -16,7 +16,9 @@
     <!--mybatis的sql工厂，通过工厂获取sqlSession对象-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
+        <!--mapper.xml所在位置-->
+        <property name="mapperLocations" value="classpath*:mapper/*DAO.xml" />
     </bean>
 
     <!--创建Dao层接口的实例（给Dao层接口引用赋值）-->

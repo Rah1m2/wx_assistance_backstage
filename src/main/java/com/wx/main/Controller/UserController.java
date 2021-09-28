@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping("/msg")
 public class UserController {
 
@@ -22,7 +22,6 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login")
-    @ResponseBody
     public String login(String encryptedData,String iv,String code) {
         //测试用
 //        System.out.println("encryptedData:"+encryptedData);
