@@ -10,14 +10,30 @@
         select distinct
           sort_id,user_mission_id,user_openid,user_name,user_avatarUrl,user_score
         from
+          a_student_info natural join user_info
+        group by
+          user_openid
+        having
+          sort_id=#{sort_id}
+        and
+          user_openid!=#{user_openid}
+    </select>
+
+    <select id="filterAStudentInfo" resultType="com.wx.main.POJO.Reserve">
+        select distinct sort_id,user_mission_id,user_openid,user_name,user_avatarUrl,user_score from
           a_student_info natural join user_info natural join mission_reserve_info
         group by
           user_openid
         having
-          COUNT(user_openid) &lt; 2
-        <if test="sort_id!=0">
-            and
-            sort_id=#{sort_id}
-        </if>
+          COUNT(user_openid) &gt; 1
     </select>
+
+    <select id="DisableONLY_FULL_GROUP_BY" resultType="java.util.Map">
+        SET sql_mode = (SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+    </select>
+
+    <insert id="insertReserveInfo" parameterType="com.wx.main.POJO.Reserve">
+        insert into mission_reserve_info (mission_id, sort_id, user_openid, customer_user_openid, isReserved) values (#{user_mission_id}, #{sort_id}, #{user_openid}, #{customer_user_openid}, #{isReserved})
+    </insert>
+
 </mapper>
