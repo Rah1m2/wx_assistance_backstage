@@ -1,6 +1,7 @@
 package com.wx.main.Controller;
 
 
+import com.wx.main.POJO.Student;
 import com.wx.main.POJO.User;
 import com.wx.main.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/msg")
+@RequestMapping("/user")
 public class UserController {
 
     private UserService userService;
@@ -28,6 +29,11 @@ public class UserController {
 //        System.out.println("iv:"+iv);
 //        System.out.println("code:"+code);
         return userService.wxLogin(encryptedData,iv,code);
+    }
+
+    @RequestMapping(value = "/registerIdentity")
+    public String registerIdentity(Student student) {
+        return userService.wxRegisterID(student);
     }
 
 

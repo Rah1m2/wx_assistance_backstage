@@ -3,6 +3,7 @@ package com.wx.main.Service.Impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.wx.main.DAO.UserDAO;
+import com.wx.main.POJO.Student;
 import com.wx.main.POJO.User;
 import com.wx.main.Service.UserService;
 import com.wx.main.Util.Decrypt_Util;
@@ -96,21 +97,32 @@ public class UserServiceImpl implements UserService {
             System.out.println("解码异常。");
         }
 
-        //临时测试用
-//        assert json_res != null;
-//        System.out.println("res_json:"+json_res.get("nickName"));
-//        System.out.println("res_json:"+json_res.get("gender"));
-//        System.out.println("res_json:"+json_res.get("language"));
-//        System.out.println("res_json:"+json_res.get("country"));
-//        System.out.println("res_json:"+json_res.get("avatarUrl"));
+        user_list = userDAO.getUserByAccount(openid);
 
-        //操作dao层，如果不是第一次登录就返回"EXIST"；否则进行插入操作
-        if(!(user_list=userDAO.getUserByAccount(openid)).isEmpty())
+        //操作dao层，如果不是第一次登录就返回解码的数据；否则进行插入操作
+        if(!user_list.isEmpty()) {
+            //判断用户的身份
+            user_list.get(0).setUser_identity(String.valueOf(userDAO.identifyUserByOpenid(openid)));
             return JSON.toJSONString(user_list);
+        }
+
         assert json_res != null;
-        if(INSERT_FAILED == userDAO.insertSingleUser(new User(openid, (String) json_res.get("nickName"), json_res.get("gender").toString(), (String) json_res.get("language"), (String) json_res.get("country"), (String) json_res.get("avatarUrl"))))
+        User regUser = new User(openid, (String) json_res.get("nickName"), json_res.get("gender").toString(), (String) json_res.get("language"), (String) json_res.get("country"), (String) json_res.get("avatarUrl"), "0");
+        if(INSERT_FAILED == userDAO.insertSingleUser(regUser))
             return "NO";
 
+        //清空user_list
+        user_list.clear();
+
+        //将首次登录用户的数据写入list
+        user_list.add(regUser);
+
+        return JSON.toJSONString(user_list);
+    }
+
+    public String wxRegisterID(Student student) {
+        if (0 == userDAO.insertSingleAStuInfo(student))
+            return "NO";
         return "YES";
     }
 }

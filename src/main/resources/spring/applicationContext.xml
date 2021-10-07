@@ -12,4 +12,7 @@
     <!--spring-mvc的配置文件-->
     <import resource="classpath:/spring/springmvc-servlet.xml"/>
 
+    <!--spring-redis的配置文件-->
+    <import resource="classpath:/spring/spring-redis.xml"/>
+
 </beans>

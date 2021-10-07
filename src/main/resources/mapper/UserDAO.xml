@@ -21,6 +21,14 @@
       insert into user_info (user_openid,user_name,user_gender,user_language,user_country,user_avatarUrl) values(#{user_openid},#{user_name},#{user_gender},#{user_language},#{user_country},#{user_avatarUrl})
   </insert>
 
+    <insert id="insertSingleAStuInfo" parameterType="com.wx.main.POJO.Student">
+        insert into a_student_info (user_mission_id, sort_id, user_openid, user_score, contact_detail) value (#{user_mission_id},#{sort_id},#{user_openid},#{user_score},#{contact_detail})
+    </insert>
+
+    <select id="identifyUserByOpenid" parameterType="java.lang.String" resultType="int">
+        select COUNT(user_openid) from a_student_info where user_openid=#{user_openid}
+    </select>
+
     <!--<delete id="deleteSingleUser">-->
       <!--delete from user_info where user_account=#{user_account}-->
     <!--</delete>-->

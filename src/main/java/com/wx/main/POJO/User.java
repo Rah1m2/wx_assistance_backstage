@@ -1,5 +1,7 @@
 package com.wx.main.POJO;
 
+import javax.persistence.Transient;
+
 public class User {
     private String user_openid;
     private String user_name;
@@ -7,17 +9,20 @@ public class User {
     private String user_language;
     private String user_country;
     private String user_avatarUrl;
+    @Transient
+    private String user_identity;
 
     public User() {
     }
 
-    public User(String user_openid, String user_name, String user_gender, String user_language, String user_country, String user_avatarUrl) {
+    public User(String user_openid, String user_name, String user_gender, String user_language, String user_country, String user_avatarUrl, String user_identity) {
         this.user_openid = user_openid;
         this.user_name = user_name;
         this.user_gender = user_gender;
         this.user_language = user_language;
         this.user_country = user_country;
         this.user_avatarUrl = user_avatarUrl;
+        this.user_identity = user_identity;
     }
 
     public String getUser_openid() {
@@ -66,5 +71,26 @@ public class User {
 
     public void setUser_avatarUrl(String user_avatarUrl) {
         this.user_avatarUrl = user_avatarUrl;
+    }
+
+    public String getUser_identity() {
+        return user_identity;
+    }
+
+    public void setUser_identity(String user_identity) {
+        this.user_identity = user_identity;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "user_openid='" + user_openid + '\'' +
+                ", user_name='" + user_name + '\'' +
+                ", user_gender='" + user_gender + '\'' +
+                ", user_language='" + user_language + '\'' +
+                ", user_country='" + user_country + '\'' +
+                ", user_avatarUrl='" + user_avatarUrl + '\'' +
+                ", user_identity='" + user_identity + '\'' +
+                '}';
     }
 }
