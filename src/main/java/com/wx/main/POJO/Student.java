@@ -1,21 +1,29 @@
 package com.wx.main.POJO;
 
+import javax.persistence.Transient;
+
 public class Student {
     private int user_mission_id;
     private int sort_id;
     private String user_openid;
     private String user_score;
     private String contact_detail;
+    @Transient
+    private String user_name;
+    @Transient
+    private String user_avatarUrl;
 
     public Student() {
     }
 
-    public Student(int user_mission_id, int sort_id, String user_openid, String user_score, String contact_detail) {
+    public Student(int user_mission_id, int sort_id, String user_openid, String user_score, String contact_detail, String user_name, String user_avatarUrl) {
         this.user_mission_id = user_mission_id;
         this.sort_id = sort_id;
         this.user_openid = user_openid;
         this.user_score = user_score;
         this.contact_detail = contact_detail;
+        this.user_name = user_name;
+        this.user_avatarUrl = user_avatarUrl;
     }
 
     public int getUser_mission_id() {
@@ -58,6 +66,22 @@ public class Student {
         this.contact_detail = contact_detail;
     }
 
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
+    }
+
+    public String getUser_avatarUrl() {
+        return user_avatarUrl;
+    }
+
+    public void setUser_avatarUrl(String user_avatarUrl) {
+        this.user_avatarUrl = user_avatarUrl;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
@@ -66,6 +90,23 @@ public class Student {
                 ", user_openid='" + user_openid + '\'' +
                 ", user_score='" + user_score + '\'' +
                 ", contact_detail='" + contact_detail + '\'' +
+                ", user_name='" + user_name + '\'' +
+                ", user_avatarUrl='" + user_avatarUrl + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if (this == o)
+            return true;
+        if (o == null || getClass()!=o.getClass())
+            return false;
+        Student student = (Student) o;
+        return student.user_openid.equals(user_openid);
+//                && student.sort_id == sort_id;
+//                && student.user_mission_id == user_mission_id
+//                && student.user_name.equals(user_name);
+//                && student.user_avatarUrl.equals(user_avatarUrl)
+//                && student.user_score.equals(user_score);
     }
 }
