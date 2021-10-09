@@ -3,6 +3,7 @@ package com.wx.main.Controller;
 import com.wx.main.POJO.Reserve;
 import com.wx.main.POJO.Student;
 import com.wx.main.Service.ReserveService;
+import com.wx.main.VO.RedisCustomer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,18 +29,23 @@ public class ReserveController {
     }
 
     @RequestMapping(value = "/sendReserveInfo")
-    public String receiveReserveInfo(Reserve reserve) {
-        return reserveService.saveReservedInfoToRedis(reserve);
+    public String receiveReserveInfo(RedisCustomer customer) {
+        return reserveService.saveReservedInfoToRedis(customer);
     }
 
     @RequestMapping(value = "/reqBacklogInfo", method = RequestMethod.POST)
-    public List<Reserve> sendBacklogInfo(@RequestBody Map<String, Object> queryForm) {
+    public List<RedisCustomer> sendBacklogInfo(@RequestBody Map<String, Object> queryForm) {
         return reserveService.getBacklogInfo(queryForm);
     }
 
     @RequestMapping(value = "/reqCurReservedInfo", method = RequestMethod.POST)
     public List<Reserve> sendCurReservedInfo(@RequestBody Map<String, Object> queryForm) {
         return reserveService.getCurReservedInfo(queryForm);
+    }
+
+    @RequestMapping(value = "/reqCurBacklogInfo", method = RequestMethod.POST)
+    public List<RedisCustomer> sendCurBacklogInfo(@RequestBody Map<String, Object> queryForm) {
+        return reserveService.getBacklogInfo(queryForm);
     }
 
 }

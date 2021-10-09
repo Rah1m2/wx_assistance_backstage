@@ -5,6 +5,7 @@ import com.wx.main.POJO.Reserve;
 import com.wx.main.POJO.Student;
 import com.wx.main.Service.ReserveService;
 import com.wx.main.Util.RedisTemplate_Util;
+import com.wx.main.VO.RedisCustomer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -61,49 +62,39 @@ public class ReserveServiceImpl implements ReserveService {
     }
 
     @Override
-    public List<Reserve> getBacklogInfo(Map<String, Object> queryForm) {
+    public List<RedisCustomer> getBacklogInfo(Map<String, Object> queryForm) {
 
-        String key = queryForm.get("sort_id")+":*:"+queryForm.get("user_openid");
+        String key = queryForm.get("sort_id")+":"+queryForm.get("user_openid")+":"+queryForm.get("customer_user_openid");
 
         RedisTemplate_Util RedisTemplate_Util = new RedisTemplate_Util(redisTemplate);
 
         Set<String> querySet = (Set<String>) RedisTemplate_Util.queryKey(key);
 
-        List<Reserve> reserves = new ArrayList<>();
+        List<RedisCustomer> customers = new ArrayList<>();
 
         for (String s : querySet) {
-            reserves.add((Reserve) RedisTemplate_Util.get(s)) ;
+            customers.add((RedisCustomer) RedisTemplate_Util.get(s)) ;
         }
 
-        return reserves;
+        return customers;
     }
 
     @Override
     public String saveReservedInfoToDB(Reserve reserve) {
-
-        RedisTemplate_Util RedisTemplate_Util = new RedisTemplate_Util(redisTemplate);
-
-        String key = reserve.getSort_id() + ":" + reserve.getUser_openid() + ":" + reserve.getCustomer_user_openid();
-
-//        if (RedisTemplate_Util.get(key) != null)
-//            return "EXIST";
-
-        RedisTemplate_Util.set(key, reserve);
-
         return String.valueOf(reserveDAO.insertReserveInfo(reserve));
     }
 
     @Override
-    public String saveReservedInfoToRedis(Reserve reserve) {
+    public String saveReservedInfoToRedis(RedisCustomer customer) {
 
         RedisTemplate_Util RedisTemplate_Util = new RedisTemplate_Util(redisTemplate);
 
-        String key = reserve.getSort_id() + ":" + reserve.getUser_openid() + ":" + reserve.getCustomer_user_openid();
+        String key = customer.getSort_id() + ":" + customer.getUser_openid() + ":" + customer.getCustomer_user_openid();
 
 //        if (RedisTemplate_Util.get(key) != null)
 //            return "EXIST";
 
-        RedisTemplate_Util.set(key, reserve);
+        RedisTemplate_Util.set(key, customer);
 
         return "YES";
     }
