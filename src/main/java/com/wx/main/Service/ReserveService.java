@@ -22,9 +22,14 @@ public interface ReserveService {
     String saveReservedInfoToRedis(RedisCustomer customer);
 
     //处理（拒绝或接受）预订状态
-    String processReserve(Reserve reserve);
+    String processReserve(Reserve reserve, boolean isAccept);
 
-    //查询当前用户已预定的订单信息
-    List<Reserve> getCurReservedInfo(Map<String, Object> queryForm);
+    //查询当前用户已接受的别人预订的订单信息
+    List<RedisCustomer> getCurAcceptedREZInfo(Map<String, Object> queryForm);
 
+    //接受当前用户预订别人的订单信息
+    List<Student> getReservationInfoOfCur(String user_openid);
+
+    //结束正在进行中的预订
+    String endProcReservation(String mission_id);
 }

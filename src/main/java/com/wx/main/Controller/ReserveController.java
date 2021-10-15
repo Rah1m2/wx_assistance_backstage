@@ -39,8 +39,8 @@ public class ReserveController {
     }
 
     @RequestMapping(value = "/reqCurReservedInfo", method = RequestMethod.POST)
-    public List<Reserve> sendCurReservedInfo(@RequestBody Map<String, Object> queryForm) {
-        return reserveService.getCurReservedInfo(queryForm);
+    public List<RedisCustomer> sendCurAcceptedREZInfo(@RequestBody Map<String, Object> queryForm) {
+        return reserveService.getCurAcceptedREZInfo(queryForm);
     }
 
     @RequestMapping(value = "/reqCurBacklogInfo", method = RequestMethod.POST)
@@ -48,4 +48,18 @@ public class ReserveController {
         return reserveService.getBacklogInfo(queryForm);
     }
 
+    @RequestMapping(value = "/processReserve")
+    public String processReserve(Reserve reserve, boolean isAccept) {
+        return reserveService.processReserve(reserve, isAccept);
+    }
+
+    @RequestMapping(value = "/reqReservationInfoOfCur")
+    public List<Student> sendReservationOfCur(String user_openid) {
+        return reserveService.getReservationInfoOfCur(user_openid);
+    }
+
+    @RequestMapping(value = "/delReservation")
+    public String delReservation(String mission_id) {
+        return reserveService.endProcReservation(mission_id);
+    }
 }

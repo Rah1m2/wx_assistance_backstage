@@ -1,6 +1,7 @@
 package com.wx.main.POJO;
 
 import javax.persistence.Transient;
+import java.util.Date;
 
 public class Reserve {
     private int mission_id;
@@ -8,16 +9,18 @@ public class Reserve {
     private String user_openid;
     private String customer_user_openid;
     private Boolean isReserved = false;
+    private Date deadline;
 
     public Reserve() {
     }
 
-    public Reserve(int mission_id, int sort_id, String user_openid, String customer_user_openid, Boolean isReserved) {
+    public Reserve(int mission_id, int sort_id, String user_openid, String customer_user_openid, Boolean isReserved, Date deadline) {
         this.mission_id = mission_id;
         this.sort_id = sort_id;
         this.user_openid = user_openid;
         this.customer_user_openid = customer_user_openid;
         this.isReserved = isReserved;
+        this.deadline = deadline;
     }
 
     public int getMission_id() {
@@ -60,6 +63,14 @@ public class Reserve {
         isReserved = reserved;
     }
 
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
+    }
+
     @Override
     public String toString() {
         return "Reserve{" +
@@ -68,6 +79,7 @@ public class Reserve {
                 ", user_openid='" + user_openid + '\'' +
                 ", customer_user_openid='" + customer_user_openid + '\'' +
                 ", isReserved=" + isReserved +
+                ", deadline=" + deadline +
                 '}';
     }
 

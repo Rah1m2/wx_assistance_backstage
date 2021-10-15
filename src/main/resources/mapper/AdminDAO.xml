@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wx.main.DAO.AdminDAO">
+
+    <select id="getAdminByAcPw" parameterType="java.util.Map" resultType="java.util.Map">
+        select * from admin where admin_account=#{user_account} and admin_password=#{user_password}
+    </select>
+
+    <select id="getUserByQuery" parameterType="java.lang.String" resultType="com.wx.main.POJO.User">
+        <choose>
+            <when test="query == 'ALL'.toString()">
+                select * from user_info
+            </when>
+            <otherwise>
+                select distinct user_openid, user_name, user_gender, user_language, user_country from user_info
+            </otherwise>
+        </choose>
+            <if test="query == 'AStu'.toString()">
+                natural join a_student_info
+            </if>
+            <if test="query == 'Banned'.toString()">
+                natural join banned_user_list
+            </if>
+    </select>
+</mapper>

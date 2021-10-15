@@ -75,6 +75,7 @@ public class ReserveServiceImpl implements ReserveService {
         for (String s : querySet) {
             customers.add((RedisCustomer) RedisTemplate_Util.get(s)) ;
         }
+            System.out.println("cus:"+customers.toString());
 
         return customers;
     }
@@ -100,14 +101,43 @@ public class ReserveServiceImpl implements ReserveService {
     }
 
     @Override
-    public String processReserve(Reserve reserve) {
+    public String processReserve(Reserve reserve, boolean isAccept) {
 
-        return null;
+        //如果isAccept是true代表接受预订，反之拒绝
+        if (isAccept){
+            System.out.println("continuing...");
+            this.saveReservedInfoToDB(reserve);
+        }
+        else
+            System.out.println("refused continuing...");
+
+        //导入redis
+        RedisTemplate_Util RedisTemplate_util = new RedisTemplate_Util(redisTemplate);
+
+        //生成key
+        String key = reserve.getSort_id() + ":" + reserve.getUser_openid() + ":" + reserve.getCustomer_user_openid();
+
+        //无论拒绝还是同意，都会删除redis中的键值对
+        RedisTemplate_util.delete(key);
+
+        return "YES";
     }
 
     @Override
-    public List<Reserve> getCurReservedInfo(Map<String, Object> queryForm) {
-        return reserveDAO.getCurReservedInfoByUserOpenid(queryForm);
+    public List<RedisCustomer> getCurAcceptedREZInfo(Map<String, Object> queryForm) {
+        return reserveDAO.getCurAcceptedREZInfoByUserOpenid(queryForm);
+    }
+
+    @Override
+    public List<Student> getReservationInfoOfCur(String user_openid) {
+        return reserveDAO.getREZInfoOfCurByUserOpenid(user_openid);
+    }
+
+    @Override
+    public String endProcReservation(String mission_id) {
+        if (reserveDAO.delReservation(mission_id) == 0)
+            return "NO";
+        return "YES";
     }
 
 }

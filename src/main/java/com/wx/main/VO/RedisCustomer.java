@@ -8,7 +8,7 @@ public class RedisCustomer {
     private String customer_user_openid;
     private String customer_user_name;
     private String customer_user_avatarUrl;
-    private boolean isReserved;
+    private boolean isReserved = false;
 
     public RedisCustomer() {
     }

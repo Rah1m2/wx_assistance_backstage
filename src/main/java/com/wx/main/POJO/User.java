@@ -1,6 +1,7 @@
 package com.wx.main.POJO;
 
 import javax.persistence.Transient;
+import java.util.Objects;
 
 public class User {
     private String user_openid;
@@ -93,4 +94,13 @@ public class User {
                 ", user_identity='" + user_identity + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return user_openid .equals(user.user_openid);
+    }
+
 }

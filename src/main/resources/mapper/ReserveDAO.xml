@@ -12,15 +12,43 @@
         from
           a_student_info natural join user_info
         group by
-          user_openid,sort_id
+          user_openid, sort_id
         having
           sort_id=#{sort_id}
         and
           user_openid!=#{user_openid}
     </select>
 
-    <select id="getCurReservedInfoByUserOpenid" resultType="com.wx.main.POJO.Reserve">
-        select * from mission_reserve_info where customer_user_openid=#{user_openid} and sort_id=#{sort_id}
+    <select id="getREZInfoOfCurByUserOpenid" parameterType="java.lang.String" resultType="com.wx.main.POJO.Student">
+        select
+            mission_id user_mission_id, user_avatarUrl,user_name, a_student_info.user_openid, contact_detail, mission_reserve_info.sort_id, a_student_info.sort_id, user_name, sort_name, isReserved
+        from
+            a_student_info
+            natural join
+            mission_reserve_info
+            natural join
+            sort_info
+            natural join
+            user_info
+        where
+            mission_reserve_info.customer_user_openid=#{user_openid}
+            and
+            a_student_info.sort_id=mission_reserve_info.sort_id
+    </select>
+
+    <select id="getCurAcceptedREZInfoByUserOpenid" resultType="com.wx.main.VO.RedisCustomer">
+        select
+            sort_name,user_avatarUrl customer_user_avatarUrl,user_name customer_user_name, sort_id, mission_reserve_info.customer_user_openid user_openid, isReserved
+        from
+            mission_reserve_info
+        natural join
+            sort_info
+        inner join
+            user_info
+        where
+            mission_reserve_info.user_openid=#{user_openid}
+        and
+            mission_reserve_info.customer_user_openid = user_info.user_openid
     </select>
 
     <select id="filterAStudentInfo" resultType="com.wx.main.POJO.Student">
@@ -37,7 +65,11 @@
     </select>
 
     <insert id="insertReserveInfo" parameterType="com.wx.main.POJO.Reserve">
-        insert into mission_reserve_info (mission_id, sort_id, user_openid, customer_user_openid, isReserved) values (#{mission_id}, #{sort_id}, #{user_openid}, #{customer_user_openid}, #{isReserved})
+        insert into mission_reserve_info (mission_id, sort_id, user_openid, customer_user_openid, isReserved, deadline) values (#{mission_id}, #{sort_id}, #{user_openid}, #{customer_user_openid}, 1, #{deadline})
     </insert>
+    
+    <delete id="delReservation" parameterType="java.lang.String">
+        delete from mission_reserve_info where mission_id=#{mission_id}
+    </delete>
 
 </mapper>
