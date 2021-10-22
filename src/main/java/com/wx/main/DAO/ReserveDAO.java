@@ -3,6 +3,7 @@ package com.wx.main.DAO;
 import com.wx.main.POJO.Reserve;
 import com.wx.main.POJO.Student;
 import com.wx.main.VO.RedisCustomer;
+import com.wx.main.VO.StudentReserve;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface ReserveDAO {
     List<Student> getAStudentInfoBySortId(Map<String, Object> queryForm);
 
     //通过user_openid查询预约的信息
-    List<Student> getREZInfoOfCurByUserOpenid(String user_openid);
+    List<StudentReserve> getREZInfoOfCurByUserOpenid(String user_openid);
 
     //通过
     List<RedisCustomer> getCurAcceptedREZInfoByUserOpenid(Map<String, Object> queryForm);

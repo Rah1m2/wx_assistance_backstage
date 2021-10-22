@@ -54,7 +54,7 @@ public class ReserveController {
     }
 
     @RequestMapping(value = "/reqReservationInfoOfCur")
-    public List<Student> sendReservationOfCur(String user_openid) {
+    public Map<String, Object> sendReservationOfCur(String user_openid) {
         return reserveService.getReservationInfoOfCur(user_openid);
     }
 

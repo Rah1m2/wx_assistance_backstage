@@ -19,9 +19,9 @@
           user_openid!=#{user_openid}
     </select>
 
-    <select id="getREZInfoOfCurByUserOpenid" parameterType="java.lang.String" resultType="com.wx.main.POJO.Student">
+    <select id="getREZInfoOfCurByUserOpenid" parameterType="java.lang.String" resultType="com.wx.main.VO.StudentReserve">
         select
-            mission_id user_mission_id, user_avatarUrl,user_name, a_student_info.user_openid, contact_detail, mission_reserve_info.sort_id, a_student_info.sort_id, user_name, sort_name, isReserved
+            mission_id, user_avatarUrl,user_name, a_student_info.user_openid, contact_detail, mission_reserve_info.sort_id, a_student_info.sort_id, user_name, sort_name, isReserved, deadline
         from
             a_student_info
             natural join

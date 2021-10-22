@@ -3,6 +3,7 @@ package com.wx.main.Controller;
 import com.wx.main.VO.QueryParams;
 import com.wx.main.POJO.*;
 import com.wx.main.Service.PostingService;
+import com.wx.main.VO.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -79,7 +80,7 @@ public class PostingController {
      * @return 返回String串
      */
     @RequestMapping(value = "/reqSortInfo")
-    public String sendSortInfo() {
+    public ResponseData sendSortInfo() {
         return postingService.getSortInfo();
     }
 

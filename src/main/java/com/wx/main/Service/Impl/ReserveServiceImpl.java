@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @SuppressWarnings("unchecked")
 @Service("reserveServiceImpl")
@@ -93,6 +90,7 @@ public class ReserveServiceImpl implements ReserveService {
         String key = customer.getSort_id() + ":" + customer.getUser_openid() + ":" + customer.getCustomer_user_openid();
 
 //        if (RedisTemplate_Util.get(key) != null)
+
 //            return "EXIST";
 
         RedisTemplate_Util.set(key, customer);
@@ -129,8 +127,27 @@ public class ReserveServiceImpl implements ReserveService {
     }
 
     @Override
-    public List<Student> getReservationInfoOfCur(String user_openid) {
-        return reserveDAO.getREZInfoOfCurByUserOpenid(user_openid);
+    public Map<String, Object> getReservationInfoOfCur(String user_openid) {
+
+        RedisTemplate_Util redisTemplate_util = new RedisTemplate_Util(redisTemplate);
+
+        String query = "*" + ":*:" + user_openid;
+
+        Set<String> keySets = (Set<String>) redisTemplate_util.queryKey(query);
+
+        List<RedisCustomer> customers = new ArrayList<>();
+
+        for (String keySet : keySets) {
+            RedisCustomer redisCustomer = (RedisCustomer) redisTemplate_util.get(keySet);
+            customers.add(redisCustomer);
+        }
+
+        //封装
+        Map<String, Object> map = new HashMap<>();
+        map.put("redisData", customers);
+        map.put("mysqlData", reserveDAO.getREZInfoOfCurByUserOpenid(user_openid));
+
+        return map;
     }
 
     @Override

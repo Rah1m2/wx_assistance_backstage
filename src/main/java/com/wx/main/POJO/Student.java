@@ -1,6 +1,7 @@
 package com.wx.main.POJO;
 
 import javax.persistence.Transient;
+import java.util.Date;
 
 public class Student {
     private int user_mission_id;
@@ -13,14 +14,12 @@ public class Student {
     @Transient
     private String user_avatarUrl;
     @Transient
-    private String sort_name;
-    @Transient
     private boolean isReserved;
 
     public Student() {
     }
 
-    public Student(int user_mission_id, int sort_id, String user_openid, String user_score, String contact_detail, String user_name, String user_avatarUrl, String sort_name, boolean isReserved) {
+    public Student(int user_mission_id, int sort_id, String user_openid, String user_score, String contact_detail, String user_name, String user_avatarUrl, boolean isReserved) {
         this.user_mission_id = user_mission_id;
         this.sort_id = sort_id;
         this.user_openid = user_openid;
@@ -28,7 +27,6 @@ public class Student {
         this.contact_detail = contact_detail;
         this.user_name = user_name;
         this.user_avatarUrl = user_avatarUrl;
-        this.sort_name = sort_name;
         this.isReserved = isReserved;
     }
 
@@ -88,14 +86,6 @@ public class Student {
         this.user_avatarUrl = user_avatarUrl;
     }
 
-    public String getSort_name() {
-        return sort_name;
-    }
-
-    public void setSort_name(String sort_name) {
-        this.sort_name = sort_name;
-    }
-
     public boolean isReserved() {
         return isReserved;
     }
@@ -103,6 +93,7 @@ public class Student {
     public void setReserved(boolean reserved) {
         isReserved = reserved;
     }
+
 
     @Override
     public String toString() {
@@ -114,7 +105,6 @@ public class Student {
                 ", contact_detail='" + contact_detail + '\'' +
                 ", user_name='" + user_name + '\'' +
                 ", user_avatarUrl='" + user_avatarUrl + '\'' +
-                ", sort_name='" + sort_name + '\'' +
                 ", isReserved=" + isReserved +
                 '}';
     }

@@ -3,6 +3,7 @@ package com.wx.main.Service;
 
 import com.wx.main.POJO.Posting;
 import com.wx.main.VO.QueryParams;
+import com.wx.main.VO.ResponseData;
 
 public interface PostingService {
 
@@ -22,7 +23,7 @@ public interface PostingService {
     String deleteSinglePosting(String article_id);
 
     //获取分类信息
-    String getSortInfo();
+    ResponseData getSortInfo();
 
     //获取当前用户的发帖数量
     int getCurUserPstCount(String user_openid);

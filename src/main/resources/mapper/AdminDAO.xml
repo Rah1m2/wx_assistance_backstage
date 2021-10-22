@@ -24,4 +24,52 @@
                 natural join banned_user_list
             </if>
     </select>
+
+    <insert id="insertAdmin" parameterType="java.util.Map">
+        insert into admin (admin_account, admin_password) values (#{admin_account}, #{admin_password})
+    </insert>
+
+    <select id="getReservations" resultType="com.wx.main.VO.StudentReserve">
+        SELECT mission_id, sort_name, user_openid, customer_user_openid from mission_reserve_info NATURAL JOIN sort_info
+    </select>
+
+    <delete id="deleteReservation" parameterType="java.lang.Integer">
+        delete from mission_reserve_info where mission_id=#{mission_id}
+    </delete>
+
+    <insert id="insertSort" parameterType="java.lang.String">
+        insert into sort_info (sort_id, sort_name) VALUES (0, #{addSortName})
+    </insert>
+
+    <delete id="deleteSort" parameterType="java.lang.Integer">
+        delete from sort_info where sort_id=#{sort_id}
+    </delete>
+
+    <update id="updateSort" parameterType="java.util.Map">
+        update sort_info set sort_name=#{sort_name} where sort_id=#{sort_id}
+    </update>
+
+    <insert id="barAccount" parameterType="java.lang.String">
+        insert into banned_user_list (user_openid, banned_reason) values
+        <choose>
+            <when test="banned_reason == null">
+                (#{user_openid}, 'default')
+            </when>
+            <otherwise>
+                (#{user_openid}, #{banned_reason})
+            </otherwise>
+        </choose>
+    </insert>
+
+    <delete id="unbarAccount" parameterType="java.lang.String">
+        delete from banned_user_list where user_openid=#{user_openid}
+    </delete>
+
+    <delete id="deleteAStuByQuery" parameterType="java.lang.String">
+        delete from a_student_info where user_openid=#{user_openid}
+        <if test="sort_id!=null">
+            and sort_id=#{sort_id}
+        </if>
+    </delete>
+
 </mapper>

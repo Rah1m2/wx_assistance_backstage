@@ -63,6 +63,10 @@ public class ResponseData {
         return new ResponseData(500, "Server Internal Error");
     }
 
+    public static ResponseData sqlInternalException() {
+        return new ResponseData(306, "SQL Internal Error");
+    }
+
     public static ResponseData customerError() {
         return new ResponseData(1001, "customer Error");
     }
@@ -70,4 +74,5 @@ public class ResponseData {
     public static ResponseData tokenExpired() {
         return new ResponseData(840, "Token Expired");
     }
+
 }

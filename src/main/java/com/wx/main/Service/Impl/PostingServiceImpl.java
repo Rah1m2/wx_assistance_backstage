@@ -9,6 +9,7 @@ import com.wx.main.POJO.Posting;
 import com.wx.main.VO.QueryParams;
 import com.wx.main.Service.PostingService;
 import com.wx.main.Util.Split_Util;
+import com.wx.main.VO.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -117,8 +118,8 @@ public class PostingServiceImpl implements PostingService {
      * 获取帖子的分类信息
      * @return 返回json串
      */
-    public String getSortInfo() {
-        return JSON.toJSONString(postingDAO.getSortInfo());
+    public ResponseData getSortInfo() {
+        return ResponseData.ok().setData("sortList", postingDAO.getSortInfo());
     }
 
     public int getCurUserPstCount(String user_openid) {

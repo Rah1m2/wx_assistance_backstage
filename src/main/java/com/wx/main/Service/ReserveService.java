@@ -27,8 +27,8 @@ public interface ReserveService {
     //查询当前用户已接受的别人预订的订单信息
     List<RedisCustomer> getCurAcceptedREZInfo(Map<String, Object> queryForm);
 
-    //接受当前用户预订别人的订单信息
-    List<Student> getReservationInfoOfCur(String user_openid);
+    //获取当前用户预订别人的订单信息
+    Map<String, Object> getReservationInfoOfCur(String user_openid);
 
     //结束正在进行中的预订
     String endProcReservation(String mission_id);
