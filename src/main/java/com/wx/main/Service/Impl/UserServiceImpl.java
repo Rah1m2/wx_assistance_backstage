@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService {
         }
 
         assert json_res != null;
-        User regUser = new User(openid, (String) json_res.get("nickName"), json_res.get("gender").toString(), (String) json_res.get("language"), (String) json_res.get("country"), (String) json_res.get("avatarUrl"), "0");
+        User regUser = new User(openid, (String) json_res.get("nickName"), json_res.get("gender").toString(), (String) json_res.get("language"), (String) json_res.get("country"), (String) json_res.get("avatarUrl"), "0", null);
         if(INSERT_FAILED == userDAO.insertSingleUser(regUser))
             return "NO";
 

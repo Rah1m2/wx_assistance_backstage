@@ -150,9 +150,10 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public ResponseData delUnconfirmedREZ() {
-
-        return null;
+    public ResponseData delUnconfirmedREZ(String key) {
+        RedisTemplate_Util redisTemplate_util = new RedisTemplate_Util(redisTemplate);
+        redisTemplate_util.delete(key);
+        return ResponseData.ok();
     }
 
     @Override

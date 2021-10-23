@@ -12,11 +12,13 @@ public class User {
     private String user_avatarUrl;
     @Transient
     private String user_identity;
+    @Transient
+    private String banned_reason;
 
     public User() {
     }
 
-    public User(String user_openid, String user_name, String user_gender, String user_language, String user_country, String user_avatarUrl, String user_identity) {
+    public User(String user_openid, String user_name, String user_gender, String user_language, String user_country, String user_avatarUrl, String user_identity, String banned_reason) {
         this.user_openid = user_openid;
         this.user_name = user_name;
         this.user_gender = user_gender;
@@ -24,6 +26,7 @@ public class User {
         this.user_country = user_country;
         this.user_avatarUrl = user_avatarUrl;
         this.user_identity = user_identity;
+        this.banned_reason = banned_reason;
     }
 
     public String getUser_openid() {
@@ -82,6 +85,14 @@ public class User {
         this.user_identity = user_identity;
     }
 
+    public String getBanned_reason() {
+        return banned_reason;
+    }
+
+    public void setBanned_reason(String banned_reason) {
+        this.banned_reason = banned_reason;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -92,6 +103,7 @@ public class User {
                 ", user_country='" + user_country + '\'' +
                 ", user_avatarUrl='" + user_avatarUrl + '\'' +
                 ", user_identity='" + user_identity + '\'' +
+                ", banned_reason='" + banned_reason + '\'' +
                 '}';
     }
 

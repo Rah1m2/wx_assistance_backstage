@@ -10,7 +10,7 @@
 
     <select id="getUserByQuery" parameterType="java.lang.String" resultType="com.wx.main.POJO.User">
         <choose>
-            <when test="query == 'ALL'.toString()">
+            <when test="query == 'ALL'.toString() or query == 'Banned'.toString()">
                 select * from user_info
             </when>
             <otherwise>

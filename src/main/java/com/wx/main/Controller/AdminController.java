@@ -67,14 +67,14 @@ public class AdminController {
 
     @RequestMapping(value = "/delAcceptedREZ")
     @ResponseBody
-    public ResponseData delReservationFromMySQL(String mission_id) {
-        return adminService.delAcceptedREZ(Integer.parseInt(mission_id));
+    public ResponseData delReservationFromMySQL(String key) {
+        return adminService.delAcceptedREZ(Integer.parseInt(key));
     }
 
     @RequestMapping(value = "/delUnconfirmedREZ")
     @ResponseBody
-    public ResponseData delReservationFromRedis() {
-        return adminService.delUnconfirmedREZ();
+    public ResponseData delReservationFromRedis(String key) {
+        return adminService.delUnconfirmedREZ(key);
     }
 
     @RequestMapping(value = "/editSortName", method = RequestMethod.POST)
@@ -85,7 +85,7 @@ public class AdminController {
 
     @RequestMapping(value = "/delSort/{id}")
     @ResponseBody
-    public ResponseData delSort(@PathVariable("id")  int sort_id) {
+    public ResponseData delSort(@PathVariable("id") int sort_id) {
         System.out.println("sort_id:"+sort_id);
         return adminService.delSort(sort_id);
     }

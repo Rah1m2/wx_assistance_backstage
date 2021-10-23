@@ -31,7 +31,7 @@ public interface AdminService {
     ResponseData getUnconfirmedREZ();
 
     //删除未确认的预约(redis)
-    ResponseData delUnconfirmedREZ();
+    ResponseData delUnconfirmedREZ(String key);
 
     //获取已经受理的全部预约(mysql)
     ResponseData getAcceptedREZ();
