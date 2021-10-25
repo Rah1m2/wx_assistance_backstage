@@ -14,6 +14,8 @@ public interface AdminDAO {
     //取消封禁
     int unbarAccount(Map<String, Object> userForm);
 
+    User getBarredInfo(String User_openid);
+
     //获取管理员信息
     Map<String, Object> getAdminByAcPw(Map<String, Object> loginForm);
 

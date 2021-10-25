@@ -8,6 +8,7 @@ import com.wx.main.POJO.User;
 import com.wx.main.Service.UserService;
 import com.wx.main.Util.Decrypt_Util;
 import com.wx.main.Util.HttpRequest_Util;
+import com.wx.main.VO.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +53,11 @@ public class UserServiceImpl implements UserService {
     public int updateSingleUser(User user) {
 //        userDAO.updateSingleUser(user);
         return 0;
+    }
+
+    @Override
+    public ResponseData checkIsAStu(String user_openid) {
+        return ResponseData.ok().setData("user_identity", String.valueOf(userDAO.identifyUserByOpenid(user_openid)));
     }
 
     public String wxLogin(String encryptedData, String iv, String code) {

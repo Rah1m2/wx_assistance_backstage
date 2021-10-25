@@ -32,6 +32,14 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public ResponseData isBarred(String user_openid) {
+       if (adminDAO.getBarredInfo(user_openid) == null)
+           return ResponseData.ok();
+       else
+           return ResponseData.forbidden();
+    }
+
+    @Override
     public ResponseData GarryKing(Map<String, Object> userForm) {
 
         if (userForm.get("user_status") == null && userForm.get("user_identity") != null) {

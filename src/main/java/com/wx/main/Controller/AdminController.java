@@ -102,4 +102,10 @@ public class AdminController {
         return adminService.GarryKing(userForm);
     }
 
+    @RequestMapping(value = "/checkIsBanned")
+    @ResponseBody
+    public ResponseData checkIsBanned(String user_openid) {
+        return adminService.isBarred(user_openid);
+    }
+
 }

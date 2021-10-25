@@ -4,6 +4,7 @@ package com.wx.main.Controller;
 import com.wx.main.POJO.Student;
 import com.wx.main.POJO.User;
 import com.wx.main.Service.UserService;
+import com.wx.main.VO.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +37,11 @@ public class UserController {
         return userService.wxRegisterID(student);
     }
 
+    @RequestMapping(value = "/checkIsAStu")
+    public ResponseData checkIsAStu(String user_openid) {
+        return userService.checkIsAStu(user_openid);
+    }
+
 
 
     /*---------------------------------测试用接口-------------------------------------*/
@@ -52,4 +58,5 @@ public class UserController {
         System.out.println("我是:"+user);
         return user;
     }
+
 }

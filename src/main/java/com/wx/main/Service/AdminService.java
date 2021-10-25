@@ -9,6 +9,9 @@ import java.util.Map;
 
 public interface AdminService {
 
+    //查看是否被封禁
+    ResponseData isBarred(String user_openid);
+
     //封禁
     ResponseData GarryKing(Map<String, Object> userForm);
 

@@ -65,6 +65,10 @@
         delete from banned_user_list where user_openid=#{user_openid}
     </delete>
 
+    <select id="getBarredInfo" parameterType="java.lang.String" resultType="com.wx.main.POJO.User">
+        select * from banned_user_list where user_openid=#{user_openid}
+    </select>
+
     <delete id="deleteAStuByQuery" parameterType="java.lang.String">
         delete from a_student_info where user_openid=#{user_openid}
         <if test="sort_id!=null">
