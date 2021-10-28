@@ -3,6 +3,7 @@ package com.wx.main.Service;
 import com.wx.main.DAO.ReserveDAO;
 import com.wx.main.POJO.User;
 import com.wx.main.VO.ResponseData;
+import com.wx.main.VO.StudentReserve;
 
 import java.util.List;
 import java.util.Map;
@@ -50,4 +51,7 @@ public interface AdminService {
 
     //添加课程
     ResponseData addSort(String addSortName);
+
+    //admin界面的查询语句
+    ResponseData screenUser(String query);
 }

@@ -14,11 +14,11 @@
              ON
              postings_info.article_id = comment_info.article_id
              WHERE
-             postings_info.article_content LIKE CONCAT('%',#{query},'%')
-             OR
-             postings_info.article_title LIKE CONCAT('%',#{query},'%')
-             OR
-             comment_info.comment_content LIKE CONCAT('%',#{query},'%')
+                 postings_info.article_content LIKE CONCAT('%',#{query},'%')
+                 OR
+                 postings_info.article_title LIKE CONCAT('%',#{query},'%')
+                 OR
+                 comment_info.comment_content LIKE CONCAT('%',#{query},'%')
          </when>
          <otherwise>
              * from postings_info
@@ -28,6 +28,24 @@
     
     <select id="getUserOpenidByArticleId" resultType="String" parameterType="int">
         select user_openid from postings_info where article_id=#{article_id}
+    </select>
+
+    <select id="searchAdmin" resultType="com.wx.main.POJO.User" parameterType="String">
+        SELECT
+            *
+        FROM
+            user_info
+        WHERE
+            user_info.user_name LIKE CONCAT('%',#{query},'%')
+            OR
+            user_info.user_openid LIKE CONCAT('%',#{query},'%')
+            OR
+            user_info.user_language LIKE CONCAT('%',#{query},'%')
+            OR
+            user_info.user_country LIKE CONCAT('%',#{query},'%')
+            OR
+            user_info.user_avatarUrl LIKE CONCAT('%',#{query},'%')
+
     </select>
 
 </mapper>

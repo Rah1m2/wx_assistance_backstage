@@ -10,6 +10,7 @@ public class StudentReserve {
     private String user_openid;
     private String user_name;
     private String user_avatarUrl;
+    private String customer_user_name;
     private String customer_user_openid;
     private String customer_user_avatarUrl;
     private String user_score;
@@ -21,13 +22,14 @@ public class StudentReserve {
     public StudentReserve() {
     }
 
-    public StudentReserve(int user_mission_id, int mission_id, int sort_id, String user_openid, String user_name, String user_avatarUrl, String customer_user_openid, String customer_user_avatarUrl, String user_score, String contact_detail, String sort_name, boolean isReserved, Date deadline) {
+    public StudentReserve(int user_mission_id, int mission_id, int sort_id, String user_openid, String user_name, String user_avatarUrl, String customer_user_name, String customer_user_openid, String customer_user_avatarUrl, String user_score, String contact_detail, String sort_name, boolean isReserved, Date deadline) {
         this.user_mission_id = user_mission_id;
         this.mission_id = mission_id;
         this.sort_id = sort_id;
         this.user_openid = user_openid;
         this.user_name = user_name;
         this.user_avatarUrl = user_avatarUrl;
+        this.customer_user_name = customer_user_name;
         this.customer_user_openid = customer_user_openid;
         this.customer_user_avatarUrl = customer_user_avatarUrl;
         this.user_score = user_score;
@@ -83,6 +85,14 @@ public class StudentReserve {
 
     public void setUser_avatarUrl(String user_avatarUrl) {
         this.user_avatarUrl = user_avatarUrl;
+    }
+
+    public String getCustomer_user_name() {
+        return customer_user_name;
+    }
+
+    public void setCustomer_user_name(String customer_user_name) {
+        this.customer_user_name = customer_user_name;
     }
 
     public String getCustomer_user_openid() {
@@ -150,6 +160,7 @@ public class StudentReserve {
                 ", user_openid='" + user_openid + '\'' +
                 ", user_name='" + user_name + '\'' +
                 ", user_avatarUrl='" + user_avatarUrl + '\'' +
+                ", customer_user_name='" + customer_user_name + '\'' +
                 ", customer_user_openid='" + customer_user_openid + '\'' +
                 ", customer_user_avatarUrl='" + customer_user_avatarUrl + '\'' +
                 ", user_score='" + user_score + '\'' +

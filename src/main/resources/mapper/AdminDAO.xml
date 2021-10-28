@@ -30,7 +30,27 @@
     </insert>
 
     <select id="getReservations" resultType="com.wx.main.VO.StudentReserve">
-        SELECT mission_id, sort_name, user_openid, customer_user_openid from mission_reserve_info NATURAL JOIN sort_info
+        SELECT
+          mission_id, sort_name, user_name, mission_reserve_info.user_openid, mission_reserve_info.customer_user_openid
+        FROM
+          mission_reserve_info
+        NATURAL JOIN
+          sort_info
+        INNER JOIN
+          user_info
+        WHERE
+          user_info.user_openid = mission_reserve_info.user_openid
+    </select>
+
+    <select id="getReservationsPart2" resultType="com.wx.main.VO.StudentReserve">
+      SELECT
+        mission_id, user_name customer_user_name,mission_reserve_info.user_openid, mission_reserve_info.customer_user_openid
+      FROM
+        mission_reserve_info
+      INNER JOIN
+        user_info
+      WHERE
+        user_info.user_openid = mission_reserve_info.customer_user_openid
     </select>
 
     <delete id="deleteReservation" parameterType="java.lang.Integer">

@@ -28,6 +28,9 @@ public interface AdminDAO {
     //获取预订信息
     List<StudentReserve> getReservations();
 
+    //获取预订信息
+    List<StudentReserve> getReservationsPart2();
+
     //从MySQL删除一条预约
     boolean deleteReservation(int mission_id);
 
@@ -40,6 +43,6 @@ public interface AdminDAO {
     //修改课程名称
     int updateSort(Map<String, Object> sortForm);
 
+    //按照条件删除学霸信息
     int deleteAStuByQuery(Map<String, Object> userForm);
-
 }

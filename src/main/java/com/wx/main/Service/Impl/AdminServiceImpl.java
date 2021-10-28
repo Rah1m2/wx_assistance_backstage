@@ -2,12 +2,14 @@ package com.wx.main.Service.Impl;
 
 import com.wx.main.DAO.AdminDAO;
 import com.wx.main.DAO.PostingDAO;
+import com.wx.main.DAO.SearchDAO;
 import com.wx.main.POJO.Sort;
 import com.wx.main.POJO.User;
 import com.wx.main.Service.AdminService;
 import com.wx.main.Util.RedisTemplate_Util;
 import com.wx.main.VO.RedisCustomer;
 import com.wx.main.VO.ResponseData;
+import com.wx.main.VO.StudentReserve;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -21,12 +23,14 @@ import java.util.Set;
 public class AdminServiceImpl implements AdminService {
 
     private AdminDAO adminDAO;
+    private SearchDAO searchDAO;
     private PostingDAO postingDAO;
     private RedisTemplate redisTemplate;
 
     @Autowired
-    public AdminServiceImpl(AdminDAO adminDAO, PostingDAO postingDAO, RedisTemplate redisTemplate) {
+    public AdminServiceImpl(AdminDAO adminDAO, SearchDAO searchDAO, PostingDAO postingDAO, RedisTemplate redisTemplate) {
         this.adminDAO = adminDAO;
+        this.searchDAO = searchDAO;
         this.postingDAO = postingDAO;
         this.redisTemplate = redisTemplate;
     }
@@ -166,9 +170,23 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public ResponseData getAcceptedREZ() {
+        List<StudentReserve> reserves =  adminDAO.getReservations();
+        List<StudentReserve> reserves_p2 = adminDAO.getReservationsPart2();
+
+        for (StudentReserve reserve_p2 : reserves_p2) {
+            for (StudentReserve reserve : reserves) {
+                if (reserve_p2.getMission_id() == reserve.getMission_id()) {
+                    reserve.setCustomer_user_name(reserve_p2.getCustomer_user_name());
+                    break;
+                }
+            }
+        }
+
+        System.out.println(reserves);
+
         return ResponseData
                 .ok()
-                .setData("Reservations", adminDAO.getReservations());
+                .setData("Reservations", reserves);
     }
 
     @Override
@@ -209,5 +227,14 @@ public class AdminServiceImpl implements AdminService {
         return ResponseData
                 .ok();
     }
+
+    @Override
+    public ResponseData screenUser(String query) {
+        return ResponseData
+                .ok()
+                .setData("searchRes", searchDAO.searchAdmin(query))
+                .setData("pageTotal", searchDAO.searchAdmin(query).size());
+    }
+
 
 }

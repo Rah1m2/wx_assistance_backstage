@@ -108,4 +108,10 @@ public class AdminController {
         return adminService.isBarred(user_openid);
     }
 
+    @RequestMapping(value = "/searchAdmin")
+    @ResponseBody
+    public ResponseData searchAdmin(String query) {
+        return adminService.screenUser(query);
+    }
+
 }
