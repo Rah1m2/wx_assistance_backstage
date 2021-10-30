@@ -34,6 +34,7 @@ public class CommentController {
     @ResponseBody
     public String sendComment(QueryParams queryParams) {
 //        showUrl();
+        System.out.println("Params3:"+queryParams);
         return commentService.getCommentByPosting(String.valueOf(queryParams.getArticle_id()));
     }
 
