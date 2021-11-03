@@ -1,11 +1,13 @@
 package com.wx.main.Service.Impl;
 
+import com.auth0.jwt.interfaces.Claim;
 import com.wx.main.DAO.AdminDAO;
 import com.wx.main.DAO.PostingDAO;
 import com.wx.main.DAO.SearchDAO;
 import com.wx.main.POJO.Sort;
 import com.wx.main.POJO.User;
 import com.wx.main.Service.AdminService;
+import com.wx.main.Util.JWT_Util;
 import com.wx.main.Util.RedisTemplate_Util;
 import com.wx.main.VO.RedisCustomer;
 import com.wx.main.VO.ResponseData;
@@ -73,9 +75,17 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public boolean verifyLogin(Map<String, Object> loginForm) {
+    public ResponseData verifyLogin(Map<String, Object> loginForm) {
         Map<String, Object> result = adminDAO.getAdminByAcPw(loginForm);
-        return result != null && result.size() == 2;
+
+        if (result == null)
+            return ResponseData.unauthorized();
+
+        String token = JWT_Util.createToken((String)loginForm.get("user_account"), (String)loginForm.get("user_password"));
+
+        Map<String, Claim> verified_token = JWT_Util.verifyToken(token);
+
+        return ResponseData.ok().setData("token", token);
     }
 
     @Override
@@ -238,3 +248,22 @@ public class AdminServiceImpl implements AdminService {
 
 
 }
+
+
+
+
+//    @Override
+//    public boolean verifyLogin(Map<String, Object> loginForm) {
+//        Map<String, Object> result = adminDAO.getAdminByAcPw(loginForm);
+//
+////        if (result == null)
+////            return false;
+//
+//        String token = JWT_Util.createToken((String)loginForm.get("user_account"), (String)loginForm.get("user_password"));
+//
+//        Map<String, Claim> verified_token = JWT_Util.verifyToken(token);
+//
+////        return ResponseData.ok().setData("token", token);
+//
+//        return result != null && result.size() == 2;
+//    }

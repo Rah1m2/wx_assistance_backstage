@@ -24,9 +24,7 @@ public class AdminController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public ResponseData adminLogin(@RequestBody Map<String, Object> loginForm) {
-        if (adminService.verifyLogin(loginForm))
-            return ResponseData.ok();
-        return ResponseData.unauthorized();
+        return adminService.verifyLogin(loginForm);
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)

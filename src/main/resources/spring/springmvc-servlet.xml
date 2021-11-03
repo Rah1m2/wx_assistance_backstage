@@ -7,9 +7,9 @@
             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
             http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <mvc:cors>
-        <mvc:mapping path="/**" allowed-origins="*" allow-credentials="true" max-age="1800" allowed-methods="GET,POST,OPTIONS"/>
-    </mvc:cors>
+    <!--<mvc:cors>-->
+        <!--<mvc:mapping path="/**" allowed-origins="*" allow-credentials="true" max-age="1800" allowed-methods="GET,POST,OPTIONS"/>-->
+    <!--</mvc:cors>-->
 
     <!--自动扫描指定包下的注解，依次创建对象放入IOC容器统一管理-->
     <context:component-scan base-package="com.wx.main"/>
@@ -19,6 +19,16 @@
 
     <!--替代了HandlerMapper和HandlerAdapter的功能，通过注解自动匹配对应的Controller-->
     <mvc:annotation-driven />
+
+    <!--拦截器配置-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/admin/**"/>
+            <mvc:exclude-mapping path="/admin/login"/>
+            <mvc:exclude-mapping path="/admin/register"/>
+            <bean class="com.wx.main.Interceptor.TokenInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
     <!-- 视图解析器
         1. 获取ModelAndView的数据

@@ -17,7 +17,7 @@ public interface AdminService {
     ResponseData GarryKing(Map<String, Object> userForm);
 
     //校验管理员的登录
-    boolean verifyLogin(Map<String, Object> loginForm);
+    ResponseData verifyLogin(Map<String, Object> loginForm);
 
     //注册管理员账号
     ResponseData register(Map<String, Object> registerForm);
