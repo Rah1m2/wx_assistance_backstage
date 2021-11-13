@@ -36,9 +36,9 @@
             a_student_info.sort_id=mission_reserve_info.sort_id
     </select>
 
-    <select id="getCurAcceptedREZInfoByUserOpenid" resultType="com.wx.main.VO.RedisCustomer">
+    <select id="getCurAcceptedREZInfoByUserOpenid" resultType="com.wx.main.VO.StudentReserve">
         select
-            sort_name,user_avatarUrl customer_user_avatarUrl,user_name customer_user_name, sort_id, mission_reserve_info.customer_user_openid user_openid, isReserved
+            sort_name,user_avatarUrl customer_user_avatarUrl,user_name customer_user_name, sort_id, mission_reserve_info.customer_user_openid user_openid, isReserved, deadline
         from
             mission_reserve_info
         natural join
@@ -68,8 +68,12 @@
         insert into mission_reserve_info (mission_id, sort_id, user_openid, customer_user_openid, isReserved, deadline) values (#{mission_id}, #{sort_id}, #{user_openid}, #{customer_user_openid}, 1, #{deadline})
     </insert>
     
-    <delete id="delReservation" parameterType="java.lang.String">
-        delete from mission_reserve_info where mission_id=#{mission_id}
+    <delete id="delReservation" parameterType="java.lang.Integer">
+        delete from mission_reserve_info where mission_id=#{x}
     </delete>
+
+    <select id="getContactDetailByUserOpenid" parameterType="java.lang.String" resultType="java.lang.String">
+        select DISTINCT contact_detail from a_student_info where user_openid=#{user_openid}
+    </select>
 
 </mapper>

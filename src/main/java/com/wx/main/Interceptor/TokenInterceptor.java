@@ -45,6 +45,9 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
             verifiedToken = JWT_Util.verifyToken(token);
         } catch (TokenExpiredException te) {
             System.out.println(te.getMessage());
+            PrintWriter out = httpServletResponse.getWriter();
+            ResponseData responseData = ResponseData.tokenExpired();
+            out.write(JSON.toJSONString(responseData));
             //暂时让过期token通过
             return false;
         }

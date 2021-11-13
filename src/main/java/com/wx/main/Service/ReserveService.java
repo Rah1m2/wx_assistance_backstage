@@ -3,6 +3,8 @@ package com.wx.main.Service;
 import com.wx.main.POJO.Reserve;
 import com.wx.main.POJO.Student;
 import com.wx.main.VO.RedisCustomer;
+import com.wx.main.VO.ResponseData;
+import com.wx.main.VO.StudentReserve;
 
 import java.util.List;
 import java.util.Map;
@@ -25,11 +27,14 @@ public interface ReserveService {
     String processReserve(Reserve reserve, boolean isAccept);
 
     //查询当前用户已接受的别人预订的订单信息
-    List<RedisCustomer> getCurAcceptedREZInfo(Map<String, Object> queryForm);
+    List<StudentReserve> getCurAcceptedREZInfo(Map<String, Object> queryForm);
 
     //获取当前用户预订别人的订单信息
     Map<String, Object> getReservationInfoOfCur(String user_openid);
 
     //结束正在进行中的预订
-    String endProcReservation(String mission_id);
+    ResponseData endProcReservation(int mission_id);
+
+    //获取当前用户的联系方式
+    ResponseData getCurContactDetail(String user_openid);
 }

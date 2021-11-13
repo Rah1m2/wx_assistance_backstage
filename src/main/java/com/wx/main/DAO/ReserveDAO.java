@@ -18,7 +18,7 @@ public interface ReserveDAO {
     List<StudentReserve> getREZInfoOfCurByUserOpenid(String user_openid);
 
     //通过
-    List<RedisCustomer> getCurAcceptedREZInfoByUserOpenid(Map<String, Object> queryForm);
+    List<StudentReserve> getCurAcceptedREZInfoByUserOpenid(Map<String, Object> queryForm);
 
     //过滤预订信息
     List<Student> filterAStudentInfo(@Param("aStuList")List<Student> aStuList);
@@ -30,6 +30,9 @@ public interface ReserveDAO {
     int insertReserveInfo(Reserve reserve);
 
     //删除单条预约信息
-    int delReservation(String ...x);
+    int delReservation(int x);
+
+    //通过user_openid查询contact_detail
+    String getContactDetailByUserOpenid(String user_openid);
 
 }

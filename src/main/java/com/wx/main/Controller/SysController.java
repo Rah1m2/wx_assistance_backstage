@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import javax.mail.search.SearchTerm;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 
 @RestController
@@ -52,8 +54,9 @@ public class SysController {
 
     @RequestMapping(value = "/sendSubMsg")
     public String sendSubscribeMsg(SubMsgInfo subMsgInfo) {
-        String user_openid = searchService.getUidByAid(subMsgInfo.getArticle_id());
-        return push(user_openid, subMsgInfo);
+        if (subMsgInfo.getUser_openid() == null)
+            subMsgInfo.setUser_openid(searchService.getUidByAid(subMsgInfo.getArticle_id()));
+        return push(subMsgInfo.getUser_openid(), subMsgInfo);
     }
 
     private String push(String user_openid, SubMsgInfo subMsgInfo) {
@@ -68,9 +71,14 @@ public class SysController {
         wxMssVo.setPage("pages/index/index");
 
         Map<String, TemplateData> m = new HashMap<String, TemplateData>(3);
-        m.put("thing6", new TemplateData((String) subMsgData.get("thing06")));
-        m.put("thing1", new TemplateData((String) subMsgData.get("thing01")));
-        m.put("thing2", new TemplateData((String) subMsgData.get("thing02")));
+        System.out.println(subMsgData.keySet());
+        Set<String> keys =  subMsgData.keySet();
+        for (String key : keys) {
+            m.put(key, new TemplateData((String) subMsgData.get(key)));
+        }
+//        m.put("thing6", new TemplateData((String) subMsgData.get("thing06")));
+//        m.put("thing1", new TemplateData((String) subMsgData.get("thing01")));
+//        m.put("thing2", new TemplateData((String) subMsgData.get("thing02")));
         wxMssVo.setData(m);
         ResponseEntity<String> responseEntity =
                 restTemplate.postForEntity(url, wxMssVo, String.class);

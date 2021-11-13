@@ -4,11 +4,10 @@ import com.wx.main.POJO.Reserve;
 import com.wx.main.POJO.Student;
 import com.wx.main.Service.ReserveService;
 import com.wx.main.VO.RedisCustomer;
+import com.wx.main.VO.ResponseData;
+import com.wx.main.VO.StudentReserve;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -39,7 +38,7 @@ public class ReserveController {
     }
 
     @RequestMapping(value = "/reqCurReservedInfo", method = RequestMethod.POST)
-    public List<RedisCustomer> sendCurAcceptedREZInfo(@RequestBody Map<String, Object> queryForm) {
+    public List<StudentReserve> sendCurAcceptedREZInfo(@RequestBody Map<String, Object> queryForm) {
         return reserveService.getCurAcceptedREZInfo(queryForm);
     }
 
@@ -59,7 +58,12 @@ public class ReserveController {
     }
 
     @RequestMapping(value = "/delReservation")
-    public String delReservation(String mission_id) {
+    public ResponseData delReservation(int mission_id) {
         return reserveService.endProcReservation(mission_id);
+    }
+
+    @RequestMapping(value = "/reqCurNumber")
+    public ResponseData sendCurContactDetail(String user_openid) {
+        return reserveService.getCurContactDetail(user_openid);
     }
 }

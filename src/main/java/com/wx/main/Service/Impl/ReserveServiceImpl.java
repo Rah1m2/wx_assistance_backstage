@@ -6,6 +6,8 @@ import com.wx.main.POJO.Student;
 import com.wx.main.Service.ReserveService;
 import com.wx.main.Util.RedisTemplate_Util;
 import com.wx.main.VO.RedisCustomer;
+import com.wx.main.VO.ResponseData;
+import com.wx.main.VO.StudentReserve;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -37,8 +39,13 @@ public class ReserveServiceImpl implements ReserveService {
         //查询预约表
         List<Student> filteredList = reserveDAO.filterAStudentInfo(aStuList);
 
-        //做差集
-        aStuList.removeAll(filteredList);
+        if (filteredList.size() >= 2)
+            aStuList.clear();
+        else
+            //做差集
+            aStuList.removeAll(filteredList);
+
+
 
 //        RedisTemplate_Util RedisTemplate_Util = new RedisTemplate_Util(redisTemplate);
 //
@@ -122,8 +129,8 @@ public class ReserveServiceImpl implements ReserveService {
     }
 
     @Override
-    public List<RedisCustomer> getCurAcceptedREZInfo(Map<String, Object> queryForm) {
-        return reserveDAO.getCurAcceptedREZInfoByUserOpenid(queryForm);
+    public List<StudentReserve> getCurAcceptedREZInfo(Map<String, Object> queryForm) {
+    return reserveDAO.getCurAcceptedREZInfoByUserOpenid(queryForm);
     }
 
     @Override
@@ -151,10 +158,15 @@ public class ReserveServiceImpl implements ReserveService {
     }
 
     @Override
-    public String endProcReservation(String mission_id) {
+    public ResponseData endProcReservation(int mission_id) {
         if (reserveDAO.delReservation(mission_id) == 0)
-            return "NO";
-        return "YES";
+            return ResponseData.notFound();
+        return ResponseData.ok();
+    }
+
+    @Override
+    public ResponseData getCurContactDetail(String user_openid) {
+        return ResponseData.ok().setData("contact_detail", reserveDAO.getContactDetailByUserOpenid(user_openid));
     }
 
 }

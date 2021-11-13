@@ -9,12 +9,12 @@ public class Reserve {
     private String user_openid;
     private String customer_user_openid;
     private Boolean isReserved = false;
-    private Date deadline;
+    private String deadline;
 
     public Reserve() {
     }
 
-    public Reserve(int mission_id, int sort_id, String user_openid, String customer_user_openid, Boolean isReserved, Date deadline) {
+    public Reserve(int mission_id, int sort_id, String user_openid, String customer_user_openid, Boolean isReserved, String deadline) {
         this.mission_id = mission_id;
         this.sort_id = sort_id;
         this.user_openid = user_openid;
@@ -63,11 +63,11 @@ public class Reserve {
         isReserved = reserved;
     }
 
-    public Date getDeadline() {
+    public String getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(Date deadline) {
+    public void setDeadline(String deadline) {
         this.deadline = deadline;
     }
 
@@ -79,7 +79,7 @@ public class Reserve {
                 ", user_openid='" + user_openid + '\'' +
                 ", customer_user_openid='" + customer_user_openid + '\'' +
                 ", isReserved=" + isReserved +
-                ", deadline=" + deadline +
+                ", deadline='" + deadline + '\'' +
                 '}';
     }
 

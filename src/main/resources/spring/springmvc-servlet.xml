@@ -26,6 +26,7 @@
             <mvc:mapping path="/admin/**"/>
             <mvc:exclude-mapping path="/admin/login"/>
             <mvc:exclude-mapping path="/admin/register"/>
+            <mvc:exclude-mapping path="/admin/checkIsBanned"/>
             <bean class="com.wx.main.Interceptor.TokenInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>

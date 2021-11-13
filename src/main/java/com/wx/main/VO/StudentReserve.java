@@ -17,12 +17,12 @@ public class StudentReserve {
     private String contact_detail;
     private String sort_name;
     private boolean isReserved;
-    private Date deadline;
+    private String deadline;
 
     public StudentReserve() {
     }
 
-    public StudentReserve(int user_mission_id, int mission_id, int sort_id, String user_openid, String user_name, String user_avatarUrl, String customer_user_name, String customer_user_openid, String customer_user_avatarUrl, String user_score, String contact_detail, String sort_name, boolean isReserved, Date deadline) {
+    public StudentReserve(int user_mission_id, int mission_id, int sort_id, String user_openid, String user_name, String user_avatarUrl, String customer_user_name, String customer_user_openid, String customer_user_avatarUrl, String user_score, String contact_detail, String sort_name, boolean isReserved, String deadline) {
         this.user_mission_id = user_mission_id;
         this.mission_id = mission_id;
         this.sort_id = sort_id;
@@ -143,11 +143,11 @@ public class StudentReserve {
         isReserved = reserved;
     }
 
-    public Date getDeadline() {
+    public String getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(Date deadline) {
+    public void setDeadline(String deadline) {
         this.deadline = deadline;
     }
 
