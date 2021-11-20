@@ -57,13 +57,19 @@ public class ReserveController {
         return reserveService.getReservationInfoOfCur(user_openid);
     }
 
-    @RequestMapping(value = "/delReservation")
-    public ResponseData delReservation(int mission_id) {
-        return reserveService.endProcReservation(mission_id);
+    @RequestMapping(value = "/disableReservation", method = RequestMethod.POST)
+    public ResponseData delReservation(@RequestBody Map<String, Object> disableForm) {
+        return reserveService.endProcReservation(disableForm);
     }
 
     @RequestMapping(value = "/reqCurNumber")
     public ResponseData sendCurContactDetail(String user_openid) {
         return reserveService.getCurContactDetail(user_openid);
     }
+
+    @RequestMapping(value = "/isRedisContainAStu")
+    public ResponseData isRedisContainAStu(String user_openid) {
+        return reserveService.isRedisContainAStu(user_openid);
+    }
+
 }

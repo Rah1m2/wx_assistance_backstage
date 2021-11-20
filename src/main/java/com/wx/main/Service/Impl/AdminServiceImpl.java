@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Service("adminServiceImpl")
+@SuppressWarnings("Uncheked")
 public class AdminServiceImpl implements AdminService {
 
     private AdminDAO adminDAO;

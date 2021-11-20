@@ -33,17 +33,23 @@ public class ReserveServiceImpl implements ReserveService {
         //暂时关闭ONLY_FULL_GROUP_BY
         reserveDAO.DisableONLY_FULL_GROUP_BY();
 
-        //查询学霸表
+        //查询AStu表
         List<Student> aStuList = reserveDAO.getAStudentInfoBySortId(queryForm);
 
-        //查询预约表
-        List<Student> filteredList = reserveDAO.filterAStudentInfo(aStuList);
+        //查询没有筛选掉过期预约的不空闲学霸
+        List<Student> UnavailableList = reserveDAO.getUnavailableStudentInfo();
 
-        if (filteredList.size() >= 2)
+        //查询过期的预约条目
+        List<Student> InvalidList = reserveDAO.getInvalidStudentInfo(aStuList);
+
+        //去掉过期的预约条目
+        UnavailableList.removeAll(InvalidList);
+
+        if (UnavailableList.size() >= 2)
             aStuList.clear();
         else
             //做差集
-            aStuList.removeAll(filteredList);
+            aStuList.removeAll(UnavailableList);
 
 
 
@@ -130,7 +136,7 @@ public class ReserveServiceImpl implements ReserveService {
 
     @Override
     public List<StudentReserve> getCurAcceptedREZInfo(Map<String, Object> queryForm) {
-    return reserveDAO.getCurAcceptedREZInfoByUserOpenid(queryForm);
+        return reserveDAO.getCurAcceptedREZInfoByUserOpenid(queryForm);
     }
 
     @Override
@@ -158,15 +164,33 @@ public class ReserveServiceImpl implements ReserveService {
     }
 
     @Override
-    public ResponseData endProcReservation(int mission_id) {
-        if (reserveDAO.delReservation(mission_id) == 0)
-            return ResponseData.notFound();
+    public ResponseData endProcReservation(Map<String, Object> disableForm) {
+//        if (reserveDAO.delRezByMissionId(mission_id) == 0)
+//            return ResponseData.notFound();
+//        return ResponseData.ok();
+        if (reserveDAO.updateRezDeadlineByMissionId(disableForm) == 0)
+            return ResponseData.sqlInternalException();
         return ResponseData.ok();
     }
 
     @Override
     public ResponseData getCurContactDetail(String user_openid) {
         return ResponseData.ok().setData("contact_detail", reserveDAO.getContactDetailByUserOpenid(user_openid));
+    }
+
+    @Override
+    public ResponseData isRedisContainAStu(String user_openid) {
+
+        RedisTemplate_Util redisTemplate_util = new RedisTemplate_Util(redisTemplate);
+
+        Set<String> keySet = (Set<String>) redisTemplate_util.queryKey("*:oRjTi4jAwOlEfmsQ1M2AS2D95pYY:*");
+
+        if (keySet.isEmpty())
+            return ResponseData
+                    .ok();
+        else
+            return ResponseData
+                    .forbidden();
     }
 
 }

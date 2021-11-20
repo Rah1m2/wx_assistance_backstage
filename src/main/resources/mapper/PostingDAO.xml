@@ -9,7 +9,7 @@
     </select>
 
     <select id="getPostingListOrderByTime" resultType="com.wx.main.POJO.Posting">
-        select * from postings_info order by last_reply_time
+        select * from postings_info order by last_reply_time DESC
     </select>
 
     <select id="getSortInfo" resultType="com.wx.main.POJO.Sort">

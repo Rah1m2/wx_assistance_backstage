@@ -24,5 +24,5 @@ public interface UserService {
     //以上为测试代码，下面的才是正式的事务层逻辑
     String wxLogin(String encryptedData,String iv,String code);
 
-    String wxRegisterID(Student student);
+    ResponseData wxRegisterID(Student student);
 }

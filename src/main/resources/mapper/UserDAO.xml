@@ -25,6 +25,10 @@
         insert into a_student_info (user_mission_id, sort_id, user_openid, user_score, contact_detail) value (#{user_mission_id},#{sort_id},#{user_openid},#{user_score},#{contact_detail})
     </insert>
 
+    <delete id="deleteOneStuInfoById" parameterType="java.lang.String">
+        delete from a_student_info where user_openid=#{user_openid}
+    </delete>
+
     <select id="identifyUserByOpenid" parameterType="java.lang.String" resultType="int">
         select COUNT(user_openid) from a_student_info where user_openid=#{user_openid}
     </select>

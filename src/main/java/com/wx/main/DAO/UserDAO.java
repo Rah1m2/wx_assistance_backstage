@@ -22,6 +22,10 @@ public interface UserDAO {
     //增加一条学霸信息
     int insertSingleAStuInfo(Student student);
 
+    //删除一名用户有关的学霸信息
+    int deleteOneStuInfoById(String user_openid);
+
     //判断用户身份
     int identifyUserByOpenid(String String);
+
 }

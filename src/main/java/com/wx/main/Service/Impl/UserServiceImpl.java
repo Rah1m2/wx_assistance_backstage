@@ -2,6 +2,7 @@ package com.wx.main.Service.Impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.wx.main.DAO.ReserveDAO;
 import com.wx.main.DAO.UserDAO;
 import com.wx.main.POJO.Student;
 import com.wx.main.POJO.User;
@@ -18,13 +19,17 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private UserDAO userDAO;
+    private ReserveDAO reserveDAO;
 
     public UserServiceImpl() {
     }
+
     @Autowired
-    public UserServiceImpl(UserDAO userDAO) {
+    public UserServiceImpl(UserDAO userDAO, ReserveDAO reserveDAO) {
         this.userDAO = userDAO;
+        this.reserveDAO = reserveDAO;
     }
+
 
 
     public UserDAO getUserDAO() {
@@ -126,9 +131,19 @@ public class UserServiceImpl implements UserService {
         return JSON.toJSONString(user_list);
     }
 
-    public String wxRegisterID(Student student) {
-        if (0 == userDAO.insertSingleAStuInfo(student))
-            return "NO";
-        return "YES";
+    public ResponseData wxRegisterID(Student student) {
+        //用业务代码维护的级联删除
+        delCASCADE(student);
+        //插入新的学霸认证数据
+        userDAO.insertSingleAStuInfo(student);
+        return ResponseData.ok();
     }
+
+    public void delCASCADE(Student student) {
+        //先删除学霸表
+        userDAO.deleteOneStuInfoById(student.getUser_openid());
+        //再删除预约表的相关内容
+        reserveDAO.delRezByUserOpenid(student.getUser_openid());
+    }
+
 }

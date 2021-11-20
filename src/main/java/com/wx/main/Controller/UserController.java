@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/registerIdentity")
-    public String registerIdentity(Student student) {
+    public ResponseData registerIdentity(Student student) {
         return userService.wxRegisterID(student);
     }
 

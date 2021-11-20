@@ -33,8 +33,10 @@ public interface ReserveService {
     Map<String, Object> getReservationInfoOfCur(String user_openid);
 
     //结束正在进行中的预订
-    ResponseData endProcReservation(int mission_id);
+    ResponseData endProcReservation(Map<String, Object> disableForm);
 
     //获取当前用户的联系方式
     ResponseData getCurContactDetail(String user_openid);
+
+    ResponseData isRedisContainAStu(String user_openid);
 }

@@ -6,6 +6,19 @@
 
 <mapper namespace="com.wx.main.DAO.ReserveDAO">
 
+    <sql id="aStu_filter">
+        select distinct sort_id,user_mission_id,user_openid,user_name,user_avatarUrl,user_score,deadline
+        from
+            a_student_info
+            natural join
+            user_info
+            natural join
+            mission_reserve_info
+        group by
+            user_openid
+        having
+    </sql>
+
     <select id="getAStudentInfoBySortId" resultType="com.wx.main.POJO.Student">
         select distinct
           sort_id,user_mission_id,user_openid,user_name,user_avatarUrl,user_score
@@ -34,6 +47,8 @@
             mission_reserve_info.customer_user_openid=#{user_openid}
             and
             a_student_info.sort_id=mission_reserve_info.sort_id
+            and
+            deadline>NOW()
     </select>
 
     <select id="getCurAcceptedREZInfoByUserOpenid" resultType="com.wx.main.VO.StudentReserve">
@@ -51,12 +66,14 @@
             mission_reserve_info.customer_user_openid = user_info.user_openid
     </select>
 
-    <select id="filterAStudentInfo" resultType="com.wx.main.POJO.Student">
-        select distinct sort_id,user_mission_id,user_openid,user_name,user_avatarUrl,user_score from
-          a_student_info natural join user_info natural join mission_reserve_info
-        group by
-          user_openid
-        having
+    <select id="getInvalidStudentInfo" resultType="com.wx.main.POJO.Student">
+        <include refid="aStu_filter"/>
+          deadline &lt; NOW()
+            <!--COUNT(user_openid) &gt; 1-->
+    </select>
+    
+    <select id="getUnavailableStudentInfo" resultType="com.wx.main.POJO.Student">
+        <include refid="aStu_filter"/>
           COUNT(user_openid) &gt; 1
     </select>
 
@@ -68,12 +85,20 @@
         insert into mission_reserve_info (mission_id, sort_id, user_openid, customer_user_openid, isReserved, deadline) values (#{mission_id}, #{sort_id}, #{user_openid}, #{customer_user_openid}, 1, #{deadline})
     </insert>
     
-    <delete id="delReservation" parameterType="java.lang.Integer">
+    <delete id="delRezByMissionId" parameterType="java.lang.Integer">
         delete from mission_reserve_info where mission_id=#{x}
+    </delete>
+
+    <delete id="delRezByUserOpenid" parameterType="java.lang.String">
+        delete from mission_reserve_info where user_openid=#{user_openid} and deadline >= NOW()
     </delete>
 
     <select id="getContactDetailByUserOpenid" parameterType="java.lang.String" resultType="java.lang.String">
         select DISTINCT contact_detail from a_student_info where user_openid=#{user_openid}
     </select>
+
+    <update id="updateRezDeadlineByMissionId" parameterType="java.util.Map">
+        update mission_reserve_info set deadline=#{deadline} where mission_id=#{mission_id}
+    </update>
 
 </mapper>
