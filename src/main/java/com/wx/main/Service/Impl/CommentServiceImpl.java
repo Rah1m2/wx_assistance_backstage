@@ -107,6 +107,8 @@ public class CommentServiceImpl implements CommentService {
         //更新点赞人数,要写个foreach
         if (!tmpAdd.isEmpty())
             commentDAO.updateThumbsCount(tmpAdd);
+        else if (!tmpDel.isEmpty())
+            commentDAO.updateThumbsCount(tmpDel);
 
         return "YES";
     }

@@ -47,14 +47,14 @@
           delete from thumb_info
           <where>
               <foreach collection="delList" item="an" separator=",">
-                  comment_id=#{an.comment_id}
+                  comment_id=#{an.comment_id} and user_openid=#{an.user_openid}
               </foreach>
           </where>
       </delete>
 
       <update id="updateThumbsCount" parameterType="int">
+          <foreach collection="cmtList" item="an" separator=";">
           update comment_info set comment_info.thumbs =
-          <foreach collection="cmtList" item="an">
               (
                       select COUNT(*) from thumb_info
                       where thumb_info.comment_id=#{an}
