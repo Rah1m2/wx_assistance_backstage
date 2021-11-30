@@ -33,6 +33,10 @@
         select COUNT(user_openid) from a_student_info where user_openid=#{user_openid}
     </select>
 
+    <update id="updateUserInfoByOpenid">
+        update user_info set user_name=#{nickName},user_gender=#{gender},user_language=#{language},user_country=#{country},user_avatarUrl=#{avatarUrl} where user_openid=#{openid}
+    </update>
+
     <!--<delete id="deleteSingleUser">-->
       <!--delete from user_info where user_account=#{user_account}-->
     <!--</delete>-->

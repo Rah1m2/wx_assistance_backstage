@@ -183,7 +183,7 @@ public class ReserveServiceImpl implements ReserveService {
 
         RedisTemplate_Util redisTemplate_util = new RedisTemplate_Util(redisTemplate);
 
-        Set<String> keySet = (Set<String>) redisTemplate_util.queryKey("*:oRjTi4jAwOlEfmsQ1M2AS2D95pYY:*");
+        Set<String> keySet = (Set<String>) redisTemplate_util.queryKey("*:"+user_openid+":*");
 
         if (keySet.isEmpty())
             return ResponseData

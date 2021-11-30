@@ -106,6 +106,8 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("解码异常。");
+//            return ResponseData.customerError();
+            return "Decode Failed";
         }
 
         user_list = userDAO.getUserByAccount(openid);
@@ -114,6 +116,12 @@ public class UserServiceImpl implements UserService {
         if(!user_list.isEmpty()) {
             //判断用户的身份
             user_list.get(0).setUser_identity(String.valueOf(userDAO.identifyUserByOpenid(openid)));
+            json_res.put("openid", openid);
+            userDAO.updateUserInfoByOpenid(json_res);
+            user_list.get(0).setUser_name(String.valueOf(json_res.get("nickName")));
+            user_list.get(0).setUser_avatarUrl(String.valueOf(json_res.get("avatarUrl")));
+            user_list.get(0).setUser_language(String.valueOf(json_res.get("language")));
+            user_list.get(0).setUser_country(String.valueOf(json_res.get("country")));
             return JSON.toJSONString(user_list);
         }
 

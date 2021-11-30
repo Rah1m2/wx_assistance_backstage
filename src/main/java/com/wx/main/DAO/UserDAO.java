@@ -4,6 +4,7 @@ import com.wx.main.POJO.Student;
 import com.wx.main.POJO.User;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserDAO {
 
@@ -27,5 +28,8 @@ public interface UserDAO {
 
     //判断用户身份
     int identifyUserByOpenid(String String);
+
+    //更新用户信息
+    int updateUserInfoByOpenid(Map<String, Object> map);
 
 }

@@ -83,6 +83,8 @@ public class PostingServiceImpl implements PostingService {
      */
     public String getPostingDetail(int article_id){
         List <Posting> posting = postingDAO.getPostingByArticleId(article_id);
+        if (posting.isEmpty())
+            return "404";
         Split_Util.splitUrl(posting);
         return JSON.toJSONString(posting);
     }

@@ -6,10 +6,7 @@ import com.wx.main.Service.PostingService;
 import com.wx.main.VO.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/pst")
@@ -60,8 +57,8 @@ public class PostingController {
      * @param posting 帖子的实体类
      * @return 同下
      */
-    @RequestMapping(value = "/sendPostingInfo")
-    public String receivePosting(Posting posting) {
+    @RequestMapping(value = "/sendPostingInfo", method = RequestMethod.POST)
+    public String receivePosting(@RequestBody Posting posting) {
         return postingService.insertSinglePosting(posting);
     }
 
