@@ -2,6 +2,7 @@ package com.wx.main.Service.Impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import com.wx.main.DAO.ReserveDAO;
 import com.wx.main.DAO.UserDAO;
 import com.wx.main.POJO.Student;
@@ -9,11 +10,15 @@ import com.wx.main.POJO.User;
 import com.wx.main.Service.UserService;
 import com.wx.main.Util.Decrypt_Util;
 import com.wx.main.Util.HttpRequest_Util;
+import com.wx.main.Util.Property_Util;
 import com.wx.main.VO.ResponseData;
+import net.sf.ehcache.util.PropertyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.*;
 import java.util.List;
+import java.util.Properties;
 
 @Service(value = "userServiceImpl")
 public class UserServiceImpl implements UserService {
@@ -65,7 +70,7 @@ public class UserServiceImpl implements UserService {
         return ResponseData.ok().setData("user_identity", String.valueOf(userDAO.identifyUserByOpenid(user_openid)));
     }
 
-    public String wxLogin(String encryptedData, String iv, String code) {
+    public String wxLogin(String encryptedData, String iv, String code){
         final int INSERT_FAILED = 0;
         List<User> user_list;
         //登录凭证不能为空
@@ -74,11 +79,15 @@ public class UserServiceImpl implements UserService {
             return "NO";
         }
 
+        //获取配置文件中的变量
+        String propName = "wx-params.properties";
+        Property_Util.setPropName(propName);
+
         //小程序id
-        String wxAppID = "wx8b35bb94f164b782";
+        String wxAppID = Property_Util.getProperty("wxAppID");
 
         //小程序唯一密钥
-        String wxAppSecret = "6896ae1a015096e1704fb01cc5ef6d3b";
+        String wxAppSecret = Property_Util.getProperty("wxAppSecret");
 
         //请求的内容
         String grant_type = "authorization_code";

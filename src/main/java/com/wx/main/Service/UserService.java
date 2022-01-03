@@ -4,6 +4,7 @@ import com.wx.main.POJO.Student;
 import com.wx.main.POJO.User;
 import com.wx.main.VO.ResponseData;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface UserService {
@@ -22,7 +23,7 @@ public interface UserService {
     ResponseData checkIsAStu(String user_openid);
 
     //以上为测试代码，下面的才是正式的事务层逻辑
-    String wxLogin(String encryptedData,String iv,String code);
+    String wxLogin(String encryptedData,String iv,String code) throws IOException;
 
     ResponseData wxRegisterID(Student student);
 }

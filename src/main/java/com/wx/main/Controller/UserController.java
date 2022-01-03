@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -24,7 +26,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login")
-    public String login(String encryptedData,String iv,String code) {
+    public String login(String encryptedData,String iv,String code) throws IOException {
         //测试用
 //        System.out.println("encryptedData:"+encryptedData);
 //        System.out.println("iv:"+iv);
