@@ -47,5 +47,23 @@
             user_info.user_avatarUrl LIKE CONCAT('%',#{query},'%')
     </select>
 
+    <select id="returnStatsMap" resultType="java.lang.Integer">
+        select COUNT(*) from postings_info
+        UNION ALL
+        select COUNT(*) from user_info
+        UNION ALL
+        select COUNT(*) from mission_reserve_info
+    </select>
+
+    <select id="returnPostingCountGroupBySort" resultMap="sortMap">
+        select DISTINCT sort_info.sort_name,COUNT(*) count from postings_info INNER JOIN sort_info where postings_info.sort_id=sort_info.sort_id
+        GROUP BY sort_info.sort_id
+    </select>
+    
+    <resultMap id="sortMap" type="java.util.HashMap">
+        <result property="name" column="sort_name"/>
+        <result property="value" column="count"/>
+    </resultMap>
+
 
 </mapper>

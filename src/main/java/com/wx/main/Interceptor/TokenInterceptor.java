@@ -22,7 +22,7 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
 
-        System.out.println("test：计算器token前。");
+//        System.out.println("test：计算器token前。");
 
         String token = httpServletRequest.getHeader("token");
 

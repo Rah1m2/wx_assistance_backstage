@@ -2,10 +2,7 @@ package com.wx.main.Controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.wx.main.VO.QueryParams;
-import com.wx.main.VO.SubMsgInfo;
-import com.wx.main.VO.TemplateData;
-import com.wx.main.VO.WxMssVo;
+import com.wx.main.VO.*;
 import com.wx.main.Service.SearchService;
 import com.wx.main.Util.Generate_TempKey_Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.mail.search.SearchTerm;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,8 +26,6 @@ import java.util.Set;
 public class SysController {
 
     private SearchService searchService;
-
-
 
     @Autowired
     public SysController(SearchService searchService) {
@@ -57,6 +53,16 @@ public class SysController {
         if (subMsgInfo.getUser_openid() == null)
             subMsgInfo.setUser_openid(searchService.getUidByAid(subMsgInfo.getArticle_id()));
         return push(subMsgInfo.getUser_openid(), subMsgInfo);
+    }
+
+    @RequestMapping(value = "/reqStatistics")
+    public ResponseData sendStatistics() {
+        return searchService.getStatistics();
+    }
+
+    @RequestMapping(value = "/reqPSTCountBySort")
+    public ResponseData sendPSTCountGroupBySort() {
+        return searchService.getPSTCountGroupBySort();
     }
 
     private String push(String user_openid, SubMsgInfo subMsgInfo) {
@@ -88,8 +94,8 @@ public class SysController {
     private String getAccessToken() {
         RestTemplate restTemplate = new RestTemplate();
         Map<String, String> params = new HashMap<String, String>();
-        params.put("APPID", "wx8b35bb94f164b782");
-        params.put("APPSECRET", "6896ae1a015096e1704fb01cc5ef6d3b");
+        params.put("APPID", "wx5184957586df2d71");
+        params.put("APPSECRET", "c48e85f19194e895a7968ed3d23874c4");
         ResponseEntity<String> responseEntity = restTemplate.getForEntity(
                 "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={APPID}&secret={APPSECRET}", String.class, params);
         String body = responseEntity.getBody();

@@ -67,7 +67,7 @@ public class HeartbeatEndPoint {
 
 
     /**
-     * 主动向库护短发送信息
+     * 主动向客户端发送信息
      * @param message
      * @throws IOException
      */

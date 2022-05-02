@@ -5,6 +5,7 @@ import com.wx.main.POJO.User;
 import com.wx.main.VO.StudentReserve;
 
 import java.util.List;
+import java.util.Map;
 
 public interface SearchDAO {
 
@@ -16,4 +17,10 @@ public interface SearchDAO {
 
     //检索数据（后台）
     List<User> searchAdmin(String query);
+
+    //查询整体统计数据
+    List<Integer> returnStatsMap();
+
+    //查询文章数量并按照科目分类
+    List<Map<String, Integer>> returnPostingCountGroupBySort();
 }

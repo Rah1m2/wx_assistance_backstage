@@ -92,6 +92,7 @@ public class UserServiceImpl implements UserService {
         //请求的内容
         String grant_type = "authorization_code";
 
+
         //请求的参数
         String params = "appid=" + wxAppID + "&secret=" + wxAppSecret + "&js_code=" + code + "&grant_type=" + grant_type;
 
