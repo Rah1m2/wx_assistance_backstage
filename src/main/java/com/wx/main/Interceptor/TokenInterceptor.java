@@ -14,6 +14,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Map;
 
 @Component
@@ -35,9 +36,7 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
             out.write(JSON.toJSONString(responseData));
             return false;
         }
-//        if ( token == null || token.equals("undefined") || token.equals("default")) {
-//            return true;
-//        }
+
 
         Map<String, Claim> verifiedToken = null;
 
@@ -48,13 +47,16 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
             PrintWriter out = httpServletResponse.getWriter();
             ResponseData responseData = ResponseData.tokenExpired();
             out.write(JSON.toJSONString(responseData));
-            //暂时让过期token通过
             return false;
         }
 
         System.out.println("test：计算token后，进入执行链前。");
 
-        verifiedToken.get("token");
+//        System.out.println("token打印："+verifiedToken);
+//
+//        Map<String, String[]> m = new HashMap<String, String[]>(httpServletRequest.getParameterMap());
+//
+//        m.put("user_openid", new String[] {String.valueOf(verifiedToken.get("user_name"))});
 
         return true;
     }

@@ -1,6 +1,7 @@
 package com.wx.main.Controller;
 
 import com.mysql.cj.x.protobuf.MysqlxCrud;
+import com.wx.main.Annotation.Limit;
 import com.wx.main.POJO.Comment;
 import com.wx.main.Service.AdminService;
 import com.wx.main.VO.ResponseData;
@@ -21,6 +22,7 @@ public class AdminController {
         this.adminService = adminService;
     }
 
+    @Limit(value = "AccessLimit", limit = 5)
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public ResponseData adminLogin(@RequestBody Map<String, Object> loginForm) {

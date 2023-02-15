@@ -7,9 +7,11 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.wx.main.DAO.CommentDAO;
+import com.wx.main.DAO.PostingDAO;
 import com.wx.main.POJO.Comment;
 import com.wx.main.POJO.Thumb;
 import com.wx.main.Service.CommentService;
+import com.wx.main.VO.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +22,12 @@ import java.util.List;
 public class CommentServiceImpl implements CommentService {
 
     private CommentDAO commentDAO;
+    private PostingDAO postingDAO;
 
     @Autowired
-    public CommentServiceImpl(CommentDAO commentDAO) {
+    public CommentServiceImpl(CommentDAO commentDAO, PostingDAO postingDAO) {
         this.commentDAO = commentDAO;
+        this.postingDAO = postingDAO;
     }
 
     public String getCommentByPosting(String article_id) {
@@ -51,6 +55,7 @@ public class CommentServiceImpl implements CommentService {
 
     public int insertSingleComment(Comment comment) {
         commentDAO.insertSingleComment(comment);
+        postingDAO.updateLastReplyTimeByArticleId(String.valueOf(comment.getArticle_id()));
         return comment.getComment_id();
     }
 
@@ -111,5 +116,10 @@ public class CommentServiceImpl implements CommentService {
             commentDAO.updateThumbsCount(tmpDel);
 
         return "YES";
+    }
+
+    @Override
+    public ResponseData getInnerCommentByComment(String comment_id) {
+        return null;
     }
 }

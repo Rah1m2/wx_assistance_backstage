@@ -58,4 +58,8 @@
     <!--<update id="updateSingleUser">-->
     <!--update user_info set user_password=#{user_password} where user_account=#{user_account}-->
     <!--</update>-->
+
+    <update id="updateLastReplyTimeByArticleId"  parameterType="String">
+        update postings_info set last_reply_time=now() where article_id=#{article_id}
+    </update>
 </mapper>

@@ -33,4 +33,7 @@ public interface CommentDAO {
 
     //更新点赞人数
     int updateThumbsCount(@Param("cmtList")JSONArray thumbComments);
+
+    //根据评论查询对应楼中楼评论
+
 }

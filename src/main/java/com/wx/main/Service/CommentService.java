@@ -1,6 +1,7 @@
 package com.wx.main.Service;
 
 import com.wx.main.POJO.Comment;
+import com.wx.main.VO.ResponseData;
 
 public interface CommentService {
 
@@ -16,4 +17,6 @@ public interface CommentService {
 
     //存储当前用户的点赞记录
     String updateCurUserThumbs(String user_openid, String thumbs);
+
+    ResponseData getInnerCommentByComment(String comment_id);
 }

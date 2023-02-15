@@ -3,6 +3,7 @@ package com.wx.main.Controller;
 import com.wx.main.POJO.Comment;
 import com.wx.main.VO.QueryParams;
 import com.wx.main.Service.CommentService;
+import com.wx.main.VO.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -66,4 +67,10 @@ public class CommentController {
 //                + ":" +request.getServerPort()
 //                + request.getServletPath() + "?" + request.getQueryString());
 //    }
+
+    @RequestMapping(value = "/sendCurInnerComment")
+    @ResponseBody
+    public ResponseData sendInnerComment(String comment_id) {
+        return commentService.getInnerCommentByComment(comment_id);
+    }
 }

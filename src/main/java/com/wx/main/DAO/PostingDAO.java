@@ -40,4 +40,7 @@ public interface PostingDAO {
 
     //更新当前用户的点赞数目
 //    int updateCurrentUserThumbCount();
+
+    //根据article_id更新文章最后回复时间
+    int updateLastReplyTimeByArticleId(String article_id);
 }

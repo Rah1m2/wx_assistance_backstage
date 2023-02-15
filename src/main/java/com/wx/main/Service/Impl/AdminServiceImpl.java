@@ -156,10 +156,12 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public ResponseData getUnconfirmedREZ() {
 
+        //初始化redis接口
         RedisTemplate_Util redisTemplate_util = new RedisTemplate_Util(redisTemplate);
 
         String key = "?:*";
 
+        //查询所有未确认的预约信息
         Set<String> querySet = (Set<String>) redisTemplate_util.queryKey(key);
 
         List<RedisCustomer> redisCustomers = new ArrayList<>();

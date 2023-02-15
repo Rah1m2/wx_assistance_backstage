@@ -1,5 +1,7 @@
 package com.wx.main.Controller;
 
+import com.wx.main.Annotation.Calculate;
+import com.wx.main.Annotation.Limit;
 import com.wx.main.VO.QueryParams;
 import com.wx.main.POJO.*;
 import com.wx.main.Service.PostingService;
@@ -47,6 +49,7 @@ public class PostingController {
      * @param article_id 文章id
      * @return 返回评论文章的String串
      */
+    @Calculate(value = "accCal", calculate = 1)
     @RequestMapping(value = "/reqPostingDetail")
     public String sendPostingDetail(int article_id) {
         return postingService.getPostingDetail(article_id);

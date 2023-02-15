@@ -13,7 +13,7 @@ public class RedisTemplate_Util {
 
     private RedisTemplate redisTemplate;
 
-        public RedisTemplate_Util(RedisTemplate redisTemplate){
+    public RedisTemplate_Util(RedisTemplate redisTemplate){
         this.redisTemplate = redisTemplate;
     }
 

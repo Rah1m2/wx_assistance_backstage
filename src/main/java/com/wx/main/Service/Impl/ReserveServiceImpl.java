@@ -45,9 +45,9 @@ public class ReserveServiceImpl implements ReserveService {
         //去掉过期的预约条目
         UnavailableList.removeAll(InvalidList);
 
-        if (UnavailableList.size() >= 2)
-            aStuList.clear();
-        else
+//        if (UnavailableList.size() >= 2)
+//            aStuList.clear();
+//        else
             //做差集
             aStuList.removeAll(UnavailableList);
 
