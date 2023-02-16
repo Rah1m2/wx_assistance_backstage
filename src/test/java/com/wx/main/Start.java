@@ -1,46 +1,34 @@
 package com.wx.main;
 
+import com.wx.main.Algorithm.Recommend;
+import com.wx.main.Util.RedisTemplate_Util;
+import org.junit.Test;
 import org.mortbay.jetty.Connector;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.bio.SocketConnector;
 import org.mortbay.jetty.webapp.WebAppContext;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.data.redis.core.RedisTemplate;
 
+@MapperScan("com.wx.main.*")
 public class Start {
 
-	public static void main(String[] args) throws Exception {
-		Server server = new Server();
-		SocketConnector connector = new SocketConnector();
-		// Set some timeout options to make debugging easier.
-		connector.setMaxIdleTime(1000 * 60 * 60);
-		connector.setSoLingerTime(-1);
-		connector.setPort(8080);
-		server.setConnectors(new Connector[] { connector });
+	private RedisTemplate redisTemplate;
 
-		WebAppContext bb = new WebAppContext();
-		bb.setServer(server);
-		bb.setContextPath("/");
-		bb.setWar("src/main/webapp");
+	public Start() {
+	}
 
-		
-		// START JMX SERVER
-		// MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
-		// MBeanContainer mBeanContainer = new MBeanContainer(mBeanServer);
-		// server.getContainer().addEventListener(mBeanContainer);
-		// mBeanContainer.start();
-		
-		server.addHandler(bb);
-
-		try {
-			System.out.println(">>> STARTING EMBEDDED JETTY SERVER, PRESS ANY KEY TO STOP");
-			server.start();
-			while (System.in.available() == 0) {
-				Thread.sleep(5000);
-			}
-			server.stop();
-			server.join();
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.exit(100);
-		}
+	@Test
+	public void test() throws Exception {
+		String config = "/spring/applicationContext.xml";
+		ApplicationContext acContext = new ClassPathXmlApplicationContext(config);
+		redisTemplate = (RedisTemplate) acContext.getBean("redisTemplate");
+		RedisTemplate_Util redisTemplate_util = new RedisTemplate_Util(redisTemplate);
+		redisTemplate_util.get("db_graduate_design:user_vector:oRSGA5ED1yYb4CUbswh_j7VkNXNk:55");
+		Recommend recommend = new Recommend(redisTemplate);
+		recommend.getUserVectorMatrix("1234css");
 	}
 }
