@@ -16,6 +16,65 @@ public class Recommend {
         this.redisTemplate = redisTemplate;
     }
 
+    public void generateUserCosineMatrix(List<Map<String, String>> userVectorMatrix) {
+        List<Map<String, String>> userCosineMatrix;
+        Map<String, String> currentUserMap = new HashMap<>();
+        currentUserMap.put("1", "5");
+        currentUserMap.put("2", "3");
+        currentUserMap.put("3", "4");
+        currentUserMap.put("4", "4");
+
+        Map<String, String> otherUserMap = new HashMap<>();
+        otherUserMap.put("1", "3");
+        otherUserMap.put("2", "1");
+        otherUserMap.put("3", "2");
+        otherUserMap.put("4", "3");
+        otherUserMap.put("5", "3");
+        //测试
+        calculateCosineSimilarity(currentUserMap, otherUserMap);
+    }
+
+    private double calculateCosineSimilarity(Map<String, String> currentUserMap, Map<String, String> otherUserMap) {
+        //用于计算分子
+        double tempValue01, tempValue02;
+        //分子
+        double sumValue = 0;
+        //分母
+        double divisor01 = 0;
+        double divisor02 = 0;
+        //最终结果
+        double cosineValue;
+        //两个用户共有的向量
+        List<Integer> overlapVectorList = new ArrayList<>();
+
+        //计算分子，求和
+        for (String currentUserKey : currentUserMap.keySet()) {
+            if (otherUserMap.get(currentUserKey) != null && !otherUserMap.get(currentUserKey).equals("user_openid")) {
+                tempValue01 = Double.parseDouble(currentUserMap.get(currentUserKey));
+                tempValue02 = Double.parseDouble(otherUserMap.get(currentUserKey));
+                sumValue += tempValue01 * tempValue02;
+                overlapVectorList.add(Integer.valueOf(currentUserKey));
+            }
+        }
+
+        //计算分母
+        for (Integer integer : overlapVectorList) {
+            divisor01 += Double.parseDouble(currentUserMap.get(integer.toString())) * Double.parseDouble(currentUserMap.get(integer.toString()));
+            divisor02 += Double.parseDouble(otherUserMap.get(integer.toString())) * Double.parseDouble(otherUserMap.get(integer.toString()));
+        }
+
+        //将分母开方
+        divisor01 = java.lang.Math.sqrt(divisor01);
+        divisor02 = java.lang.Math.sqrt(divisor02);
+
+        //做除法计算余弦相似度
+        cosineValue = sumValue / (divisor01 * divisor02);
+
+        System.out.println("cosineValue:"+cosineValue);
+
+        return cosineValue;
+    }
+
     public List<Map<String, String>> getUserVectorMatrix(String current_user_openid) {
 
         //redis key的公共部分
