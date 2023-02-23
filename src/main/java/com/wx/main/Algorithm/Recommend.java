@@ -16,7 +16,7 @@ public class Recommend {
         this.redisTemplate = redisTemplate;
     }
 
-    public void generateUserCosineMatrix(List<Map<String, String>> userVectorMatrix) {
+    public void generateUserCosineMatrix(List<Map<String, String>> userVectorMatrix, String current_user_openid) {
         List<Map<String, String>> userCosineMatrix;
         Map<String, String> currentUserMap = new HashMap<>();
         currentUserMap.put("1", "5");
@@ -32,8 +32,111 @@ public class Recommend {
         otherUserMap.put("5", "3");
         //测试
         calculateCosineSimilarity(currentUserMap, otherUserMap);
+        //遍历userVectorMatrix，获取map
+        currentUserMap = userVectorMatrix.get(0);
+
+        Map<String, Object> currentUserCosineMap = new HashMap<>();
+        //存入当前用户的user_openid
+        currentUserCosineMap.put("current_user_openid",current_user_openid);
+        //生成当前用户的余弦相似度map
+        for(int i=1; i<userVectorMatrix.size(); i++) {
+            otherUserMap = userVectorMatrix.get(i);
+            currentUserCosineMap.put(otherUserMap.get("user_openid"), calculateCosineSimilarity(currentUserMap, otherUserMap));
+        }
+
+        //选出与当前用户余弦相似度最高的两个用户
+        String maxCosineUserOpenid = "";
+        double maxCosine = 0.0;
+        String secondCosineUserOpenid = "";
+        double secondMaxCosine = 0.0;
+        //选出最大的
+        for (String s : currentUserCosineMap.keySet()) {
+            if (Double.parseDouble(currentUserCosineMap.get(s).toString()) > maxCosine) {
+                maxCosine = Double.parseDouble(currentUserCosineMap.get(s).toString());
+                maxCosineUserOpenid = s;
+            }
+        }
+        //选出第二大的
+        for (String s : currentUserCosineMap.keySet()) {
+            if (Double.parseDouble(currentUserCosineMap.get(s).toString()) > secondMaxCosine) {
+                secondMaxCosine = Double.parseDouble(currentUserCosineMap.get(s).toString());
+                secondCosineUserOpenid = s;
+            }
+        }
+
+        //如果备选用户数量不足，直接终止推荐函数运行
+        if (maxCosine == 0.0 || secondMaxCosine == 0.0)
+            return;
+
+        //筛选出最大和第二大用户看过，但当前用户没看过的文章
+        List<String> recommendedArticles = new ArrayList<>();
+        Map<String, String> maxMap = null;
+        Map<String, String> secondMap = null;
+        //首先找出相似度前两位的用户的兴趣向量map
+        for (Map<String, String> vectorMap : userVectorMatrix) {
+            if (vectorMap.get(maxCosineUserOpenid) != null) {
+                maxMap = vectorMap;
+            } else if (vectorMap.get(secondCosineUserOpenid) != null) {
+                secondMap = vectorMap;
+            }
+        }
+
+        try {
+            //将maxMap与当前用户的兴趣向量map做差集
+            for (String s : maxMap.keySet()) {
+                if (currentUserMap.get(s) != null && !currentUserMap.get(s).equals("user_openid"))
+                    maxMap.remove(s);
+            }
+            //将maxMap和secondMap做交集，得出maxMap和secondMap共同看过，但当前用户没有看过的文章
+            for (String s : maxMap.keySet()) {
+                if (secondMap.get(s) == null) {
+                    maxMap.remove(s);
+                }
+            }
+            //如果maxMap作运算后为空，终止推荐函数
+            if (maxMap.isEmpty())
+                return;
+            //可能要推荐给当前用户的文章列表
+            for (String s : maxMap.keySet()) {
+                if (!s.equals("user_openid"))
+                    recommendedArticles.add(s);
+            }
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+            System.out.println("相似度前两位用户查找失败");
+        }
+
+        //计算预测出的当前用户评分
+        Map<String, String> predictVectorMap = new HashMap<>();
+
+        for (String s : Objects.requireNonNull(maxMap).keySet()) {
+            if (!s.equals("user_openid"))
+                predictVector(currentUserCosineMap, maxMap, secondMap, s);
+        }
+
+
+
     }
 
+    private double predictVector(Map<String, Object> currentUserCosineMap, Map<String, String> firstMap, Map<String, String> secondMap, String article_id) {
+
+        double firstCosineSim, secondCosineSim;
+        firstCosineSim = Double.parseDouble(currentUserCosineMap.get(firstMap.get("user_openid")).toString());
+        secondCosineSim = Double.parseDouble(currentUserCosineMap.get(secondMap.get("user_openid")).toString());
+
+        double firstVectorValue, secondVectorValue;
+        firstVectorValue = Double.parseDouble(firstMap.get(article_id));
+        secondVectorValue = Double.parseDouble(secondMap.get(article_id));
+
+        return (firstCosineSim * firstVectorValue + secondCosineSim * secondVectorValue) / (firstCosineSim + secondCosineSim);
+    }
+
+    /**
+     *
+     * @param currentUserMap
+     * @param otherUserMap
+     * @return
+     */
     private double calculateCosineSimilarity(Map<String, String> currentUserMap, Map<String, String> otherUserMap) {
         //用于计算分子
         double tempValue01, tempValue02;
