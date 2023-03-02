@@ -44,7 +44,7 @@ public class ResponseData {
     }
 
     public static ResponseData elemExist() {
-        return new ResponseData(841, "inserted element is exist");
+        return new ResponseData(841, "Inserted element is exist");
     }
 
     public static ResponseData badRequest() {
@@ -56,7 +56,7 @@ public class ResponseData {
     }
 
     public static ResponseData unauthorized() {
-        return new ResponseData(401, "unauthorized");
+        return new ResponseData(401, "Unauthorized");
     }
 
     public static ResponseData serverInternalError() {
@@ -68,11 +68,15 @@ public class ResponseData {
     }
 
     public static ResponseData customerError() {
-        return new ResponseData(1001, "customer Error");
+        return new ResponseData(1001, "Customer Error");
     }
 
     public static ResponseData tokenExpired() {
         return new ResponseData(840, "Token Expired");
+    }
+
+    public static ResponseData functionTerminated() {
+        return new ResponseData(201, "Function Terminated");
     }
 
 }
