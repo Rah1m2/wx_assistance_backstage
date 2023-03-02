@@ -81,7 +81,7 @@ public class AlgorithmAspect {
         System.out.println("after aspect.");
 
         Recommend recommend = new Recommend(redisTemplate);
-        recommend.generateUserCosineMatrix(recommend.getUserVectorMatrix(user_openid), user_openid);
+        recommend.processRecommend(recommend.getUserVectorMatrix(user_openid), user_openid);
 
         //返回业务方法运行结果
         return proceed;
