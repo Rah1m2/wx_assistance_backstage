@@ -87,8 +87,9 @@ public class Recommend {
             }
         }
 
+        List<String> removeList;
         try {
-            List<String> removeList = new ArrayList<>();
+            removeList = new ArrayList<>();
             //将maxMap与当前用户的兴趣向量map做差集
             for (String s : maxMap.keySet()) {
                 if (s.equals("user_openid"))
@@ -143,16 +144,21 @@ public class Recommend {
         int threshold;
         int sum = 0;
         for (String s : currentUserMap.keySet()) {
-            sum +=  Integer.parseInt(currentUserMap.get(s));
+            if (!s.equals("user_openid"))
+                sum +=  Integer.parseInt(currentUserMap.get(s));
         }
         threshold = sum / currentUserMap.size();
 
         System.out.println("阈值："+threshold);
 
         //筛选超过阈值的文章进行推荐
+        removeList.clear();
         for (String ps : predictVectorMap.keySet()) {
-            if (Integer.parseInt(predictVectorMap.get(ps)) < threshold)
-                predictVectorMap.remove(ps);
+            if (Double.parseDouble(predictVectorMap.get(ps)) < threshold)
+                removeList.add(ps);
+        }
+        for (String r : removeList) {
+            predictVectorMap.remove(r);
         }
 
         return ResponseData.ok().setData("recommendedArticles", predictVectorMap);
