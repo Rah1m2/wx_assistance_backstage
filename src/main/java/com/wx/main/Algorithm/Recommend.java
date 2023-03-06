@@ -57,14 +57,14 @@ public class Recommend {
         double secondMaxCosine = 0.0;
         //选出最大的
         for (String s : currentUserCosineMap.keySet()) {
-            if (!s.equals("current_user_openid") && Double.parseDouble(currentUserCosineMap.get(s).toString()) > maxCosine) {
+            if (!s.equals("current_user_openid") && Double.parseDouble(currentUserCosineMap.get(s).toString()) > maxCosine && Double.parseDouble(currentUserCosineMap.get(s).toString()) < 1.0) {
                 maxCosine = Double.parseDouble(currentUserCosineMap.get(s).toString());
                 maxCosineUserOpenid = s;
             }
         }
         //选出第二大的
         for (String s : currentUserCosineMap.keySet()) {
-            if (!s.equals("current_user_openid") && !s.equals(maxCosineUserOpenid) && Double.parseDouble(currentUserCosineMap.get(s).toString()) > secondMaxCosine) {
+            if (!s.equals("current_user_openid") && !s.equals(maxCosineUserOpenid) && Double.parseDouble(currentUserCosineMap.get(s).toString()) > secondMaxCosine && Double.parseDouble(currentUserCosineMap.get(s).toString()) < 1.0) {
                 secondMaxCosine = Double.parseDouble(currentUserCosineMap.get(s).toString());
                 secondCosineUserOpenid = s;
             }
@@ -141,11 +141,11 @@ public class Recommend {
         }
 
         //根据阈值进行推荐
-        int threshold;
-        int sum = 0;
+        double threshold;
+        double sum = 0;
         for (String s : currentUserMap.keySet()) {
             if (!s.equals("user_openid"))
-                sum +=  Integer.parseInt(currentUserMap.get(s));
+                sum +=  Double.parseDouble(currentUserMap.get(s));
         }
         threshold = sum / currentUserMap.size();
 
