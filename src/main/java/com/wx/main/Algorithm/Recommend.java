@@ -57,14 +57,14 @@ public class Recommend {
         double secondMaxCosine = 0.0;
         //选出最大的
         for (String s : currentUserCosineMap.keySet()) {
-            if (!s.equals("current_user_openid") && Double.parseDouble(currentUserCosineMap.get(s).toString()) > maxCosine && Double.parseDouble(currentUserCosineMap.get(s).toString()) < 1.0) {
+            if (!s.equals("current_user_openid") && Double.parseDouble(currentUserCosineMap.get(s).toString()) > maxCosine) {
                 maxCosine = Double.parseDouble(currentUserCosineMap.get(s).toString());
                 maxCosineUserOpenid = s;
             }
         }
         //选出第二大的
         for (String s : currentUserCosineMap.keySet()) {
-            if (!s.equals("current_user_openid") && !s.equals(maxCosineUserOpenid) && Double.parseDouble(currentUserCosineMap.get(s).toString()) > secondMaxCosine && Double.parseDouble(currentUserCosineMap.get(s).toString()) < 1.0) {
+            if (!s.equals("current_user_openid") && !s.equals(maxCosineUserOpenid) && Double.parseDouble(currentUserCosineMap.get(s).toString()) > secondMaxCosine) {
                 secondMaxCosine = Double.parseDouble(currentUserCosineMap.get(s).toString());
                 secondCosineUserOpenid = s;
             }
@@ -164,25 +164,7 @@ public class Recommend {
         return ResponseData.ok().setData("recommendedArticles", predictVectorMap);
 
     }
-
-    private void generateCosineMatrix() {
-        Map<String, String> currentUserMap = new HashMap<>();
-        currentUserMap.put("1", "5");
-        currentUserMap.put("2", "3");
-        currentUserMap.put("3", "4");
-        currentUserMap.put("4", "4");
-
-        Map<String, String> otherUserMap = new HashMap<>();
-        otherUserMap.put("1", "3");
-        otherUserMap.put("2", "1");
-        otherUserMap.put("3", "2");
-        otherUserMap.put("4", "3");
-        otherUserMap.put("5", "3");
-        //测试
-        calculateCosineSimilarity(currentUserMap, otherUserMap);
-    }
-
-
+    
     private double predictVector(Map<String, Object> currentUserCosineMap, Map<String, String> firstMap, Map<String, String> secondMap, String article_id) {
 
         double firstCosineSim, secondCosineSim;
