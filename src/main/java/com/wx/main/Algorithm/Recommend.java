@@ -5,18 +5,23 @@ import com.wx.main.VO.ResponseData;
 import org.apache.wicket.util.value.CopyOnWriteValueMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 
 import javax.xml.ws.Response;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Component
 public class Recommend {
 
-    private RedisTemplate redisTemplate;
+    private RedisTemplate_Util redisTemplate_util;
+
+    public Recommend() {
+    }
 
     @Autowired
-    public Recommend(RedisTemplate redisTemplate) {
-        this.redisTemplate = redisTemplate;
+    public Recommend(RedisTemplate_Util redisTemplate_util) {
+        this.redisTemplate_util = redisTemplate_util;
     }
 
     public ResponseData processRecommend(List<Map<String, String>> userVectorMatrix, String current_user_openid) {
@@ -229,7 +234,7 @@ public class Recommend {
 
         //redis key的公共部分
         String baseKey = "db_graduate_design:user_vector:";
-        RedisTemplate_Util redisTemplate_util = new RedisTemplate_Util(redisTemplate);
+
         //redis查询所有用户的兴趣向量
         Set<String> querySet = (Set<String>) redisTemplate_util.queryKey(baseKey + "*");
 

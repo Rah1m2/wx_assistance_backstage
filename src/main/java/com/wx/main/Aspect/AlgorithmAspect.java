@@ -1,10 +1,8 @@
 package com.wx.main.Aspect;
 
 import com.alibaba.fastjson.JSONObject;
-import com.auth0.jwt.interfaces.Claim;
 import com.wx.main.Algorithm.Recommend;
 import com.wx.main.Annotation.Calculate;
-import com.wx.main.Util.JWT_Util;
 import com.wx.main.Util.RedisTemplate_Util;
 import com.wx.main.Util.Url_Util;
 import com.wx.main.VO.ResponseData;
@@ -14,27 +12,25 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.data.redis.core.RedisTemplate;
-
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Map;
 
 @Aspect
 @Configuration
 public class AlgorithmAspect {
-    private RedisTemplate redisTemplate;
+    private RedisTemplate_Util redisTemplate_util;
     private HttpServletRequest request;
+    private Recommend recommend;
 
     public AlgorithmAspect() {
     }
 
     @Autowired
-    public AlgorithmAspect(RedisTemplate redisTemplate, HttpServletRequest request) {
-        this.redisTemplate = redisTemplate;
+    public AlgorithmAspect(RedisTemplate_Util redisTemplate_util, HttpServletRequest request, Recommend recommend) {
+        this.redisTemplate_util = redisTemplate_util;
         this.request = request;
+        this.recommend = recommend;
     }
-
 
     @Around(value = "@annotation(calculate)")
 //    @Order(1)
@@ -68,7 +64,6 @@ public class AlgorithmAspect {
         System.out.println("userMap:"+userMap.get("user_openid"));
         String user_openid = userMap.get("user_openid");
 
-        RedisTemplate_Util redisTemplate_util = new RedisTemplate_Util(redisTemplate);
         Object redis_get_result = redisTemplate_util.get("db_graduate_design:user_vector:" + user_openid + ":" + article_id);
         int redis_set_param = 1;
         if (null == redis_get_result) {
@@ -77,8 +72,6 @@ public class AlgorithmAspect {
             redis_set_param = (int) redis_get_result + 1;
             redisTemplate_util.set("db_graduate_design:user_vector:" + user_openid + ":" + article_id, redis_set_param);
         }
-
-        Recommend recommend = new Recommend(redisTemplate);
 
         //存储推荐信息到redis
         saveToRedis(recommend.processRecommend(recommend.getUserVectorMatrix(user_openid), user_openid), user_openid);
@@ -103,7 +96,6 @@ public class AlgorithmAspect {
     }
 
     private void saveToRedis(ResponseData responseData, String user_openid) {
-        RedisTemplate_Util redisTemplate_util = new RedisTemplate_Util(redisTemplate);
         Map<String, String> predictMap = (Map<String, String>) responseData.getData().get("recommendedArticles");
         try {
             for (String s : predictMap.keySet()) {
