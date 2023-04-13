@@ -27,6 +27,7 @@ public class PostingController {
 //        this.request = request;
     }
 
+
     /**
      * 前端向后端请求数帖子封面数据
      * @param queryParams 前端传回的请求参数

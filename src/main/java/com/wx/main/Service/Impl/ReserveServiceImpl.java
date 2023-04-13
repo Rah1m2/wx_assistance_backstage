@@ -82,7 +82,12 @@ public class ReserveServiceImpl implements ReserveService {
 
         List<RedisCustomer> customers = new ArrayList<>();
 
+        String[] strings;
+
         for (String s : querySet) {
+            strings = s.split(":");
+            if (strings[0].equals("db_graduate_design"))
+                continue;
             customers.add((RedisCustomer) RedisTemplate_Util.get(s)) ;
         }
             System.out.println("cus:"+customers.toString());
@@ -184,6 +189,17 @@ public class ReserveServiceImpl implements ReserveService {
         RedisTemplate_Util redisTemplate_util = new RedisTemplate_Util(redisTemplate);
 
         Set<String> keySet = (Set<String>) redisTemplate_util.queryKey("*:"+user_openid+":*");
+
+        String[] strings;
+        List<String> removeList = new ArrayList<>();
+        for (String s : keySet) {
+            strings = s.split(":");
+            if (strings[0].equals("db_graduate_design"))
+                removeList.add(s);
+        }
+        for (String s : removeList) {
+            keySet.remove(s);
+        }
 
         if (keySet.isEmpty())
             return ResponseData
