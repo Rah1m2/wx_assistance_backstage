@@ -65,8 +65,15 @@ public class responseAspect implements ResponseBodyAdvice<Object> {
         List<Posting> articleList = (List<Posting>) jsonObject.get("articleList");
 
         //通过截取响应头获得token，进而获得user_openid
-        JSONObject tokenObj = JSON.parseObject(httpServletRequest.getHeader("token"));
-        Map<String, String> userMap = (Map<String, String>) tokenObj.get("userInfo");
+        JSONObject tokenObj;
+        Map<String, String> userMap;
+        try {
+            tokenObj = JSON.parseObject(httpServletRequest.getHeader("token"));
+            userMap = (Map<String, String>) tokenObj.get("userInfo");
+        } catch (Exception e) {
+            System.out.println("no user logon.");
+            return body;
+        }
         String user_openid = userMap.get("user_openid");
 
         //查询redis中协同过滤算法计算出的文章
@@ -108,6 +115,7 @@ public class responseAspect implements ResponseBodyAdvice<Object> {
 
         //放入body中发送给前端
         body = jsonObject.toJSONString();
+        System.out.println(jsonObject.toString());
         return body;
     }
 }
